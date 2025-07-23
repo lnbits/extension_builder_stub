@@ -1,0 +1,9 @@
+{
+  "repos": [
+    {
+      "id": "extension_builder_stub",
+      "organisation": "lnbits",
+      "repository": "extension_builder_stub"
+    }
+  ]
+}
