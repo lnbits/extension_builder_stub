@@ -12,7 +12,10 @@ class CreateMyExtensionData(BaseModel):
     lnurlwithdrawamount: int
     wallet: str
     total: int = 0
-
+    """ [[ cancel_comment ]]
+    [% for field in fields %]
+    [[ field.name ]]: Optional[[[ field.type ]]] = None[% endfor %]
+    [[ cancel_comment ]] """ 
 
 class MyExtension(BaseModel):
     id: str
