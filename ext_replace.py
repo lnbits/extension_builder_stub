@@ -66,8 +66,8 @@ rendered_html = render_file(
     py_template_path,
     {
         "fields": [
-            {"name": "description", "type": str},
-            {"name": "amount", "type": int},
+            {"name": "description", "type": "str"},
+            {"name": "amount", "type": "int"},
         ],
         "cancel_comment": remove_line_marker,
     },
