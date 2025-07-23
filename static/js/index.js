@@ -49,6 +49,10 @@ window.app = Vue.createApp({
   ///////////////////////////////////////////////////
 
   methods: {
+    async updateSettings() {
+      console.log("Updating settings...");
+      this.settingsFormDialog.show = false;
+    },
     async closeFormDialog() {
       this.formDialog.show = false;
       this.formDialog.data = {};
