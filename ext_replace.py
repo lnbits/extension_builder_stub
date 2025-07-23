@@ -28,6 +28,7 @@ def render_file(template_path: str, data: dict) -> str:
     # Render the template with data
     return template.render(**data)
 
+
 def remove_lines_with_string(file_path: str, target: str) -> None:
     """
     Removes lines from a file that contain the given target string.
@@ -36,12 +37,12 @@ def remove_lines_with_string(file_path: str, target: str) -> None:
         file_path (str): Path to the file.
         target (str): Substring to search for in lines to remove.
     """
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, encoding="utf-8") as f:
         lines = f.readlines()
 
     filtered_lines = [line for line in lines if target not in line]
 
-    with open(file_path, 'w', encoding='utf-8') as f:
+    with open(file_path, "w", encoding="utf-8") as f:
         f.writelines(filtered_lines)
 
 

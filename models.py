@@ -15,7 +15,8 @@ class CreateMyExtensionData(BaseModel):
     """ [[ cancel_comment ]]
     [% for field in fields %]
     [[ field.name ]]: Optional[[[ field.type ]]] = None[% endfor %]
-    [[ cancel_comment ]] """ 
+    [[ cancel_comment ]] """
+
 
 class MyExtension(BaseModel):
     id: str
