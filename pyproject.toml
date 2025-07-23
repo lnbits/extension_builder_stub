@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "extension_builder_stub"
-version = "0.0.0"
+version = "0.0.1"
 description = "Eightball is a simple API that allows you to create a random number generator."
 authors = ["benarc", "dni <dni@lnbits.com>"]
 

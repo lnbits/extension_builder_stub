@@ -50,19 +50,19 @@
 {% endblock %} {% block scripts %}
 <script>
   window.app = Vue.createApp({
-    el: '#vue',
+    el: "#vue",
     mixins: [windowMixin],
     data: function () {
       return {
-        qrValue: '{{lnurlpay}}',
-        myExtensionID: '{{extension_builder_stub_id}}'
-      }
+        qrValue: "{{lnurlpay}}",
+        myExtensionID: "{{extension_builder_stub_id}}",
+      };
     },
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py
-      eventReactionWebocket(this.myExtensionID)
+      eventReactionWebocket(this.myExtensionID);
     },
-    methods: {}
-  })
+    methods: {},
+  });
 </script>
 {% endblock %}

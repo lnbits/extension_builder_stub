@@ -10,13 +10,9 @@ from .views import extension_builder_stub_generic_router
 from .views_api import extension_builder_stub_api_router
 from .views_lnurl import extension_builder_stub_lnurl_router
 
-logger.debug(
-    "This logged message is from extension_builder_stub/__init__.py, you can debug in your "
-    "extension using 'import logger from loguru' and 'logger.debug(<thing-to-log>)'."
+extension_builder_stub_ext: APIRouter = APIRouter(
+    prefix="/extension_builder_stub", tags=["Extension Builder Stub"]
 )
-
-
-extension_builder_stub_ext: APIRouter = APIRouter(prefix="/extension_builder_stub", tags=["Extension Builder Stub"])
 extension_builder_stub_ext.include_router(extension_builder_stub_generic_router)
 extension_builder_stub_ext.include_router(extension_builder_stub_api_router)
 extension_builder_stub_ext.include_router(extension_builder_stub_lnurl_router)
@@ -40,7 +36,9 @@ def extension_builder_stub_stop():
 
 
 def extension_builder_stub_start():
-    task = create_permanent_unique_task("ext_extension_builder_stub", wait_for_paid_invoices)
+    task = create_permanent_unique_task(
+        "ext_extension_builder_stub", wait_for_paid_invoices
+    )
     scheduled_tasks.append(task)
 
 

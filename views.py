@@ -50,7 +50,8 @@ async def extension_builder_stub(req: Request, extension_builder_stub_id):
             "request": req,
             "extension_builder_stub_id": extension_builder_stub_id,
             "lnurlpay": lnurler(myex.id, "extension_builder_stub.api_lnurl_pay", req),
-            "web_manifest": f"/extension_builder_stub/manifest/{extension_builder_stub_id}.webmanifest",
+            "web_manifest": "/extension_builder_stub/manifest"
+            f"/{extension_builder_stub_id}.webmanifest",
         },
     )
 
@@ -58,7 +59,9 @@ async def extension_builder_stub(req: Request, extension_builder_stub_id):
 # Manifest for public page, customise or remove manifest completely
 
 
-@extension_builder_stub_generic_router.get("/manifest/{extension_builder_stub_id}.webmanifest")
+@extension_builder_stub_generic_router.get(
+    "/manifest/{extension_builder_stub_id}.webmanifest"
+)
 async def manifest(extension_builder_stub_id: str):
     extension_builder_stub = await get_extension_builder_stub(extension_builder_stub_id)
     if not extension_builder_stub:
@@ -88,9 +91,13 @@ async def manifest(extension_builder_stub_id: str):
         "theme_color": "#1F2234",
         "shortcuts": [
             {
-                "name": extension_builder_stub.name + " - " + settings.lnbits_site_title,
+                "name": extension_builder_stub.name
+                + " - "
+                + settings.lnbits_site_title,
                 "short_name": extension_builder_stub.name,
-                "description": extension_builder_stub.name + " - " + settings.lnbits_site_title,
+                "description": extension_builder_stub.name
+                + " - "
+                + settings.lnbits_site_title,
                 "url": "/extension_builder_stub/" + extension_builder_stub_id,
             }
         ],

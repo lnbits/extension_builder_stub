@@ -34,7 +34,8 @@ async def api_lnurl_pay(
     return {
         "callback": str(
             request.url_for(
-                "extension_builder_stub.api_lnurl_pay_callback", extension_builder_stub_id=extension_builder_stub_id
+                "extension_builder_stub.api_lnurl_pay_callback",
+                extension_builder_stub_id=extension_builder_stub_id,
             )
         ),
         "maxSendable": extension_builder_stub.lnurlpayamount * 1000,
@@ -59,11 +60,12 @@ async def api_lnurl_pay_cb(
     if not extension_builder_stub:
         return {"status": "ERROR", "reason": "No extension_builder_stub found"}
 
+    memo = extension_builder_stub.name
     payment = await create_invoice(
         wallet_id=extension_builder_stub.wallet,
         amount=int(amount / 1000),
-        memo=extension_builder_stub.name,
-        unhashed_description=f'[["text/plain", "{extension_builder_stub.name}"]]'.encode(),
+        memo=memo,
+        unhashed_description=f'[["text/plain", "{memo}"]]'.encode(),
         extra={
             "tag": "Extension Builder Stub",
             "extension_builder_stubId": extension_builder_stub_id,
@@ -73,7 +75,10 @@ async def api_lnurl_pay_cb(
     return {
         "pr": payment.bolt11,
         "routes": [],
-        "successAction": {"tag": "message", "message": f"Paid {extension_builder_stub.name}"},
+        "successAction": {
+            "tag": "message",
+            "message": f"Paid {memo}",
+        },
     }
 
 
@@ -103,7 +108,8 @@ async def api_lnurl_withdraw(
         "tag": "withdrawRequest",
         "callback": str(
             request.url_for(
-                "extension_builder_stub.api_lnurl_withdraw_callback", extension_builder_stub_id=extension_builder_stub_id
+                "extension_builder_stub.api_lnurl_withdraw_callback",
+                extension_builder_stub_id=extension_builder_stub_id,
             )
         ),
         "k1": k1,

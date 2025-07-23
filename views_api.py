@@ -41,7 +41,9 @@ async def api_extension_builder_stubs(
     # Without the lnurl stuff this wouldnt be needed.
     for myex in extension_builder_stubs:
         myex.lnurlpay = lnurler(myex.id, "extension_builder_stub.api_lnurl_pay", req)
-        myex.lnurlwithdraw = lnurler(myex.id, "extension_builder_stub.api_lnurl_withdraw", req)
+        myex.lnurlwithdraw = lnurler(
+            myex.id, "extension_builder_stub.api_lnurl_withdraw", req
+        )
 
     return extension_builder_stubs
 
@@ -53,7 +55,9 @@ async def api_extension_builder_stubs(
     "/api/v1/myex/{extension_builder_stub_id}",
     dependencies=[Depends(require_invoice_key)],
 )
-async def api_extension_builder_stub(extension_builder_stub_id: str, req: Request) -> MyExtension:
+async def api_extension_builder_stub(
+    extension_builder_stub_id: str, req: Request
+) -> MyExtension:
     myex = await get_extension_builder_stub(extension_builder_stub_id)
     if not myex:
         raise HTTPException(
@@ -62,7 +66,9 @@ async def api_extension_builder_stub(extension_builder_stub_id: str, req: Reques
     # Populate lnurlpay and lnurlwithdraw.
     # Without the lnurl stuff this wouldnt be needed.
     myex.lnurlpay = lnurler(myex.id, "extension_builder_stub.api_lnurl_pay", req)
-    myex.lnurlwithdraw = lnurler(myex.id, "extension_builder_stub.api_lnurl_withdraw", req)
+    myex.lnurlwithdraw = lnurler(
+        myex.id, "extension_builder_stub.api_lnurl_withdraw", req
+    )
 
     return myex
 
@@ -81,7 +87,9 @@ async def api_extension_builder_stub_create(
     # Populate lnurlpay and lnurlwithdraw.
     # Withoutthe lnurl stuff this wouldnt be needed.
     myex.lnurlpay = lnurler(myex.id, "extension_builder_stub.api_lnurl_pay", req)
-    myex.lnurlwithdraw = lnurler(myex.id, "extension_builder_stub.api_lnurl_withdraw", req)
+    myex.lnurlwithdraw = lnurler(
+        myex.id, "extension_builder_stub.api_lnurl_withdraw", req
+    )
 
     return myex
 
@@ -115,7 +123,9 @@ async def api_extension_builder_stub_update(
     # Populate lnurlpay and lnurlwithdraw.
     # Without the lnurl stuff this wouldnt be needed.
     myex.lnurlpay = lnurler(myex.id, "extension_builder_stub.api_lnurl_pay", req)
-    myex.lnurlwithdraw = lnurler(myex.id, "extension_builder_stub.api_lnurl_withdraw", req)
+    myex.lnurlwithdraw = lnurler(
+        myex.id, "extension_builder_stub.api_lnurl_withdraw", req
+    )
 
     return myex
 
@@ -148,9 +158,13 @@ async def api_extension_builder_stub_delete(
 ## This endpoint creates a payment
 
 
-@extension_builder_stub_api_router.post("/api/v1/myex/payment", status_code=HTTPStatus.CREATED)
+@extension_builder_stub_api_router.post(
+    "/api/v1/myex/payment", status_code=HTTPStatus.CREATED
+)
 async def api_extension_builder_stub_create_invoice(data: CreatePayment) -> dict:
-    extension_builder_stub = await get_extension_builder_stub(data.extension_builder_stub_id)
+    extension_builder_stub = await get_extension_builder_stub(
+        data.extension_builder_stub_id
+    )
 
     if not extension_builder_stub:
         raise HTTPException(
@@ -164,7 +178,9 @@ async def api_extension_builder_stub_create_invoice(data: CreatePayment) -> dict
         wallet_id=extension_builder_stub.wallet,
         amount=data.amount,
         memo=(
-            f"{data.memo} to {extension_builder_stub.name}" if data.memo else f"{extension_builder_stub.name}"
+            f"{data.memo} to {extension_builder_stub.name}"
+            if data.memo
+            else f"{extension_builder_stub.name}"
         ),
         extra={
             "tag": "extension_builder_stub",

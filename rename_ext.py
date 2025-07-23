@@ -1,6 +1,7 @@
 import os
 import zipfile
 
+
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     """
     Recursively replaces text in all files under the given directory.
@@ -9,7 +10,7 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     - directory (str): Root directory to start searching.
     - old_text (str): Text to search for.
     - new_text (str): Text to replace with.
-    - file_extensions (list[str], optional): Only process files with these extensions. If None, process all files.
+    - file_extensions (list[str], optional): Only process files with these extensions.
     """
     for root, _, files in os.walk(directory):
         for filename in files:
@@ -18,14 +19,14 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
                     continue
             if filename == "rename_ext.py":
                 continue
-            
+
             file_path = os.path.join(root, filename)
             try:
-                with open(file_path, 'r', encoding='utf-8') as f:
+                with open(file_path, encoding="utf-8") as f:
                     content = f.read()
                 if old_text in content:
                     new_content = content.replace(old_text, new_text)
-                    with open(file_path, 'w', encoding='utf-8') as f:
+                    with open(file_path, "w", encoding="utf-8") as f:
                         f.write(new_content)
                     print(f"Updated: {file_path}")
             except (UnicodeDecodeError, PermissionError, FileNotFoundError) as e:
@@ -76,7 +77,7 @@ def zip_directory(source_dir, zip_path):
     - source_dir (str): The path of the directory to zip.
     - zip_path (str): The path where the .zip file will be saved.
     """
-    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
             for file in files:
                 full_path = os.path.join(root, file)
@@ -87,17 +88,17 @@ def zip_directory(source_dir, zip_path):
 
 
 replace_text_in_files(
-    directory='.',
-    old_text='myextension',
-    new_text='extension_builder_stub',
-    file_extensions=['.py', '.js', '.html', '.md', '.json', '.toml']
+    directory=".",
+    old_text="myextension",
+    new_text="extension_builder_stub",
+    file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
 )
 
 replace_text_in_files(
-    directory='.',
+    directory=".",
     old_text='"MyExtension"',
     new_text='"Extension Builder Stub"',
-    file_extensions=['.py', '.js', '.html', '.md', '.json', '.toml']
+    file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
 )
 # replace_text_in_files(
 #     directory='.',
@@ -107,9 +108,7 @@ replace_text_in_files(
 # )
 
 rename_files_and_dirs_in_directory(
-    directory=".",
-    old_text="myextension",
-    new_text="extension_builder_stub"
+    directory=".", old_text="myextension", new_text="extension_builder_stub"
 )
 
-zip_directory('.', 'extension_builder_stub.zip')
+zip_directory(".", "extension_builder_stub.zip")

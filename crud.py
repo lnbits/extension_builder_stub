@@ -16,7 +16,9 @@ async def create_extension_builder_stub(data: CreateMyExtensionData) -> MyExtens
     return MyExtension(**data.dict())
 
 
-async def get_extension_builder_stub(extension_builder_stub_id: str) -> Optional[MyExtension]:
+async def get_extension_builder_stub(
+    extension_builder_stub_id: str,
+) -> Optional[MyExtension]:
     return await db.fetchone(
         "SELECT * FROM extension_builder_stub.maintable WHERE id = :id",
         {"id": extension_builder_stub_id},
@@ -24,12 +26,15 @@ async def get_extension_builder_stub(extension_builder_stub_id: str) -> Optional
     )
 
 
-async def get_extension_builder_stubs(wallet_ids: Union[str, List[str]]) -> List[MyExtension]:
+async def get_extension_builder_stubs(
+    wallet_ids: Union[str, List[str]]
+) -> List[MyExtension]:
     if isinstance(wallet_ids, str):
         wallet_ids = [wallet_ids]
     q = ",".join([f"'{w}'" for w in wallet_ids])
     return await db.fetchall(
-        f"SELECT * FROM extension_builder_stub.maintable WHERE wallet IN ({q}) ORDER BY id",
+        "SELECT * FROM extension_builder_stub.maintable "
+        f"WHERE wallet IN ({q}) ORDER BY id",
         model=MyExtension,
     )
 
@@ -41,5 +46,6 @@ async def update_extension_builder_stub(data: CreateMyExtensionData) -> MyExtens
 
 async def delete_extension_builder_stub(extension_builder_stub_id: str) -> None:
     await db.execute(
-        "DELETE FROM extension_builder_stub.maintable WHERE id = :id", {"id": extension_builder_stub_id}
+        "DELETE FROM extension_builder_stub.maintable WHERE id = :id",
+        {"id": extension_builder_stub_id},
     )
