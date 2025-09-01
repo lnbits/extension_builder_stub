@@ -66,10 +66,13 @@ py_template_path = "./models.py"
 rendered_html = render_file(
     py_template_path,
     {
-        "fields": [
-            {"name": "description", "type": "str"},
-            {"name": "amount", "type": "int", "optional": True},
-        ],
+        "table": {
+            "name": "Campaign",
+            "fields": [
+                {"name": "description", "type": "str"},
+                {"name": "amount", "type": "int", "optional": True},
+            ],
+        },
         "cancel_comment": remove_line_marker,
     },
 )

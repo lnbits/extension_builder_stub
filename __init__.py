@@ -8,14 +8,13 @@ from .crud import db
 from .tasks import wait_for_paid_invoices
 from .views import extension_builder_stub_generic_router
 from .views_api import extension_builder_stub_api_router
-from .views_lnurl import extension_builder_stub_lnurl_router
 
 extension_builder_stub_ext: APIRouter = APIRouter(
     prefix="/extension_builder_stub", tags=["Extension Builder Stub"]
 )
 extension_builder_stub_ext.include_router(extension_builder_stub_generic_router)
 extension_builder_stub_ext.include_router(extension_builder_stub_api_router)
-extension_builder_stub_ext.include_router(extension_builder_stub_lnurl_router)
+
 
 extension_builder_stub_static_files = [
     {

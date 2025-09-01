@@ -26,11 +26,11 @@ async def wait_for_paid_invoices():
 
 
 async def on_invoice_paid(payment: Payment) -> None:
-    if payment.extra.get("tag") != "Extension Builder Stub":
+    if payment.extra.get("tag") != "ext_extension_builder_stub":
         return
 
-    extension_builder_stub_id = payment.extra.get("extension_builder_stubId")
-    assert extension_builder_stub_id, "extension_builder_stubId not set in invoice"
+    extension_builder_stub_id = payment.extra.get("extension_builder_stub_iss")
+    assert extension_builder_stub_id, "extension_builder_stub_iss not set in invoice"
     extension_builder_stub = await get_extension_builder_stub(extension_builder_stub_id)
     assert extension_builder_stub, "MyExtension does not exist"
 
