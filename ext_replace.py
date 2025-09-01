@@ -6,12 +6,12 @@ from jinja2 import Environment, FileSystemLoader
 def jinja_env(template_dir: str) -> Environment:
     return Environment(
         loader=FileSystemLoader(template_dir),
-        variable_start_string="[[",
-        variable_end_string="]]",
-        block_start_string="[%",  # for control structures
-        block_end_string="%]",
-        comment_start_string="[#",
-        comment_end_string="#]",
+        variable_start_string="<<",
+        variable_end_string=">>",
+        block_start_string="<%",  # for control structures
+        block_end_string="%>",
+        comment_start_string="<#",
+        comment_end_string="#>",
     )
 
 
@@ -68,7 +68,7 @@ rendered_html = render_file(
     {
         "fields": [
             {"name": "description", "type": "str"},
-            {"name": "amount", "type": "int"},
+            {"name": "amount", "type": "int", "optional": True},
         ],
         "cancel_comment": remove_line_marker,
     },
