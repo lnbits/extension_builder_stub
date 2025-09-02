@@ -23,7 +23,8 @@ async def get_owner_data(
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.owner_data
-            WHERE id = :id AND user_id = :user_id""",
+            WHERE id = :id AND user_id = :user_id
+        """,
         {"id": owner_data_id, "user_id": user_id},
         OwnerData,
     )
