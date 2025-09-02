@@ -87,28 +87,29 @@ def zip_directory(source_dir, zip_path):
     print(f"Directory '{source_dir}' zipped to '{zip_path}'")
 
 
-replace_text_in_files(
-    directory=".",
-    old_text="myextension",
-    new_text="extension_builder_stub",
-    file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
-)
+def test():
+    replace_text_in_files(
+        directory=".",
+        old_text="myextension",
+        new_text="extension_builder_stub",
+        file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
+    )
 
-replace_text_in_files(
-    directory=".",
-    old_text='"MyExtension"',
-    new_text='"Extension Builder Stub"',
-    file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
-)
-# replace_text_in_files(
-#     directory='.',
-#     old_text='MyExtension',
-#     new_text='Extension Builder Stub',
-#     file_extensions=['.js', '.html', '.md']
-# )
+    replace_text_in_files(
+        directory=".",
+        old_text='"MyExtension"',
+        new_text='"Extension Builder Stub"',
+        file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
+    )
+    # replace_text_in_files(
+    #     directory='.',
+    #     old_text='MyExtension',
+    #     new_text='Extension Builder Stub',
+    #     file_extensions=['.js', '.html', '.md']
+    # )
 
-rename_files_and_dirs_in_directory(
-    directory=".", old_text="myextension", new_text="extension_builder_stub"
-)
+    rename_files_and_dirs_in_directory(
+        directory=".", old_text="myextension", new_text="extension_builder_stub"
+    )
 
-zip_directory(".", "extension_builder_stub.zip")
+    zip_directory(".", "extension_builder_stub.zip")
