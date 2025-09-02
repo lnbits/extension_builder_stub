@@ -19,9 +19,8 @@ class OwnerData(BaseModel):
 
 
 class PublicOwnerData(BaseModel):
-    # todo: public fields only
     """<< cancel_comment >>
-    <% for field in owner_table.all_fields %><< field >>
+    <% for field in owner_table.public_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 

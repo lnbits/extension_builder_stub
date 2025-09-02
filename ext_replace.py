@@ -98,6 +98,13 @@ data = {
                 "searchable": True,
             },
             {
+                "name": "description",
+                "type": "str",
+                "optional": False,
+                "editable": True,
+                "searchable": True,
+            },
+            {
                 "name": "email",
                 "type": "str",
                 "optional": True,
@@ -105,6 +112,7 @@ data = {
                 "searchable": True,
             },
         ],
+        "public_fields": ["name", "description"],
     },
     "client_table": {
         "name": "Donations",
@@ -147,6 +155,11 @@ rendered_html = render_file(
                 camel_to_snake(field["name"])
                 for field in data["owner_table"]["fields"]
                 if field["searchable"]
+            ],
+            "public_fields": [
+                camel_to_snake(field["name"])
+                for field in data["owner_table"]["fields"]
+                if field["name"] in data["owner_table"]["public_fields"]
             ],
             "all_fields": [
                 field_to_py(field) for field in data["owner_table"]["fields"]
