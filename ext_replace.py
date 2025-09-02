@@ -1,6 +1,7 @@
 import os
 import re
 
+from ext_rename import replace_text_in_files
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -123,3 +124,10 @@ with open("./models2.py", "w", encoding="utf-8") as f:
     f.write(rendered_html)
 
 remove_lines_with_string("./models2.py", remove_line_marker)
+
+replace_text_in_files(
+    directory=".",
+    old_text="CreateXxxOwnerXxxData",
+    new_text="CreateCampaignData",
+    file_extensions=[".py"],
+)
