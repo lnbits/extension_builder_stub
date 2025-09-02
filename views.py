@@ -42,7 +42,7 @@ async def owner_data_public_page(req: Request, owner_data_id):
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND, detail="Owner Data does not exist."
         )
-    # You can remove any sensitive data from public_data here if needed
+
     return extension_builder_stub_renderer().TemplateResponse(
         "extension_builder_stub/owner_data.html",
         {
