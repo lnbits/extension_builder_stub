@@ -57,7 +57,7 @@ def field_to_py(field: dict) -> str:
     field_name = camel_to_snake(field["name"])
     field_type = field["type"]
     if field["optional"]:
-        field_type = f"Optional[{field_type}]"
+        field_type += " | None"
     return f"{field_name}: {field_type}"
 
 
@@ -143,6 +143,11 @@ rendered_html = render_file(
                 for field in data["owner_table"]["fields"]
                 if field["editable"]
             ],
+            "search_fields": [
+                camel_to_snake(field["name"])
+                for field in data["owner_table"]["fields"]
+                if field["searchable"]
+            ],
             "all_fields": [
                 field_to_py(field) for field in data["owner_table"]["fields"]
             ],
@@ -167,4 +172,3 @@ with open("./models2.py", "w", encoding="utf-8") as f:
     f.write(rendered_html)
 
 remove_lines_with_string("./models2.py", remove_line_marker)
-
