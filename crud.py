@@ -5,7 +5,7 @@ from typing import Optional
 from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
 
-from .models import CreateOwnerData, OwnerData, OwnerDataFilters
+from .models import CreateOwnerData, OwnerData, OwnerDataFilters, PublicOwnerData
 
 db = Database("ext_extension_builder_stub")
 
@@ -27,6 +27,19 @@ async def get_owner_data(
         """,
         {"id": owner_data_id, "user_id": user_id},
         OwnerData,
+    )
+
+
+async def get_public_owner_data(
+    owner_data_id: str,
+) -> Optional[PublicOwnerData]:
+    return await db.fetchone(
+        """
+            SELECT * FROM extension_builder_stub.owner_data
+            WHERE id = :id
+        """,
+        {"id": owner_data_id},
+        PublicOwnerData,
     )
 
 
