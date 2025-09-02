@@ -124,8 +124,20 @@ def test2():
     )
     replace_text_in_files(
         directory=".",
+        old_text="Owner Data",
+        new_text="Donations Campaign",
+        file_extensions=[".py"],
+    )
+    replace_text_in_files(
+        directory=".",
         old_text="ClientData",
         new_text="UserDonation",
+        file_extensions=[".py"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="Client Data",
+        new_text="User Donation",
         file_extensions=[".py"],
     )
 
@@ -133,6 +145,12 @@ def test2():
         directory=".",
         old_text="owner_data",
         new_text="donations_campaign",
+        file_extensions=[".py"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="owner data",
+        new_text="donations campaign",
         file_extensions=[".py"],
     )
 
