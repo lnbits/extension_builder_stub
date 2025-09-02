@@ -60,6 +60,29 @@ def field_to_py(field: dict) -> str:
         field_type += " | None"
     return f"{field_name}: {field_type}"
 
+def field_to_db(field: dict) -> str:
+    field_name = camel_to_snake(field["name"])
+    field_type = field["type"]
+    if field_type == "text":
+        db_type = "TEXT"
+    elif field_type == "int":
+        db_type = "INT"
+    elif field_type == "float":
+        db_type = "REAL"
+    elif field_type == "boolean":
+        db_type = "BOOLEAN"
+    elif field_type == "datetime":
+        db_type = "TIMESTAMP"
+    else:
+        db_type = "TEXT"
+
+    db_field = f"{field_name}: {db_type}"
+    if not field["optional"]:
+        db_field += " NOT NULL"
+    if field_type == "json":
+        db_field += " DEFAULT '{}'"
+    return db_field
+
 
 html_template_path = "./templates/extension_builder_stub/index.html"
 rendered_html = render_file(
@@ -160,6 +183,9 @@ rendered_html = render_file(
                 field_to_py(field)
                 for field in data["owner_table"]["fields"]
                 if field["name"] in data["owner_table"]["public_fields"]
+            ],
+            "db_fields": [
+                field_to_db(field) for field in data["owner_table"]["fields"]
             ],
             "all_fields": [
                 field_to_py(field) for field in data["owner_table"]["fields"]

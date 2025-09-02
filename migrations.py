@@ -7,12 +7,16 @@ async def m001_owner_data(db):
     """
     Initial owner data table.
     """
+
     await db.execute(
-        """
+        f"""
         CREATE TABLE extension_builder_stub.owner_data (
             id TEXT PRIMARY KEY NOT NULL,
             user_id TEXT NOT NULL,
-
+            <% for field in owner_table.table_fields %><< field >>,
+            <% endfor%>
+            created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
+            updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
         );
     """
     )
