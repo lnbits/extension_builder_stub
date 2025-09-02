@@ -80,7 +80,7 @@ def field_to_db(field: dict) -> str:
     if not field["optional"]:
         db_field += " NOT NULL"
     if field_type == "json":
-        db_field += " DEFAULT '{}'"
+        db_field += " DEFAULT '{empty_dict}'"
     return db_field
 
 
@@ -133,6 +133,13 @@ data = {
                 "optional": True,
                 "editable": True,
                 "searchable": True,
+            },
+            {
+                "name": "extra",
+                "type": "json",
+                "optional": False,
+                "editable": False,
+                "searchable": False,
             },
         ],
         "public_fields": ["name", "description"],
