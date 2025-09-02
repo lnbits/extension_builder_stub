@@ -10,26 +10,26 @@ from .models import CreateOwnerData, OwnerData, OwnerDataFilters
 db = Database("ext_extension_builder_stub")
 
 
-async def create_owner_data_table(data: CreateOwnerData) -> OwnerData:
-    owner_data_table = OwnerData(**data.dict(), id=urlsafe_short_hash())
-    await db.insert("extension_builder_stub.owner_data_table", owner_data_table)
-    return owner_data_table
+async def create_owner_data(data: CreateOwnerData) -> OwnerData:
+    owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash())
+    await db.insert("extension_builder_stub.owner_data", owner_data)
+    return owner_data
 
 
-async def get_owner_data_table(
+async def get_owner_data(
     user_id: str,
-    owner_data_table_id: str,
+    owner_data_id: str,
 ) -> Optional[OwnerData]:
     return await db.fetchone(
         """
-            SELECT * FROM extension_builder_stub.owner_data_table
+            SELECT * FROM extension_builder_stub.owner_data
             WHERE id = :id AND user_id = :user_id""",
-        {"id": owner_data_table_id, "user_id": user_id},
+        {"id": owner_data_id, "user_id": user_id},
         OwnerData,
     )
 
 
-async def get_owner_data_table_paginated(
+async def get_owner_data_paginated(
     user_id: Optional[str] = None,
     filters: Optional[Filters[OwnerDataFilters]] = None,
 ) -> Page[OwnerData]:
@@ -40,7 +40,7 @@ async def get_owner_data_table_paginated(
         values["user_id"] = user_id
 
     return await db.fetch_page(
-        "SELECT * FROM extension_builder_stub.owner_data_table",
+        "SELECT * FROM extension_builder_stub.owner_data",
         where=where,
         values=values,
         filters=filters,
@@ -48,17 +48,17 @@ async def get_owner_data_table_paginated(
     )
 
 
-async def update_owner_data_table(user_id: str, data: OwnerData):
+async def update_owner_data(user_id: str, data: OwnerData):
     # todo: user_id
-    await db.update("extension_builder_stub.owner_data_table", data)
+    await db.update("extension_builder_stub.owner_data", data)
 
 
-async def delete_owner_data_table(user_id: str, owner_data_table_id: str) -> None:
+async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
     # todo: user_id
     await db.execute(
         """
-            DELETE FROM extension_builder_stub.owner_data_table
+            DELETE FROM extension_builder_stub.owner_data
             WHERE id = :id AND user_id = :user_id
         """,
-        {"id": owner_data_table_id, "user_id": user_id},
+        {"id": owner_data_id, "user_id": user_id},
     )

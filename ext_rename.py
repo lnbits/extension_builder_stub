@@ -131,7 +131,7 @@ def test2():
 
     replace_text_in_files(
         directory=".",
-        old_text="owner_data_table",
+        old_text="owner_data",
         new_text="campaign",
         file_extensions=[".py"],
     )

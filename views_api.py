@@ -13,10 +13,10 @@ from lnbits.decorators import (
 from lnbits.helpers import generate_filter_params_openapi
 
 from .crud import (
-    create_owner_data_table,
-    delete_owner_data_table,
-    get_owner_data_table,
-    get_owner_data_table_paginated,
+    create_owner_data,
+    delete_owner_data,
+    get_owner_data,
+    get_owner_data_paginated,
 )
 from .models import CreateOwnerData, OwnerData, OwnerDataFilters
 
@@ -35,7 +35,7 @@ async def api_create_owner_data(
     user: User = Depends(check_user_exists),
 ) -> OwnerData:
     # todo: user_id
-    owner_data = await create_owner_data_table(data)
+    owner_data = await create_owner_data(data)
     return owner_data
 
 
@@ -52,7 +52,7 @@ async def api_get_owner_data_paginated(
     filters: Filters = Depends(owner_data_filters),
 ) -> Page[OwnerData]:
 
-    return await get_owner_data_table_paginated(
+    return await get_owner_data_paginated(
         user_id=user.id,
         filters=filters,
     )
@@ -70,7 +70,7 @@ async def api_get_owner_data(
     user: User = Depends(check_user_exists),
 ) -> OwnerData:
 
-    owner_data = await get_owner_data_table(user.id, owner_data_id)
+    owner_data = await get_owner_data(user.id, owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
 
@@ -90,7 +90,7 @@ async def api_delete_owner_data(
     user_id: str = Depends(check_user_exists),
 ) -> SimpleStatus:
 
-    await delete_owner_data_table(user_id, owner_data_id)
+    await delete_owner_data(user_id, owner_data_id)
     if delete_client_data is True:
         # await delete all client data associated with this owner data
         pass
