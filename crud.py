@@ -13,7 +13,7 @@ db = Database("ext_extension_builder_stub")
 async def create_owner_data_table(data: CreateOwnerData) -> OwnerData:
     owner_data_table = OwnerData(**data.dict(), id=urlsafe_short_hash())
     await db.insert("extension_builder_stub.owner_data_table", owner_data_table)
-    return OwnerData(**data.dict())
+    return owner_data_table
 
 
 async def get_owner_data_table(
@@ -26,9 +26,8 @@ async def get_owner_data_table(
     )
 
 
-async def update_owner_data_table(data: CreateOwnerData) -> OwnerData:
+async def update_owner_data_table(data: OwnerData):
     await db.update("extension_builder_stub.owner_data_table", data)
-    return OwnerData(**data.dict())
 
 
 async def delete_owner_data_table(owner_data_table_id: str) -> None:
