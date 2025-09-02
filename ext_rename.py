@@ -88,12 +88,6 @@ def zip_directory(source_dir, zip_path):
 
 
 def test():
-    replace_text_in_files(
-        directory=".",
-        old_text="myextension",
-        new_text="extension_builder_stub",
-        file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
-    )
 
     replace_text_in_files(
         directory=".",
@@ -116,6 +110,12 @@ def test():
 
 
 def test2():
+    replace_text_in_files(
+        directory=".",
+        old_text="extension_builder_stub",
+        new_text="donations",
+        file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
+    )
     replace_text_in_files(
         directory=".",
         old_text="OwnerData",
