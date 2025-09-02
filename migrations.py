@@ -13,10 +13,10 @@ async def m001_owner_data(db):
         CREATE TABLE extension_builder_stub.owner_data (
             id TEXT PRIMARY KEY NOT NULL,
             user_id TEXT NOT NULL,
-            <% for field in owner_table.table_fields %><< field >>,
+            <% for field in owner_table.db_fields %><< field >>,
             <% endfor%>
             created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
-            updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
+            updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );
     """
     )

@@ -164,9 +164,8 @@ data = {
         ],
     },
 }
-rendered_html = render_file(
-    py_template_path,
-    {
+
+parsed_data = {
         "owner_table": {
             "name": data["owner_table"]["name"],
             "editable_fields": [
@@ -203,11 +202,20 @@ rendered_html = render_file(
             ],
         },
         "cancel_comment": remove_line_marker,
-    },
-)
+    }
+
 
 # Overwrite the original file with rendered content
+rederer = render_file("./models.py", parsed_data)
 with open("./models.py", "w", encoding="utf-8") as f:
-    f.write(rendered_html)
+    f.write(rederer)
 
 remove_lines_with_string("./models.py", remove_line_marker)
+
+rederer = render_file("./migrations.py", parsed_data)
+with open("./migrations.py", "w", encoding="utf-8") as f:
+    f.write(rederer)
+
+remove_lines_with_string("./migrations.py", remove_line_marker)
+
+
