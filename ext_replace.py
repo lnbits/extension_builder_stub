@@ -3,8 +3,6 @@ import re
 
 from jinja2 import Environment, FileSystemLoader
 
-from ext_rename import replace_text_in_files
-
 
 def jinja_env(template_dir: str) -> Environment:
     return Environment(
@@ -133,18 +131,32 @@ data = {
                 "searchable": False,
             },
         ],
-    }
+    },
 }
 rendered_html = render_file(
     py_template_path,
     {
         "owner_table": {
             "name": data["owner_table"]["name"],
-            "fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
+            "editable_fields": [
+                field_to_py(field)
+                for field in data["owner_table"]["fields"]
+                if field["editable"]
+            ],
+            "all_fields": [
+                field_to_py(field) for field in data["owner_table"]["fields"]
+            ],
         },
         "client_table": {
             "name": data["client_table"]["name"],
-            "fields": [field_to_py(field) for field in data["client_table"]["fields"]],
+            "editable_fields": [
+                field_to_py(field)
+                for field in data["client_table"]["fields"]
+                if field["editable"]
+            ],
+            "all_fields": [
+                field_to_py(field) for field in data["client_table"]["fields"]
+            ],
         },
         "cancel_comment": remove_line_marker,
     },
