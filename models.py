@@ -1,6 +1,7 @@
-from pydantic import BaseModel
-from lnbits.db import FilterModel
 from datetime import datetime
+
+from lnbits.db import FilterModel
+from pydantic import BaseModel
 
 
 class CreateOwnerData(BaseModel):
