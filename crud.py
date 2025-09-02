@@ -1,6 +1,6 @@
 # Description: This file contains the CRUD operations for talking to the database.
 
-from typing import List, Optional, Union
+from typing import Optional
 
 from lnbits.db import Database
 from lnbits.helpers import urlsafe_short_hash
@@ -11,20 +11,19 @@ db = Database("ext_extension_builder_stub")
 
 
 async def create_owner_data_table(data: CreateOwnerData) -> OwnerData:
-    data.id = urlsafe_short_hash()
-    await db.insert("extension_builder_stub.owner_data_table", data)
+    owner_data_table = OwnerData(**data.dict(), id=urlsafe_short_hash())
+    await db.insert("extension_builder_stub.owner_data_table", owner_data_table)
     return OwnerData(**data.dict())
 
 
 async def get_owner_data_table(
-    extension_builder_stub_id: str,
+    owner_data_table_id: str,
 ) -> Optional[OwnerData]:
     return await db.fetchone(
         "SELECT * FROM extension_builder_stub.owner_data_table WHERE id = :id",
-        {"id": extension_builder_stub_id},
+        {"id": owner_data_table_id},
         OwnerData,
     )
-
 
 
 async def update_owner_data_table(data: CreateOwnerData) -> OwnerData:
@@ -32,8 +31,8 @@ async def update_owner_data_table(data: CreateOwnerData) -> OwnerData:
     return OwnerData(**data.dict())
 
 
-async def delete_owner_data_table(extension_builder_stub_id: str) -> None:
+async def delete_owner_data_table(owner_data_table_id: str) -> None:
     await db.execute(
         "DELETE FROM extension_builder_stub.owner_data_table WHERE id = :id",
-        {"id": extension_builder_stub_id},
+        {"id": owner_data_table_id},
     )
