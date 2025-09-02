@@ -1,8 +1,9 @@
 import os
 import re
 
-from ext_rename import replace_text_in_files
 from jinja2 import Environment, FileSystemLoader
+
+from ext_rename import replace_text_in_files
 
 
 def jinja_env(template_dir: str) -> Environment:
@@ -82,7 +83,7 @@ py_template_path = "./models.py"
 
 data = {
     "owner_table": {
-        "name": "CampaignDonation",
+        "name": "Campaign",
         "fields": [
             {
                 "name": "id",
@@ -106,14 +107,44 @@ data = {
                 "searchable": True,
             },
         ],
+    },
+    "client_table": {
+        "name": "Donations",
+        "fields": [
+            {
+                "name": "id",
+                "type": "str",
+                "optional": False,
+                "editable": False,
+                "searchable": False,
+            },
+            {
+                "name": "amount_sats",
+                "type": "int",
+                "optional": False,
+                "editable": False,
+                "searchable": True,
+            },
+            {
+                "name": "description",
+                "type": "str",
+                "optional": True,
+                "editable": False,
+                "searchable": False,
+            },
+        ],
     }
 }
 rendered_html = render_file(
     py_template_path,
     {
-        "table": {
+        "owner_table": {
             "name": data["owner_table"]["name"],
             "fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
+        },
+        "client_table": {
+            "name": data["client_table"]["name"],
+            "fields": [field_to_py(field) for field in data["client_table"]["fields"]],
         },
         "cancel_comment": remove_line_marker,
     },
@@ -125,9 +156,9 @@ with open("./models2.py", "w", encoding="utf-8") as f:
 
 remove_lines_with_string("./models2.py", remove_line_marker)
 
-replace_text_in_files(
-    directory=".",
-    old_text="CreateXxxOwnerXxxData",
-    new_text="CreateCampaignData",
-    file_extensions=[".py"],
-)
+# replace_text_in_files(
+#     directory=".",
+#     old_text="CreateXxxOwnerXxxData",
+#     new_text=data["owner_table"]["name"],
+#     file_extensions=[".py"],
+# )
