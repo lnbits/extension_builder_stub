@@ -157,7 +157,7 @@ rendered_html = render_file(
                 if field["searchable"]
             ],
             "public_fields": [
-                camel_to_snake(field["name"])
+                field_to_py(field)
                 for field in data["owner_table"]["fields"]
                 if field["name"] in data["owner_table"]["public_fields"]
             ],
