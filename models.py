@@ -4,11 +4,6 @@ from datetime import datetime
 from typing import Optional
 
 
-
-from lnbits.db import FilterModel
-from pydantic import BaseModel
-
-
 class CreateOwnerData(BaseModel):
     """<< cancel_comment >>
     <% for field in owner_table.editable_fields %><< field >>

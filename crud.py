@@ -5,7 +5,7 @@ from typing import Optional
 from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
 
-from .models import CreateOwnerData, OwnerData
+from .models import CreateOwnerData, OwnerData, OwnerDataFilters
 
 db = Database("ext_extension_builder_stub")
 
