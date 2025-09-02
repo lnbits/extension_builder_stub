@@ -168,9 +168,3 @@ with open("./models2.py", "w", encoding="utf-8") as f:
 
 remove_lines_with_string("./models2.py", remove_line_marker)
 
-# replace_text_in_files(
-#     directory=".",
-#     old_text="CreateXxxOwnerXxxData",
-#     new_text=data["owner_table"]["name"],
-#     file_extensions=[".py"],
-# )
