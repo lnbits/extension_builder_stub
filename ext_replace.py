@@ -1,4 +1,5 @@
 import os
+import re
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -46,6 +47,20 @@ def remove_lines_with_string(file_path: str, target: str) -> None:
         f.writelines(filtered_lines)
 
 
+def camel_to_snake(name: str) -> str:
+    name = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", name)
+    name = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", name)
+    return name.lower()
+
+
+def field_to_py(field: dict) -> str:
+    field_name = camel_to_snake(field["name"])
+    field_type = field["type"]
+    if field["optional"]:
+        field_type = f"Optional[{field_type}]"
+    return f"{field_name}: {field_type}"
+
+
 html_template_path = "./templates/extension_builder_stub/index.html"
 rendered_html = render_file(
     html_template_path,
@@ -63,15 +78,41 @@ with open(html_template_path, "w", encoding="utf-8") as f:
 
 remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
+
+data = {
+    "owner_table": {
+        "name": "CampaignDonation",
+        "fields": [
+            {
+                "name": "id",
+                "type": "str",
+                "optional": False,
+                "editable": False,
+                "searchable": False,
+            },
+            {
+                "name": "name",
+                "type": "str",
+                "optional": False,
+                "editable": True,
+                "searchable": True,
+            },
+            {
+                "name": "email",
+                "type": "str",
+                "optional": True,
+                "editable": True,
+                "searchable": True,
+            },
+        ],
+    }
+}
 rendered_html = render_file(
     py_template_path,
     {
         "table": {
-            "name": "Campaign",
-            "fields": [
-                {"name": "description", "type": "str"},
-                {"name": "amount", "type": "int", "optional": True},
-            ],
+            "name": data["owner_table"]["name"],
+            "fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
         },
         "cancel_comment": remove_line_marker,
     },

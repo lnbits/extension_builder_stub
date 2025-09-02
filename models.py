@@ -5,19 +5,11 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class CreateOwnerData(BaseModel):
-    id: Optional[str] = ""
-    name: str
-    lnurlpayamount: int
-    lnurlwithdrawamount: int
-    wallet: str
-    total: int = 0
-    """ << cancel_comment >>
-    <% for field in table.fields %>
-    << field.name >>: <%if field.optional%>Optional[<%endif%>
-        << field.type >><%if field.optional %>] = None<%endif%>
+class CreateXxxOwnerXxxData(BaseModel):
+    """<< cancel_comment >>
+    <% for field in table.fields %><< field >>
     <% endfor%>
-    << cancel_comment >> """
+    << cancel_comment >>"""
 
 
 class MyExtension(BaseModel):
