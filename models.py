@@ -35,11 +35,15 @@ class ClientData(BaseModel):
 class OwnerDataFilters(FilterModel):
     __search_fields__ = [
         """<< cancel_comment >>
-        <% for field in owner_table.search_fields %>"<< field >>", <% endfor%>
+        <% for field in owner_table.search_fields %>"<< field >>",<% endfor%>
         << cancel_comment >>"""
     ]
 
     __sort_fields__ = [
+        """<< cancel_comment >>
+        <% for field in owner_table.search_fields %>"<< field >>",
+        <% endfor%>
+        << cancel_comment >>"""
         "created_at",
         "updated_at",
     ]
