@@ -1,6 +1,6 @@
 # Description: This file contains the extensions API endpoints.
 from http import HTTPStatus
-from typing import Optional, Union
+from typing import Optional
 
 from fastapi import APIRouter, Depends
 from fastapi.exceptions import HTTPException
@@ -13,13 +13,12 @@ from lnbits.decorators import (
 from lnbits.helpers import generate_filter_params_openapi
 
 from .crud import (
-    get_owner_data_table,
     create_owner_data_table,
-    get_owner_data_table_paginated,
     delete_owner_data_table,
+    get_owner_data_table,
+    get_owner_data_table_paginated,
 )
-
-from .models import OwnerData, CreateOwnerData, OwnerDataFilters
+from .models import CreateOwnerData, OwnerData, OwnerDataFilters
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 
@@ -59,7 +58,6 @@ async def api_get_owner_data_paginated(
     )
 
 
-
 @extension_builder_stub_api_router.get(
     "/api/v1/owner_data/{owner_data_id}",
     name="Get OwnerData",
@@ -97,4 +95,3 @@ async def api_delete_owner_data(
         # await delete all client data associated with this owner data
         pass
     return SimpleStatus(success=True, message="Owner Data Deleted")
-
