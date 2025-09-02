@@ -42,7 +42,7 @@ async def api_create_owner_data(
 
 @extension_builder_stub_api_router.get(
     "/api/v1/owner_data/paginated",
-    name="OwnerData Items List",
+    name="OwnerData List",
     summary="get paginated list of owner_data",
     response_description="list of owner_data",
     openapi_extra=generate_filter_params_openapi(OwnerDataFilters),
@@ -62,7 +62,7 @@ async def api_get_owner_data_paginated(
 
 @extension_builder_stub_api_router.get(
     "/api/v1/owner_data/{owner_data_id}",
-    name="Get OwnerData Item",
+    name="Get OwnerData",
     summary="Get the owner_data with this id.",
     response_description="An owner_data or 404 if not found",
     response_model=OwnerData,
@@ -86,7 +86,7 @@ async def api_get_owner_data(
     response_description="The status of the deletion.",
     response_model=SimpleStatus,
 )
-async def api_close_auction_item(
+async def api_delete_owner_data(
     owner_data_id: str,
     delete_client_data: Optional[bool] = False,
     user_id: str = Depends(check_user_exists),
