@@ -168,7 +168,7 @@ rendered_html = render_file(
 )
 
 # Overwrite the original file with rendered content
-with open("./models2.py", "w", encoding="utf-8") as f:
+with open("./models.py", "w", encoding="utf-8") as f:
     f.write(rendered_html)
 
-remove_lines_with_string("./models2.py", remove_line_marker)
+remove_lines_with_string("./models.py", remove_line_marker)
