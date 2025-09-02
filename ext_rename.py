@@ -17,7 +17,7 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
             if file_extensions:
                 if not any(filename.endswith(ext) for ext in file_extensions):
                     continue
-            if filename == "rename_ext.py":
+            if filename in ["ext_rename.py", "ext_replace.py"]:
                 continue
 
             file_path = os.path.join(root, filename)
@@ -113,3 +113,27 @@ def test():
     )
 
     zip_directory(".", "extension_builder_stub.zip")
+
+
+def test2():
+    replace_text_in_files(
+        directory=".",
+        old_text="OwnerData",
+        new_text="Campaign",
+        file_extensions=[".py"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="ClientData",
+        new_text="Donation",
+        file_extensions=[".py"],
+    )
+
+    replace_text_in_files(
+        directory=".",
+        old_text="owner_data_table",
+        new_text="campaign",
+        file_extensions=[".py"],
+    )
+
+test2()
