@@ -13,6 +13,8 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     - file_extensions (list[str], optional): Only process files with these extensions.
     """
     for root, _, files in os.walk(directory):
+        if root.startswith(".") or root in ["__pycache__", "node_modules"]:
+            continue
         for filename in files:
             if file_extensions:
                 if not any(filename.endswith(ext) for ext in file_extensions):
