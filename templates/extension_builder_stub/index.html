@@ -32,8 +32,8 @@
       <q-card-section>
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
-            <!-- @click="settingsFormDialog.show=true" -->
-             <q-btn
+            <q-btn
+              @click="showNewOwnerDataForm()"
               unelevated
               split
               color="primary"
@@ -278,6 +278,37 @@
       <div class="row q-mt-lg">
         <q-btn @click="updateSettings" unelevated color="primary" type="submit"
           >Update</q-btn
+        >
+        <q-btn v-close-popup flat color="grey" class="q-ml-auto">Cancel</q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
+
+   <q-dialog v-model="ownerDataFormDialog.show" position="top">
+    <q-card
+      v-if="ownerDataFormDialog.show"
+      class="q-pa-lg q-pt-md lnbits__dialog-card"
+    >
+      <span class="text-h5">Owner Data</span>
+
+      <div class="row q-mt-md">
+        <div class="col-12">
+          <q-input
+            filled
+            dense
+            v-model.trim="ownerDataFormDialog.data.xxx"
+            label="XXX"
+            hint="xxx"
+          ></q-input>
+        </div>
+      </div>
+
+      <div class="row q-mt-lg">
+        <q-btn @click="saveOwnerData" unelevated color="primary" type="submit"
+          >
+          <span v-if="ownerDataFormDialog.data.id">Update</span>
+          <span v-else>Create</span>
+          </q-btn
         >
         <q-btn v-close-popup flat color="grey" class="q-ml-auto">Cancel</q-btn>
       </div>

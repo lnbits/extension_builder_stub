@@ -8,6 +8,10 @@ window.app = Vue.createApp({
         show: false,
         data: {},
       },
+      ownerDataFormDialog: {
+        show: false,
+        data: {},
+      },
       invoiceAmount: 10, // todo: remove
       qrValue: "lnurlpay", // todo: remove
       myex: [],
@@ -46,6 +50,14 @@ window.app = Vue.createApp({
     async closeFormDialog() {
       this.formDialog.show = false;
       this.formDialog.data = {};
+    },
+    async showNewOwnerDataForm() {
+      this.ownerDataFormDialog.data = {};
+      this.ownerDataFormDialog.show = true;
+    },
+    async saveOwnerData() {
+      console.log("Saving owner data...");
+      this.ownerDataFormDialog.show = false;
     },
     async getMyExtensions() {
       await LNbits.api
