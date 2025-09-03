@@ -15,6 +15,7 @@ async def m001_owner_data(db):
             user_id TEXT NOT NULL,
             <% for field in owner_table.db_fields %><< field >>,
             <% endfor%>
+            extra TEXT NOT NULL DEFAULT '{empty_dict}',
             created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
             updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );
