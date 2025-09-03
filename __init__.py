@@ -10,7 +10,7 @@ from .views import extension_builder_stub_generic_router
 from .views_api import extension_builder_stub_api_router
 
 extension_builder_stub_ext: APIRouter = APIRouter(
-    prefix="/extension_builder_stub", tags=["Extension Builder Stub"]
+    prefix="/extension_builder_stub", tags=["extension_builder_stub_name"]
 )
 extension_builder_stub_ext.include_router(extension_builder_stub_generic_router)
 extension_builder_stub_ext.include_router(extension_builder_stub_api_router)
