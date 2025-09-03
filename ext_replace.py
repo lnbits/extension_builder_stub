@@ -81,7 +81,7 @@ def field_to_db(field: dict) -> str:
     else:
         db_type = "TEXT"
 
-    db_field = f"{field_name}: {db_type}"
+    db_field = f"{field_name} {db_type}"
     if not field["optional"]:
         db_field += " NOT NULL"
     if field_type == "json":
