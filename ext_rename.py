@@ -102,6 +102,19 @@ def zip_directory(source_dir, zip_path):
 
 
 def test2():
+
+    replace_text_in_files(
+        directory=".",
+        old_text="extension_builder_stub_name",
+        new_text="Raise Campaign",
+        file_extensions=[".js", ".html", ".md", ".json"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="extension_builder_stub_description",
+        new_text="An extension to manage fundraising campaigns.",
+        file_extensions=[".js", ".html", ".md", ".json"],
+    )
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub",
