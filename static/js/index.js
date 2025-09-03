@@ -8,10 +8,10 @@ window.app = Vue.createApp({
         show: false,
         data: {},
       },
-      invoiceAmount: 10,
-      qrValue: "lnurlpay",
+      invoiceAmount: 10, // todo: remove
+      qrValue: "lnurlpay", // todo: remove
       myex: [],
-      myexTable: {
+      ownerDataTable: {
         columns: [
           { name: "id", align: "left", label: "ID", field: "id" },
           { name: "name", align: "left", label: "Name", field: "name" },
@@ -164,7 +164,7 @@ window.app = Vue.createApp({
     },
 
     async exportCSV() {
-      await LNbits.utils.exportCSV(this.myexTable.columns, this.myex);
+      await LNbits.utils.exportCSV(this.ownerDataTable.columns, this.myex);
     },
     async itemsArray(tempId) {
       const extension_builder_stub = _.findWhere(this.myex, { id: tempId });

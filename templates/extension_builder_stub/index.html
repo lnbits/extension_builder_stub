@@ -46,8 +46,8 @@
           flat
           :rows="myex"
           row-key="id"
-          :columns="myexTable.columns"
-          v-model:pagination="myexTable.pagination"
+          :columns="ownerDataTable.columns"
+          v-model:pagination="ownerDataTable.pagination"
         >
           <extension_builder_stub v-slot:header="props">
             <q-tr :props="props">
