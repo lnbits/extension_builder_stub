@@ -38,7 +38,7 @@
               split
               color="primary"
             >
-            New Owner Data
+              New Owner Data
             </q-btn>
           </div>
           <div class="col-auto">
@@ -130,9 +130,7 @@
         <h6 class="text-subtitle1 q-my-none">
           {{SITE_TITLE}} extension_builder_stub_name
         </h6>
-        <p>
-          extension_builder_stub_description
-        </p>
+        <p>extension_builder_stub_description</p>
       </q-card-section>
       <q-card-section class="q-pa-none">
         <q-separator></q-separator>
@@ -284,32 +282,18 @@
     </q-card>
   </q-dialog>
 
-   <q-dialog v-model="ownerDataFormDialog.show" position="top">
+  <q-dialog v-model="ownerDataFormDialog.show" position="top">
     <q-card
       v-if="ownerDataFormDialog.show"
       class="q-pa-lg q-pt-md lnbits__dialog-card"
     >
       <span class="text-h5">Owner Data</span>
 
-      <div class="row q-mt-md">
-        <div class="col-12">
-          <q-input
-            filled
-            dense
-            v-model.trim="ownerDataFormDialog.data.xxx"
-            label="XXX"
-            hint="xxx"
-          ></q-input>
-        </div>
-      </div>
-
       <div class="row q-mt-lg">
-        <q-btn @click="saveOwnerData" unelevated color="primary" type="submit"
-          >
+        <q-btn @click="saveOwnerData" unelevated color="primary" type="submit">
           <span v-if="ownerDataFormDialog.data.id">Update</span>
           <span v-else>Create</span>
-          </q-btn
-        >
+        </q-btn>
         <q-btn v-close-popup flat color="grey" class="q-ml-auto">Cancel</q-btn>
       </div>
     </q-card>

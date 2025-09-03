@@ -4,6 +4,7 @@ window.app = Vue.createApp({
   delimiters: ["${", "}"],
   data: function () {
     return {
+      currencyOptions: ["sats"],
       settingsFormDialog: {
         show: false,
         data: {},
@@ -251,6 +252,14 @@ window.app = Vue.createApp({
       this.connection.onmessage = () => {
         this.urlDialog.show = false;
       };
+    },
+    async fetchCurrencies() {
+      try {
+        const response = await LNbits.api.request("GET", "/api/v1/currencies");
+        this.currencyOptions = ["sat", ...response.data];
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      }
     },
   },
   ///////////////////////////////////////////////////
