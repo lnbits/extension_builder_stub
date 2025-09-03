@@ -81,7 +81,6 @@ def zip_directory(source_dir, zip_path):
     """
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
-            print(f"Zipping files in: {root}")
             if root.startswith(".") or root in ["__pycache__", "node_modules"]:
                 continue
             for file in files:
