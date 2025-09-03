@@ -151,6 +151,16 @@ data = {
                 "sortable": True,
             },
             {
+                "name": "wallet_id",
+                "label": "Wallet ID",
+                "hint": "Unique identifier for the wallet",
+                "type": "wallet",
+                "optional": False,
+                "editable": True,
+                "searchable": False,
+                "sortable": False,
+            },
+            {
                 "name": "extra",
                 "type": "json",
                 "optional": False,
