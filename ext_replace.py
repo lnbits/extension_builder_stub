@@ -292,17 +292,22 @@ def test():
 
     remove_lines_with_string(template_path, remove_line_marker)
 
-    owner_inputs = html_input_fields(
-        data["owner_table"]["fields"], "ownerDataFormDialog.data"
-    )
-    template_path = "./static/js/index.html"
-    rederer = render_file(
-        template_path, {"extension_builder_stub_owner_inputs": owner_inputs}
-    )
-    with open(template_path, "w", encoding="utf-8") as f:
-        f.write(rederer)
 
-    remove_lines_with_string(template_path, remove_line_marker)
+owner_inputs = html_input_fields(
+    data["owner_table"]["fields"], "ownerDataFormDialog.data"
+)
+template_path = "./templates/extension_builder_stub/index.html"
+rederer = render_file(
+    template_path,
+    {
+        "extension_builder_stub_owner_inputs": owner_inputs,
+        "cancel_comment": remove_line_marker,
+    },
+)
+with open(template_path, "w", encoding="utf-8") as f:
+    f.write(rederer)
+
+remove_lines_with_string(template_path, remove_line_marker)
 
 
 # test()
