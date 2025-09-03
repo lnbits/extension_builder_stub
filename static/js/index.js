@@ -266,6 +266,6 @@ window.app = Vue.createApp({
   //////LIFECYCLE FUNCTIONS RUNNING ON PAGE LOAD/////
   ///////////////////////////////////////////////////
   async created() {
-    await this.getMyExtensions();
+    await this.fetchCurrencies();
   },
 });
