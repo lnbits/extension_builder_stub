@@ -211,15 +211,23 @@ parsed_data = {
 }
 
 
+py_files = [
+    "__init__.py",
+    "models.py",
+    "migrations.py",
+    "views_api.py",
+    "crud.py",
+    "views.py",
+    "tasks.py",
+    "services.py",
+]
+
 # Overwrite the original file with rendered content
-rederer = render_file("./models.py", parsed_data)
-with open("./models.py", "w", encoding="utf-8") as f:
-    f.write(rederer)
 
-remove_lines_with_string("./models.py", remove_line_marker)
+for py_file in py_files:
+    template_path = f"./{py_file}"
+    rederer = render_file(template_path, parsed_data)
+    with open(template_path, "w", encoding="utf-8") as f:
+        f.write(rederer)
 
-rederer = render_file("./migrations.py", parsed_data)
-with open("./migrations.py", "w", encoding="utf-8") as f:
-    f.write(rederer)
-
-remove_lines_with_string("./migrations.py", remove_line_marker)
+    remove_lines_with_string(template_path, remove_line_marker)

@@ -91,18 +91,6 @@ def zip_directory(source_dir, zip_path):
     print(f"Directory '{source_dir}' zipped to '{zip_path}'")
 
 
-# def test():
-
-    # replace_text_in_files(
-    #     directory='.',
-    #     old_text='MyExtension',
-    #     new_text='Extension Builder Stub',
-    #     file_extensions=['.js', '.html', '.md']
-    # )
-
-
-
-
 def test2():
     replace_text_in_files(
         directory=".",
