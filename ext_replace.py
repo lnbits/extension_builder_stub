@@ -102,20 +102,6 @@ def field_to_ui_table_column(field: dict) -> str:
     return json.dumps(column)
 
 
-html_template_path = "./templates/extension_builder_stub/index.html"
-rendered_html = render_file(
-    html_template_path,
-    {
-        "title": "My Page XXXXXXX",
-        "content": "This is the content of my page.",
-        "items": ["Item 1", "Item 2", "Item 3"],
-    },
-)
-
-# Overwrite the original file with rendered content
-with open(html_template_path, "w", encoding="utf-8") as f:
-    f.write(rendered_html)
-
 
 remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
