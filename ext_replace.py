@@ -124,16 +124,17 @@ data = {
     "owner_table": {
         "name": "Campaign",
         "fields": [
-            {
-                "name": "id",
-                "type": "str",
-                "label": "ID",
-                "hint": "Unique identifier",
-                "optional": False,
-                "editable": False,
-                "searchable": False,
-                "sortable": True,
-            },
+            # this is generated automatically
+            # {
+            #     "name": "id",
+            #     "type": "str",
+            #     "label": "ID",
+            #     "hint": "Unique identifier",
+            #     "optional": False,
+            #     "editable": False,
+            #     "searchable": False,
+            #     "sortable": True,
+            # },
             {
                 "name": "name",
                 "type": "str",
