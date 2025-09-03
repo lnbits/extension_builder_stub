@@ -79,6 +79,9 @@ def zip_directory(source_dir, zip_path):
     """
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
+            print(f"Zipping files in: {root}")
+            if root.startswith(".") or root in ["__pycache__", "node_modules"]:
+                continue
             for file in files:
                 full_path = os.path.join(root, file)
                 # Add file with a relative path inside the zip
@@ -87,14 +90,8 @@ def zip_directory(source_dir, zip_path):
     print(f"Directory '{source_dir}' zipped to '{zip_path}'")
 
 
-def test():
+# def test():
 
-    replace_text_in_files(
-        directory=".",
-        old_text='"MyExtension"',
-        new_text='"Extension Builder Stub"',
-        file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
-    )
     # replace_text_in_files(
     #     directory='.',
     #     old_text='MyExtension',
@@ -102,11 +99,7 @@ def test():
     #     file_extensions=['.js', '.html', '.md']
     # )
 
-    rename_files_and_dirs_in_directory(
-        directory=".", old_text="myextension", new_text="extension_builder_stub"
-    )
 
-    zip_directory(".", "extension_builder_stub.zip")
 
 
 def test2():
@@ -153,6 +146,12 @@ def test2():
         new_text="donations campaign",
         file_extensions=[".py"],
     )
+
+    rename_files_and_dirs_in_directory(
+        directory=".", old_text="extension_builder_stub", new_text="donations"
+    )
+
+    zip_directory(".", "donations.zip")
 
 
 test2()
