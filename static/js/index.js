@@ -13,20 +13,10 @@ window.app = Vue.createApp({
       myex: [],
       ownerDataTable: {
         columns: [
-          { name: "id", align: "left", label: "ID", field: "id" },
-          { name: "name", align: "left", label: "Name", field: "name" },
-          {
-            name: "wallet",
-            align: "left",
-            label: "Wallet",
-            field: "wallet",
-          },
-          {
-            name: "total",
-            align: "left",
-            label: "Total sent/received",
-            field: "total",
-          },
+          /** << cancel_comment >>
+          <% for field in owner_table.ui_table_columns %><< field >>,
+          <% endfor%>
+          << cancel_comment >> **/
         ],
         pagination: {
           rowsPerPage: 10,

@@ -1,3 +1,4 @@
+import json
 import os
 import re
 
@@ -89,6 +90,18 @@ def field_to_db(field: dict) -> str:
     return db_field
 
 
+def field_to_ui_table_column(field: dict) -> str:
+    column = {
+        "name": field["name"],
+        "align": "left",
+        "label": field["label"],
+        "field": field["name"],
+        "sortable": field["sortable"],
+    }
+
+    return json.dumps(column)
+
+
 html_template_path = "./templates/extension_builder_stub/index.html"
 rendered_html = render_file(
     html_template_path,
@@ -114,30 +127,42 @@ data = {
             {
                 "name": "id",
                 "type": "str",
+                "label": "ID",
+                "hint": "Unique identifier",
                 "optional": False,
                 "editable": False,
                 "searchable": False,
+                "sortable": True,
             },
             {
                 "name": "name",
                 "type": "str",
+                "label": "Name",
+                "hint": "Name of the campaign",
                 "optional": False,
                 "editable": True,
                 "searchable": True,
+                "sortable": True,
             },
             {
                 "name": "description",
                 "type": "str",
+                "label": "Description",
+                "hint": "Description of the campaign",
                 "optional": False,
                 "editable": True,
                 "searchable": True,
+                "sortable": True,
             },
             {
                 "name": "email",
+                "label": "Email",
+                "hint": "Contact email",
                 "type": "str",
                 "optional": True,
                 "editable": True,
                 "searchable": True,
+                "sortable": True,
             },
             {
                 "name": "extra",
@@ -145,6 +170,7 @@ data = {
                 "optional": False,
                 "editable": False,
                 "searchable": False,
+                "sortable": False,
             },
         ],
         "public_fields": ["name", "description"],
@@ -195,6 +221,11 @@ parsed_data = {
             for field in data["owner_table"]["fields"]
             if field["name"] in data["owner_table"]["public_fields"]
         ],
+        "ui_table_columns": [
+            field_to_ui_table_column(field)
+            for field in data["owner_table"]["fields"]
+            if field["sortable"]
+        ],
         "db_fields": [field_to_db(field) for field in data["owner_table"]["fields"]],
         "all_fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
     },
@@ -224,10 +255,22 @@ py_files = [
 
 # Overwrite the original file with rendered content
 
-for py_file in py_files:
-    template_path = f"./{py_file}"
-    rederer = render_file(template_path, parsed_data)
-    with open(template_path, "w", encoding="utf-8") as f:
-        f.write(rederer)
 
-    remove_lines_with_string(template_path, remove_line_marker)
+def test():
+    for py_file in py_files:
+        template_path = f"./{py_file}"
+        rederer = render_file(template_path, parsed_data)
+        with open(template_path, "w", encoding="utf-8") as f:
+            f.write(rederer)
+
+        remove_lines_with_string(template_path, remove_line_marker)
+
+
+# test()
+
+template_path = "./static/js/index.js"
+rederer = render_file(template_path, parsed_data)
+with open(template_path, "w", encoding="utf-8") as f:
+    f.write(rederer)
+
+remove_lines_with_string(template_path, remove_line_marker)
