@@ -10,9 +10,6 @@
   <div class="col-12 col-md-8 col-lg-7 q-gutter-y-md">
     <q-card>
       <q-card-section class="q-pa-sm">
-        <!-- <q-btn unelevated color="primary" @click="formDialog.show = true"
-          >New MyExtension</q-btn
-        > -->
         <div class="row">
           <div class="col-md-6 col-sm-12"></div>
           <div class="col-md-6 col-sm-12">
@@ -35,7 +32,14 @@
       <q-card-section>
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
-            <h5 class="text-subtitle1 q-my-none">My Page XXXXXXX</h5>
+            <!-- @click="settingsFormDialog.show=true" -->
+             <q-btn
+              unelevated
+              split
+              color="primary"
+            >
+            New Owner Data
+            </q-btn>
           </div>
           <div class="col-auto">
             <q-btn flat color="grey" @click="exportCSV">Export to CSV</q-btn>
@@ -124,11 +128,10 @@
     <q-card>
       <q-card-section>
         <h6 class="text-subtitle1 q-my-none">
-          {{SITE_TITLE}} MyExtension extension
+          {{SITE_TITLE}} extension_builder_stub_name
         </h6>
         <p>
-          Simple extension you can use as a base for your own extension. <br />
-          Includes very simple LNURL-pay and LNURL-withdraw example.
+          extension_builder_stub_description
         </p>
       </q-card-section>
       <q-card-section class="q-pa-none">
