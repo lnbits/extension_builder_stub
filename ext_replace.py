@@ -102,6 +102,21 @@ def field_to_ui_table_column(field: dict) -> str:
     return json.dumps(column)
 
 
+def html_input_fields(fields: dict, model_name: str) -> str:
+    template_path = "./templates/extension_builder_stub/_input_fields.html"
+
+    rederer = render_file(
+        template_path,
+        {
+            "fields": fields,
+            "model_name": model_name,
+        },
+    )
+    # with open(template_path + "2.html", "w", encoding="utf-8") as f:
+    #     f.write(rederer)
+    return rederer
+
+
 remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
 
@@ -277,11 +292,17 @@ def test():
 
     remove_lines_with_string(template_path, remove_line_marker)
 
+    owner_inputs = html_input_fields(
+        data["owner_table"]["fields"], "ownerDataFormDialog.data"
+    )
+    template_path = "./static/js/index.html"
+    rederer = render_file(
+        template_path, {"extension_builder_stub_owner_inputs": owner_inputs}
+    )
+    with open(template_path, "w", encoding="utf-8") as f:
+        f.write(rederer)
 
-template_path = "./templates/extension_builder_stub/_input_fields.html"
+    remove_lines_with_string(template_path, remove_line_marker)
 
-rederer = render_file(template_path, {"fields": data["owner_table"]["fields"], "model_name": "ownerDataFormDialog.data"})
-with open(template_path+"2.html", "w", encoding="utf-8") as f:
-    f.write(rederer)
 
 # test()
