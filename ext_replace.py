@@ -52,10 +52,13 @@ def camel_to_snake(name: str) -> str:
     name = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", name)
     return name.lower()
 
-
 def field_to_py(field: dict) -> str:
     field_name = camel_to_snake(field["name"])
     field_type = field["type"]
+    if field_type == "json":
+        field_type = "dict"
+    elif field_type in ["wallet", "currency"]:
+        field_type = "str"
     if field["optional"]:
         field_type += " | None"
     return f"{field_name}: {field_type}"
@@ -64,13 +67,13 @@ def field_to_py(field: dict) -> str:
 def field_to_db(field: dict) -> str:
     field_name = camel_to_snake(field["name"])
     field_type = field["type"]
-    if field_type == "text":
+    if field_type == "str":
         db_type = "TEXT"
     elif field_type == "int":
         db_type = "INT"
     elif field_type == "float":
         db_type = "REAL"
-    elif field_type == "boolean":
+    elif field_type == "bool":
         db_type = "BOOLEAN"
     elif field_type == "datetime":
         db_type = "TIMESTAMP"
