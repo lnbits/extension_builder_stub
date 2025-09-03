@@ -1,0 +1,58 @@
+<% for field in fields %> <% if field["type"] in ["str", "int", "float"] %>
+<q-input
+  filled
+  dense
+  v-model.trim="<< model_name >>.<< field['name'] >>"
+  label="<< field['label'] >>"
+  hint="<< field['hint'] >>"
+  type="<< field['type'] >>"
+></q-input>
+<% endif %> <% if field.type == "bool" %>
+<q-checkbox
+  v-model="<< model_name >>.<< field['name'] >>"
+  label="<< field['label'] >>"
+  hint="<< field['hint'] >>"
+/>
+<% endif %> <% if field.type == "datetime" %>
+<q-input
+  filled
+  dense
+  v-model.trim="<< model_name >>.<< field['name'] >>"
+  placeholder="YYYY-MM-DD HH:mm"
+  label="<< field['label'] >>"
+  hint="<< field['hint'] >>"
+>
+  <template v-slot:append>
+    <q-icon name="event" class="cursor-pointer">
+      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+        <q-date
+          v-model="<< model_name >>.<< field['name'] >>"
+          mask="YYYY-MM-DD HH:mm"
+        >
+          <div class="row items-center justify-end">
+            <q-btn v-close-popup label="Close" color="primary" flat />
+          </div>
+        </q-date>
+      </q-popup-proxy>
+    </q-icon>
+  </template>
+</q-input>
+<% endif %> <% if field.type == "wallet" %>
+<q-select
+  filled
+  dense
+  emit-value
+  v-model="<< model_name >>.<< field['name'] >>"
+  :options="g.user.walletOptions"
+  label="Wallet *"
+></q-select>
+<% endif %> <% if field.type == "currency" %>
+<q-select
+  filled
+  dense
+  v-model="<< model_name >>.<< field['name'] >>"
+  label="<< field['label'] >>"
+  hint="<< field['hint'] >>"
+  :options="currencyOptions"
+></q-select>
+<% endif %> <% endfor%>

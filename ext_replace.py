@@ -102,7 +102,6 @@ def field_to_ui_table_column(field: dict) -> str:
     return json.dumps(column)
 
 
-
 remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
 
@@ -153,8 +152,18 @@ data = {
             {
                 "name": "wallet_id",
                 "label": "Wallet ID",
-                "hint": "Unique identifier for the wallet",
+                "hint": "Select wallet",
                 "type": "wallet",
+                "optional": False,
+                "editable": True,
+                "searchable": False,
+                "sortable": False,
+            },
+            {
+                "name": "currency",
+                "label": "Currency",
+                "hint": "Select currency",
+                "type": "currency",
                 "optional": False,
                 "editable": True,
                 "searchable": False,
@@ -261,12 +270,18 @@ def test():
 
         remove_lines_with_string(template_path, remove_line_marker)
 
+    template_path = "./static/js/index.js"
+    rederer = render_file(template_path, parsed_data)
+    with open(template_path, "w", encoding="utf-8") as f:
+        f.write(rederer)
 
-# test()
+    remove_lines_with_string(template_path, remove_line_marker)
 
-template_path = "./static/js/index.js"
-rederer = render_file(template_path, parsed_data)
-with open(template_path, "w", encoding="utf-8") as f:
+
+template_path = "./templates/extension_builder_stub/_input_fields.html"
+
+rederer = render_file(template_path, {"fields": data["owner_table"]["fields"], "model_name": "ownerDataFormDialog.data"})
+with open(template_path+"2.html", "w", encoding="utf-8") as f:
     f.write(rederer)
 
-remove_lines_with_string(template_path, remove_line_marker)
+# test()
