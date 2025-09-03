@@ -60,6 +60,7 @@ def field_to_py(field: dict) -> str:
         field_type += " | None"
     return f"{field_name}: {field_type}"
 
+
 def field_to_db(field: dict) -> str:
     field_name = camel_to_snake(field["name"])
     field_type = field["type"]
@@ -173,43 +174,37 @@ data = {
 }
 
 parsed_data = {
-        "owner_table": {
-            "name": data["owner_table"]["name"],
-            "editable_fields": [
-                field_to_py(field)
-                for field in data["owner_table"]["fields"]
-                if field["editable"]
-            ],
-            "search_fields": [
-                camel_to_snake(field["name"])
-                for field in data["owner_table"]["fields"]
-                if field["searchable"]
-            ],
-            "public_fields": [
-                field_to_py(field)
-                for field in data["owner_table"]["fields"]
-                if field["name"] in data["owner_table"]["public_fields"]
-            ],
-            "db_fields": [
-                field_to_db(field) for field in data["owner_table"]["fields"]
-            ],
-            "all_fields": [
-                field_to_py(field) for field in data["owner_table"]["fields"]
-            ],
-        },
-        "client_table": {
-            "name": data["client_table"]["name"],
-            "editable_fields": [
-                field_to_py(field)
-                for field in data["client_table"]["fields"]
-                if field["editable"]
-            ],
-            "all_fields": [
-                field_to_py(field) for field in data["client_table"]["fields"]
-            ],
-        },
-        "cancel_comment": remove_line_marker,
-    }
+    "owner_table": {
+        "name": data["owner_table"]["name"],
+        "editable_fields": [
+            field_to_py(field)
+            for field in data["owner_table"]["fields"]
+            if field["editable"]
+        ],
+        "search_fields": [
+            camel_to_snake(field["name"])
+            for field in data["owner_table"]["fields"]
+            if field["searchable"]
+        ],
+        "public_fields": [
+            field_to_py(field)
+            for field in data["owner_table"]["fields"]
+            if field["name"] in data["owner_table"]["public_fields"]
+        ],
+        "db_fields": [field_to_db(field) for field in data["owner_table"]["fields"]],
+        "all_fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
+    },
+    "client_table": {
+        "name": data["client_table"]["name"],
+        "editable_fields": [
+            field_to_py(field)
+            for field in data["client_table"]["fields"]
+            if field["editable"]
+        ],
+        "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
+    },
+    "cancel_comment": remove_line_marker,
+}
 
 
 # Overwrite the original file with rendered content
@@ -224,5 +219,3 @@ with open("./migrations.py", "w", encoding="utf-8") as f:
     f.write(rederer)
 
 remove_lines_with_string("./migrations.py", remove_line_marker)
-
-
