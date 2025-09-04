@@ -65,13 +65,15 @@ window.app = Vue.createApp({
       console.log("Saving owner data...");
       try {
         const data = { extra: {}, ...this.ownerDataFormDialog.data };
-        const response = await LNbits.api.request(
-          "POST",
+        console.log("### data", data);
+        const method = data.id ? "PUT" : "POST";
+        await LNbits.api.request(
+          method,
           "/extension_builder_stub/api/v1/owner_data",
           null,
           data,
         );
-        this.ownerDataList.unshift(response.data);
+        this.getOwnerData();
         this.ownerDataFormDialog.show = false;
       } catch (error) {
         LNbits.utils.notifyApiError(error);

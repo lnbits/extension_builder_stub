@@ -17,6 +17,7 @@ from .crud import (
     delete_owner_data,
     get_owner_data,
     get_owner_data_paginated,
+    update_owner_data,
 )
 from .models import CreateOwnerData, OwnerData, OwnerDataFilters
 
@@ -39,9 +40,22 @@ async def api_create_owner_data(
     return owner_data
 
 
+@extension_builder_stub_api_router.put(
+    "/api/v1/owner_data", status_code=HTTPStatus.CREATED
+)
+async def api_update_owner_data(
+    data: OwnerData,
+    user: User = Depends(check_user_exists),
+) -> OwnerData:
+    if data.user_id != user.id:
+        raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner_data.")
+    await update_owner_data(data)
+    return data
+
+
 @extension_builder_stub_api_router.get(
     "/api/v1/owner_data/paginated",
-    name="OwnerData List",
+    name="Owner Data List",
     summary="get paginated list of owner_data",
     response_description="list of owner_data",
     openapi_extra=generate_filter_params_openapi(OwnerDataFilters),
