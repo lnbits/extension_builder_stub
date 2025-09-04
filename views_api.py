@@ -94,7 +94,7 @@ async def api_get_owner_data(
 @extension_builder_stub_api_router.delete(
     "/api/v1/owner_data/{owner_data_id}",
     name="Delete Owner Data",
-    summary="Delete the owner_data and optionally all its associated client_data.",
+    summary="Delete the owner_data " "and optionally all its associated client_data.",
     response_description="The status of the deletion.",
     response_model=SimpleStatus,
 )
