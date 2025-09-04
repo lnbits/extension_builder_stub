@@ -129,6 +129,12 @@ def test2():
     )
     replace_text_in_files(
         directory=".",
+        old_text="ownerData",
+        new_text="donationsCampaign",
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
+    )
+    replace_text_in_files(
+        directory=".",
         old_text="Owner Data",
         new_text="Donations Campaign",
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
