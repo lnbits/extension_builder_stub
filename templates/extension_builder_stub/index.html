@@ -57,6 +57,7 @@
         >
           <template v-slot:header="props">
             <q-tr :props="props">
+              <q-th auto-width></q-th>
               <q-th v-for="col in props.cols" :key="col.name" :props="props">
                 ${ col.label }
               </q-th>
@@ -67,30 +68,17 @@
             <q-tr :props="props">
               <q-td auto-width>
                 <q-btn
-                  unelevated
+                  flat
                   dense
-                  size="sm"
-                  icon="qr_code"
-                  :color="($q.dark.isActive) ? 'grey-7' : 'grey-5'"
-                  class="q-mr-sm"
-                  @click="openUrlDialog(props.row.id)"
-                ></q-btn
-              ></q-td>
-              <q-td auto-width>
-                <q-btn
-                  unelevated
-                  dense
-                  size="sm"
+                  size="xs"
                   icon="launch"
-                  :color="($q.dark.isActive) ? 'grey-7' : 'grey-5'"
+                  color="primary"
                   type="a"
                   :href="props.row.id"
                   target="_blank"
+                  class="q-mr-sm"
                   ><q-tooltip>Open public page</q-tooltip></q-btn
-                ></q-td
-              >
-
-              <q-td>
+                >
                 <q-btn
                   flat
                   dense
@@ -98,12 +86,11 @@
                   @click="updateMyExtensionForm(props.row.id)"
                   icon="edit"
                   color="light-blue"
+                  class="q-mr-sm"
                 >
-                  <q-tooltip> Edit copilot </q-tooltip>
+                  <q-tooltip> Edit </q-tooltip>
                 </q-btn>
-              </q-td>
 
-              <q-td>
                 <q-btn
                   flat
                   dense
@@ -111,8 +98,9 @@
                   @click="deleteMyExtension(props.row.id)"
                   icon="cancel"
                   color="pink"
+                  class="q-mr-sm"
                 >
-                  <q-tooltip> Delete copilot </q-tooltip>
+                  <q-tooltip> Delete </q-tooltip>
                 </q-btn>
               </q-td>
 
