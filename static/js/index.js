@@ -191,6 +191,9 @@ window.app = Vue.createApp({
     async exportCSV() {
       await LNbits.utils.exportCSV(this.ownerDataTable.columns, this.myex);
     },
+    dateFromNow(date) {
+      return moment(date).fromNow();
+    },
     async itemsArray(tempId) {
       const extension_builder_stub = _.findWhere(this.myex, { id: tempId });
       return [...extension_builder_stub.itemsMap.values()];

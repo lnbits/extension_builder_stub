@@ -105,8 +105,9 @@
               </q-td>
 
               <q-td v-for="col in props.cols" :key="col.name" :props="props">
-                <div v-if="col.field == 'amount'">
-                  ${ col.value / 1000} sats
+                <div v-if="col.field == 'updated_at'">
+                  <span v-text="dateFromNow(col.value)">
+                  </span>
                 </div>
                 <div v-else>${ col.value }</div>
               </q-td>
