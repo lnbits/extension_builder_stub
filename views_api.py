@@ -87,10 +87,10 @@ async def api_get_owner_data(
 async def api_delete_owner_data(
     owner_data_id: str,
     delete_client_data: Optional[bool] = False,
-    user_id: str = Depends(check_user_exists),
+    user: User = Depends(check_user_exists),
 ) -> SimpleStatus:
 
-    await delete_owner_data(user_id, owner_data_id)
+    await delete_owner_data(user.id, owner_data_id)
     if delete_client_data is True:
         # await delete all client data associated with this owner data
         pass

@@ -166,31 +166,22 @@ window.app = Vue.createApp({
           LNbits.utils.notifyApiError(error);
         });
     },
-    async deleteMyExtension(tempId) {
-      var extension_builder_stub = _.findWhere(this.myex, { id: tempId });
-      const wallet = _.findWhere(this.g.user.wallets, {
-        id: extension_builder_stub.wallet,
-      });
+    async deleteOwnerData(ownerDataId) {
       await LNbits.utils
-        .confirmDialog("Are you sure you want to delete this MyExtension?")
-        .onOk(function () {
-          LNbits.api
-            .request(
+        .confirmDialog("Are you sure you want to delete this Owner Data?")
+        .onOk(async function () {
+          try {
+            await LNbits.api.request(
               "DELETE",
-              "/extension_builder_stub/api/v1/myex/" + tempId,
-              wallet.adminkey,
-            )
-            .then(() => {
-              this.myex = _.reject(this.myex, function (obj) {
-                return obj.id === extension_builder_stub.id;
-              });
-            })
-            .catch((error) => {
-              LNbits.utils.notifyApiError(error);
-            });
+              "/extension_builder_stub/api/v1/owner_data/" + ownerDataId,
+              null,
+            );
+            await this.getOwnerData();
+          } catch (error) {
+            LNbits.utils.notifyApiError(error);
+          }
         });
     },
-
     async exportCSV() {
       await LNbits.utils.exportCSV(this.ownerDataTable.columns, this.myex);
     },
