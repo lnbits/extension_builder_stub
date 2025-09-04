@@ -9,6 +9,7 @@ class CreateDonationsCampaign(BaseModel):
     <% for field in owner_table.editable_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
+    extra: dict = {}
 
 
 class DonationsCampaign(BaseModel):
