@@ -1,47 +1,48 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from lnbits.db import FilterModel
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class CreateOwnerData(BaseModel):
+class CreateDonationsCampaign(BaseModel):
     """<< cancel_comment >>
     <% for field in owner_table.editable_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
 
-class OwnerData(BaseModel):
-    id: str
+class DonationsCampaign(BaseModel):
     user_id: str
     """<< cancel_comment >>
     <% for field in owner_table.all_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class PublicOwnerData(BaseModel):
+class PublicDonationsCampaign(BaseModel):
     """<< cancel_comment >>
     <% for field in owner_table.public_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
 
-# class CreateClientData(BaseModel):
+# class CreateUserDonation(BaseModel):
 #     """<< cancel_comment >>
 #     <% for field in client_table.editable_fields %><< field >>
 #     <% endfor%>
 #     << cancel_comment >>"""
 
 
-class ClientData(BaseModel):
+class UserDonation(BaseModel):
     """<< cancel_comment >>
     <% for field in client_table.all_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
 
-class OwnerDataFilters(FilterModel):
+class DonationsCampaignFilters(FilterModel):
     __search_fields__ = [
         """<< cancel_comment >>
         <% for field in owner_table.search_fields %>"<< field >>",<% endfor%>
