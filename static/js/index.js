@@ -175,7 +175,7 @@ window.app = Vue.createApp({
     async deleteOwnerData(ownerDataId) {
       await LNbits.utils
         .confirmDialog("Are you sure you want to delete this Owner Data?")
-        .onOk(async function () {
+        .onOk(async () => {
           try {
             await LNbits.api.request(
               "DELETE",
