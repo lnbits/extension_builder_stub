@@ -121,22 +121,21 @@ remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
 
 extra_ui_fields = [
-    # this is generated automatically
     {
-        "name": "id",
-        "type": "str",
-        "label": "ID",
-        "hint": "Unique identifier",
+        "name": "updated_at",
+        "type": "datetime",
+        "label": "Updated At",
+        "hint": "Timestamp of the last update",
         "optional": False,
         "editable": False,
         "searchable": False,
         "sortable": True,
     },
     {
-        "name": "updated_at",
-        "type": "datetime",
-        "label": "Updated At",
-        "hint": "Timestamp of the last update",
+        "name": "id",
+        "type": "str",
+        "label": "ID",
+        "hint": "Unique identifier",
         "optional": False,
         "editable": False,
         "searchable": False,
