@@ -18,6 +18,8 @@ window.app = Vue.createApp({
       qrValue: "lnurlpay", // todo: remove
       myex: [],
       ownerDataTable: {
+        search: "",
+        loading: false,
         columns: [
           /** << cancel_comment >>
           <% for field in owner_table.ui_table_columns %><< field >>,
@@ -42,6 +44,17 @@ window.app = Vue.createApp({
         data: {},
       },
     };
+  },
+  watch: {
+    "donationsCampaignTable.search": {
+      handler() {
+        const props = {};
+        if (this.donationsCampaignTable.search) {
+          props["search"] = this.donationsCampaignTable.search;
+        }
+        this.getDonationsCampaign();
+      },
+    },
   },
 
   ///////////////////////////////////////////////////

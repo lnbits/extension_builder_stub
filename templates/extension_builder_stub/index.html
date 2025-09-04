@@ -32,6 +32,27 @@
       <q-card-section>
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
+            <q-input
+              :label="$t('search_by_tag_memo_amount')"
+              dense
+              class="q-pr-xl"
+              v-model="ownerDataTable.search"
+            >
+              <template v-slot:before>
+                <q-icon name="search"> </q-icon>
+              </template>
+              <template v-slot:append>
+                <q-icon
+                  v-if="ownerDataTable.search !== ''"
+                  name="close"
+                  @click="ownerDataTable.search = ''"
+                  class="cursor-pointer"
+                >
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+          <div class="col-auto">
             <q-btn
               @click="showNewOwnerDataForm()"
               unelevated
@@ -40,8 +61,6 @@
             >
               New Owner Data
             </q-btn>
-          </div>
-          <div class="col-auto">
             <q-btn flat color="grey" @click="exportCSV">Export to CSV</q-btn>
           </div>
         </div>
