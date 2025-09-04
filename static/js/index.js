@@ -13,6 +13,7 @@ window.app = Vue.createApp({
         show: false,
         data: {},
       },
+      ownerDataList: [],
       invoiceAmount: 10, // todo: remove
       qrValue: "lnurlpay", // todo: remove
       myex: [],
@@ -58,21 +59,29 @@ window.app = Vue.createApp({
     },
     async saveOwnerData() {
       console.log("Saving owner data...");
-      this.ownerDataFormDialog.show = false;
+      try {
+        const data = { extra: {}, ...this.ownerDataFormDialog.data };
+        const response = await LNbits.api.request(
+          "POST",
+          "/donations/api/v1/owner_data",
+          null,
+          data,
+        );
+        this.ownerDataList.unshift(response.data);
+        this.ownerDataFormDialog.show = false;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      }
     },
-    async getMyExtensions() {
-      await LNbits.api
-        .request(
+    async getOwnerData() {
+      try {
+        const response = await LNbits.api.request(
           "GET",
-          "/extension_builder_stub/api/v1/myex",
-          this.g.user.wallets[0].inkey,
-        )
-        .then((response) => {
-          this.myex = response.data;
-        })
-        .catch((err) => {
-          LNbits.utils.notifyApiError(err);
-        });
+          "/extension_builder_stub/api/v1/owner_data",
+          null,
+        );
+        this.ownerDataList = response.data;
+      } catch (error) {}
     },
     async sendMyExtensionData() {
       const data = {
@@ -266,6 +275,7 @@ window.app = Vue.createApp({
   //////LIFECYCLE FUNCTIONS RUNNING ON PAGE LOAD/////
   ///////////////////////////////////////////////////
   async created() {
-    await this.fetchCurrencies();
+    this.fetchCurrencies();
+    this.getOwnerData();
   },
 });

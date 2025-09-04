@@ -12,6 +12,8 @@ class CreateOwnerData(BaseModel):
 
 
 class OwnerData(BaseModel):
+    id: str
+    user_id: str
     """<< cancel_comment >>
     <% for field in owner_table.all_fields %><< field >>
     <% endfor%>
