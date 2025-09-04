@@ -120,21 +120,34 @@ def html_input_fields(fields: dict, model_name: str) -> str:
 remove_line_marker = "{remove_line_marker}}"
 py_template_path = "./models.py"
 
+extra_ui_fields = [
+    # this is generated automatically
+    {
+        "name": "id",
+        "type": "str",
+        "label": "ID",
+        "hint": "Unique identifier",
+        "optional": False,
+        "editable": False,
+        "searchable": False,
+        "sortable": True,
+    },
+    {
+        "name": "updated_at",
+        "type": "datetime",
+        "label": "Updated At",
+        "hint": "Timestamp of the last update",
+        "optional": False,
+        "editable": False,
+        "searchable": False,
+        "sortable": True,
+    },
+]
+
 data = {
     "owner_table": {
         "name": "Campaign",
         "fields": [
-            # this is generated automatically
-            {
-                "name": "id",
-                "type": "str",
-                "label": "ID",
-                "hint": "Unique identifier",
-                "optional": False,
-                "editable": False,
-                "searchable": False,
-                "sortable": True,
-            },
             {
                 "name": "name",
                 "type": "str",
@@ -244,7 +257,7 @@ parsed_data = {
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in data["owner_table"]["fields"]
+            for field in (data["owner_table"]["fields"] + extra_ui_fields)
             if field["sortable"]
         ],
         "db_fields": [field_to_db(field) for field in data["owner_table"]["fields"]],
