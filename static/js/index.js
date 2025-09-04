@@ -62,7 +62,7 @@ window.app = Vue.createApp({
       this.ownerDataFormDialog.show = true;
     },
     async showEditOwnerDataForm(data) {
-      this.ownerDataFormDialog.data = {...data};
+      this.ownerDataFormDialog.data = { ...data };
       this.ownerDataFormDialog.show = true;
     },
     async saveOwnerData() {

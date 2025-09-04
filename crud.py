@@ -62,8 +62,7 @@ async def get_owner_data_paginated(
     )
 
 
-async def update_owner_data(user_id: str, data: OwnerData):
-    # todo: user_id
+async def update_owner_data(data: OwnerData):
     await db.update("extension_builder_stub.owner_data", data)
 
 
