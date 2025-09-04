@@ -125,25 +125,25 @@ def test2():
         directory=".",
         old_text="OwnerData",
         new_text="DonationsCampaign",
-        file_extensions=[".py"],
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Owner Data",
         new_text="Donations Campaign",
-        file_extensions=[".py"],
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="ClientData",
         new_text="UserDonation",
-        file_extensions=[".py"],
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Client Data",
         new_text="User Donation",
-        file_extensions=[".py"],
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
 
     replace_text_in_files(
