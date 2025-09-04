@@ -48,25 +48,23 @@
         <q-table
           dense
           flat
-          :rows="myex"
+          :rows="ownerDataList"
           row-key="id"
           :columns="ownerDataTable.columns"
           v-model:pagination="ownerDataTable.pagination"
+          :loading="ownerDataTable.loading"
+          @request="getOwnerData"
         >
-          <extension_builder_stub v-slot:header="props">
+          <template v-slot:header="props">
             <q-tr :props="props">
               <q-th v-for="col in props.cols" :key="col.name" :props="props">
                 ${ col.label }
               </q-th>
             </q-tr>
-          </extension_builder_stub>
+          </template>
 
           <template v-slot:body="props">
             <q-tr :props="props">
-              <q-td v-for="col in props.cols" :key="col.name" :props="props">
-                <div v-if="col.field == 'total'">${ col.value / 1000} sats</div>
-                <div v-else>${ col.value }</div>
-              </q-td>
               <q-td auto-width>
                 <q-btn
                   unelevated
@@ -116,6 +114,13 @@
                 >
                   <q-tooltip> Delete copilot </q-tooltip>
                 </q-btn>
+              </q-td>
+
+              <q-td v-for="col in props.cols" :key="col.name" :props="props">
+                <div v-if="col.field == 'amount'">
+                  ${ col.value / 1000} sats
+                </div>
+                <div v-else>${ col.value }</div>
               </q-td>
             </q-tr>
           </template>
