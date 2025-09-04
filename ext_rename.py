@@ -150,7 +150,7 @@ def test2():
         directory=".",
         old_text="owner_data",
         new_text="donations_campaign",
-        file_extensions=[".py"],
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
@@ -167,3 +167,4 @@ def test2():
 
 
 test2()
+# zip_directory(".", "extension_builder_stub.zip")
