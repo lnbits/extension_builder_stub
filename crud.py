@@ -10,8 +10,8 @@ from .models import CreateOwnerData, OwnerData, OwnerDataFilters, PublicOwnerDat
 db = Database("ext_extension_builder_stub")
 
 
-async def create_owner_data(data: CreateOwnerData) -> OwnerData:
-    owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash())
+async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
+    owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash(), user_id=user_id)
     await db.insert("extension_builder_stub.owner_data", owner_data)
     return owner_data
 

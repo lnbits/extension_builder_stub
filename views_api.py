@@ -35,7 +35,7 @@ async def api_create_owner_data(
     user: User = Depends(check_user_exists),
 ) -> OwnerData:
     # todo: user_id
-    owner_data = await create_owner_data(data)
+    owner_data = await create_owner_data(user.id, data)
     return owner_data
 
 
