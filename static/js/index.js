@@ -25,7 +25,11 @@ window.app = Vue.createApp({
           << cancel_comment >> **/
         ],
         pagination: {
+          sortBy: "updated_at",
           rowsPerPage: 10,
+          page: 1,
+          descending: true,
+          rowsNumber: 10,
         },
       },
       formDialog: {
@@ -63,7 +67,7 @@ window.app = Vue.createApp({
         const data = { extra: {}, ...this.ownerDataFormDialog.data };
         const response = await LNbits.api.request(
           "POST",
-          "/donations/api/v1/owner_data",
+          "/extension_builder_stub/api/v1/owner_data",
           null,
           data,
         );
@@ -73,15 +77,27 @@ window.app = Vue.createApp({
         LNbits.utils.notifyApiError(error);
       }
     },
-    async getOwnerData() {
+
+    async getOwnerData(props) {
       try {
-        const response = await LNbits.api.request(
+        this.ownerDataTable.loading = true;
+        const params = LNbits.utils.prepareFilterQuery(
+          this.ownerDataTable,
+          props,
+        );
+        const { data } = await LNbits.api.request(
           "GET",
-          "/extension_builder_stub/api/v1/owner_data",
+          `/extension_builder_stub/api/v1/owner_data/paginated?${params}`,
           null,
         );
-        this.ownerDataList = response.data;
-      } catch (error) {}
+        console.log("### data", data);
+        this.ownerDataList = data.data;
+        this.ownerDataTable.pagination.rowsNumber = data.total;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      } finally {
+        this.ownerDataTable.loading = false;
+      }
     },
     async sendMyExtensionData() {
       const data = {
