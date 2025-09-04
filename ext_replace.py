@@ -311,4 +311,4 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
 
-# test()
+test()
