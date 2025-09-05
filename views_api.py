@@ -19,7 +19,8 @@ from .crud import (
     get_owner_data_paginated,
     update_owner_data,
 )
-from .models import CreateOwnerData, OwnerData, OwnerDataFilters
+from .models import CreateOwnerData, ExtensionSettings, OwnerData, OwnerDataFilters
+from .services import get_settings, update_settings
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 
@@ -109,3 +110,33 @@ async def api_delete_owner_data(
         # await delete all client data associated with this owner data
         pass
     return SimpleStatus(success=True, message="Owner Data Deleted")
+
+
+################################### Settings ###########################################
+@extension_builder_stub_api_router.get(
+    "/api/v1/settings",
+    name="Get Settings",
+    summary="Get the settings for the current user.",
+    response_description="The settings or 404 if not found",
+    response_model=ExtensionSettings,
+)
+async def api_get_settings(
+    user: User = Depends(check_user_exists),
+) -> ExtensionSettings:
+
+    return await get_settings(user.id)
+
+
+@extension_builder_stub_api_router.put(
+    "/api/v1/settings",
+    name="Update Settings",
+    summary="Update the settings for the current user.",
+    response_description="The updated settings.",
+    response_model=ExtensionSettings,
+)
+async def api_update_extension_settings(
+    data: ExtensionSettings,
+    user: User = Depends(check_user_exists),
+) -> ExtensionSettings:
+
+    return await update_settings(user.id, data)

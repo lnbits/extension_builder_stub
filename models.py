@@ -63,3 +63,18 @@ class OwnerDataFilters(FilterModel):
 
     created_at: datetime | None
     updated_at: datetime | None
+
+
+################################### Settings ###########################################
+class ExtensionSettings(BaseModel):
+    """<< cancel_comment >>
+    <% for field in owner_table.settings_fields %><< field >>
+    <% endfor%>
+    << cancel_comment >>"""
+
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class UserExtensionSettings(ExtensionSettings):
+    user_id: str

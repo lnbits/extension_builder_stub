@@ -5,7 +5,14 @@ from typing import Optional
 from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
 
-from .models import CreateOwnerData, OwnerData, OwnerDataFilters, PublicOwnerData
+from .models import (
+    CreateOwnerData,
+    ExtensionSettings,
+    OwnerData,
+    OwnerDataFilters,
+    PublicOwnerData,
+    UserExtensionSettings,
+)
 
 db = Database("ext_extension_builder_stub")
 
@@ -75,3 +82,29 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
         """,
         {"id": owner_data_id, "user_id": user_id},
     )
+
+
+################################### Settings ###########################################
+async def create_extension_settings(
+    user_id: str, data: ExtensionSettings
+) -> ExtensionSettings:
+    settings = UserExtensionSettings(**data.dict(), user_id=user_id)
+    await db.insert("extension_builder_stub.extension_settings", settings)
+    return settings
+
+
+async def get_extension_settings(
+    user_id: str,
+) -> Optional[ExtensionSettings]:
+    return await db.fetchone(
+        """
+            SELECT * FROM extension_builder_stub.extension_settings
+            WHERE user_id = :user_id
+        """,
+        {"user_id": user_id},
+        ExtensionSettings,
+    )
+
+
+async def update_extension_settings(data: ExtensionSettings):
+    await db.update("extension_builder_stub.extension_settings", data)
