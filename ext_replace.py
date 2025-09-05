@@ -273,7 +273,7 @@ parsed_data = {
     },
     "settings": {
         "has_settings": True,
-        "is_admin_settings_only": True,
+        "is_admin_settings_only": False,
     },
     "cancel_comment": remove_line_marker,
 }
