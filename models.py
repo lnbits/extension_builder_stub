@@ -75,6 +75,10 @@ class ExtensionSettings(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+    @classmethod
+    def is_admin_only(cls) -> bool:
+        return bool("<< is_admin_settings_only >>")
+
 
 class UserExtensionSettings(ExtensionSettings):
     user_id: str

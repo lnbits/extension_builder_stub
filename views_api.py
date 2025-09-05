@@ -123,8 +123,8 @@ async def api_delete_owner_data(
 async def api_get_settings(
     user: User = Depends(check_user_exists),
 ) -> ExtensionSettings:
-
-    return await get_settings(user.id)
+    user_id = "admin" if ExtensionSettings.is_admin_only() else user.id
+    return await get_settings(user_id)
 
 
 @extension_builder_stub_api_router.put(
@@ -138,5 +138,10 @@ async def api_update_extension_settings(
     data: ExtensionSettings,
     user: User = Depends(check_user_exists),
 ) -> ExtensionSettings:
-
-    return await update_settings(user.id, data)
+    if ExtensionSettings.is_admin_only() and not user.admin:
+        raise HTTPException(
+            HTTPStatus.FORBIDDEN,
+            "Only admins can update settings.",
+        )
+    user_id = "admin" if ExtensionSettings.is_admin_only() else user.id
+    return await update_settings(user_id, data)
