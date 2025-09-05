@@ -240,6 +240,8 @@ data = {
             {
                 "name": "max_campaign_amount_sats",
                 "type": "int",
+                "label": "Max Campaign Amount (sats)",
+                "hint": "Maximum amount for a single campaign in satoshis",
                 "optional": False,
                 "editable": True,
                 "searchable": True,
@@ -247,6 +249,8 @@ data = {
             {
                 "name": "description",
                 "type": "str",
+                "label": "Default Description",
+                "hint": "Some random data here",
                 "optional": True,
                 "editable": True,
                 "searchable": False,

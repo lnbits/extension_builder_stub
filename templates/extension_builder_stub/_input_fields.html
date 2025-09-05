@@ -1,11 +1,11 @@
-<% for field in fields %> <% if field["type"] in ["str", "int", "float"] %>
+<% for field in fields %> <% if field["type"] in ["int", "float"] %>
 <q-input
   filled
   dense
   v-model.trim="<< model_name >>.<< field['name'] >>"
   label="<< field['label'] >>"
   hint="<< field['hint'] >>"
-  type="<< field['type'] >>"
+  type="number"
 ></q-input>
 <% endif %> <% if field.type == "bool" %>
 <q-checkbox
@@ -55,4 +55,12 @@
   hint="<< field['hint'] >>"
   :options="currencyOptions"
 ></q-select>
+<% else>
+<q-input
+  filled
+  dense
+  v-model.trim="<< model_name >>.<< field['name'] >>"
+  label="<< field['label'] >>"
+  hint="<< field['hint'] >>"
+></q-input>
 <% endif %> <% endfor%>
