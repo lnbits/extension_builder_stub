@@ -234,6 +234,32 @@ data = {
             },
         ],
     },
+    "settings_table": {
+        "name": "Settings",
+        "fields": [
+            {
+                "user_id": "id",
+                "type": "str",
+                "optional": False,
+                "editable": False,
+                "searchable": False,
+            },
+            {
+                "name": "max_campaign_amount_sats",
+                "type": "int",
+                "optional": False,
+                "editable": False,
+                "searchable": True,
+            },
+            {
+                "name": "description",
+                "type": "str",
+                "optional": True,
+                "editable": False,
+                "searchable": False,
+            },
+        ],
+    },
 }
 
 parsed_data = {
@@ -271,9 +297,15 @@ parsed_data = {
         ],
         "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
     },
-    "settings": {
+    "settings_table": {
         "has_settings": True,
         "is_admin_settings_only": False,
+        "editable_fields": [
+            field_to_py(field)
+            for field in data["settings_table"]["fields"]
+            if field["editable"]
+        ],
+        "db_fields": [field_to_db(field) for field in data["settings_table"]["fields"]],
     },
     "cancel_comment": remove_line_marker,
 }

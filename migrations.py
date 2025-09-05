@@ -5,7 +5,23 @@
 empty_dict: dict[str, str] = {}
 
 
-async def m001_owner_data(db):
+async def m001_extension_settings(db):
+    """
+    Initial owner data table.
+    """
+
+    await db.execute(
+        f"""
+        CREATE TABLE extension_builder_stub.extension_settings (
+            user_id TEXT NOT NULL,
+            <% for field in settings_table.db_fields %><< field >>,
+            <% endfor%>updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
+        );
+    """
+    )
+
+
+async def m002_owner_data(db):
     """
     Initial owner data table.
     """

@@ -65,6 +65,7 @@ class OwnerDataFilters(FilterModel):
     updated_at: datetime | None
 
 
+#  <% if settings_table.has_settings %>
 ################################### Settings ###########################################
 class ExtensionSettings(BaseModel):
     """<< cancel_comment >>
@@ -82,3 +83,6 @@ class ExtensionSettings(BaseModel):
 
 class UserExtensionSettings(ExtensionSettings):
     user_id: str
+
+
+# <% endif %>
