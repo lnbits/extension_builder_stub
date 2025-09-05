@@ -7,12 +7,16 @@ from lnbits.helpers import urlsafe_short_hash
 
 from .models import (
     CreateOwnerData,
-    ExtensionSettings,
     OwnerData,
     OwnerDataFilters,
     PublicOwnerData,
-    UserExtensionSettings,
 )
+
+#  <% if settings_table.has_settings %> << cancel_comment >>
+from .models import ExtensionSettings as ExtensionSettings
+from .models import UserExtensionSettings as UserExtensionSettings
+
+# <% endif %> << cancel_comment >>
 
 db = Database("ext_extension_builder_stub")
 

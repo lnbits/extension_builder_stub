@@ -20,7 +20,10 @@ async def m001_extension_settings(db):
         );
     """
     )
+
+
 # <% endif %>
+
 
 async def m002_owner_data(db):
     """
