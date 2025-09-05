@@ -7,13 +7,13 @@
   hint="<< field['hint'] >>"
   type="number"
 ></q-input>
-<% endif %> <% if field.type == "bool" %>
+<% elif field.type == "bool" %>
 <q-checkbox
   v-model="<< model_name >>.<< field['name'] >>"
   label="<< field['label'] >>"
   hint="<< field['hint'] >>"
 />
-<% endif %> <% if field.type == "datetime" %>
+<% elif field.type == "datetime" %>
 <q-input
   filled
   dense
@@ -37,7 +37,7 @@
     </q-icon>
   </template>
 </q-input>
-<% endif %> <% if field.type == "wallet" %>
+<% elif field.type == "wallet" %>
 <q-select
   filled
   dense
@@ -46,7 +46,7 @@
   :options="g.user.walletOptions"
   label="Wallet *"
 ></q-select>
-<% endif %> <% if field.type == "currency" %>
+<% elif field.type == "currency" %>
 <q-select
   filled
   dense
