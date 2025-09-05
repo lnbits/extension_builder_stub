@@ -78,7 +78,7 @@ class ExtensionSettings(BaseModel):
 
     @classmethod
     def is_admin_only(cls) -> bool:
-        return bool("<< settings_table.is_admin_settings_only >>")
+        return bool("<< settings_table.is_admin_settings_only >>" == "True")
 
 
 class UserExtensionSettings(ExtensionSettings):
