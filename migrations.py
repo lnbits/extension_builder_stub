@@ -5,6 +5,7 @@
 empty_dict: dict[str, str] = {}
 
 
+#  <% if settings_table.has_settings %>
 async def m001_extension_settings(db):
     """
     Initial owner data table.
@@ -19,7 +20,7 @@ async def m001_extension_settings(db):
         );
     """
     )
-
+# <% endif %>
 
 async def m002_owner_data(db):
     """
