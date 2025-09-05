@@ -271,6 +271,10 @@ parsed_data = {
         ],
         "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
     },
+    "settings": {
+        "has_settings": True,
+        "is_admin_settings_only": True,
+    },
     "cancel_comment": remove_line_marker,
 }
 
