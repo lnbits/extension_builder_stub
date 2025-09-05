@@ -176,19 +176,15 @@
   <q-dialog v-model="settingsFormDialog.show" position="top">
     <q-card
       v-if="settingsFormDialog.show"
-      class="q-pa-lg q-pt-xl lnbits__dialog-card"
+      class="q-pa-lg q-pt-xl lnbits__dialog-card q-col-gutter-md"
     >
-      <h6 class="q-mt-none">Settings</h6>
+      <span class="text-h5">Settings</span>
 
       <div class="row">
         <div class="col-12">
-          <q-input
-            filled
-            dense
-            v-model.trim="settingsFormDialog.data.xxx"
-            label="XXX"
-            hint="xxx"
-          ></q-input>
+          <!-- << cancel_comment >>
+            << extension_builder_stub_settings_inputs >>
+            << cancel_comment >> -->
         </div>
       </div>
 

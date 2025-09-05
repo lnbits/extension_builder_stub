@@ -338,11 +338,16 @@ def test():
         [f for f in data["owner_table"]["fields"] if f["editable"]],
         "ownerDataFormDialog.data",
     )
+    settings_inputs = html_input_fields(
+        [f for f in data["settings_table"]["fields"] if f["editable"]],
+        "settingsFormDialog.data",
+    )
     template_path = "./templates/extension_builder_stub/index.html"
     rederer = render_file(
         template_path,
         {
             "extension_builder_stub_owner_inputs": owner_inputs,
+            "extension_builder_stub_settings_inputs": settings_inputs,
             "cancel_comment": remove_line_marker,
             **parsed_data,
         },
