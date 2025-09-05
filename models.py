@@ -69,7 +69,7 @@ class OwnerDataFilters(FilterModel):
 ################################### Settings ###########################################
 class ExtensionSettings(BaseModel):
     """<< cancel_comment >>
-    <% for field in owner_table.settings_fields %><< field >>
+    <% for field in settings_table.editable_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
@@ -78,7 +78,7 @@ class ExtensionSettings(BaseModel):
 
     @classmethod
     def is_admin_only(cls) -> bool:
-        return bool("<< is_admin_settings_only >>")
+        return bool("<< settings_table.is_admin_settings_only >>")
 
 
 class UserExtensionSettings(ExtensionSettings):
