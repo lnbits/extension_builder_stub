@@ -238,24 +238,24 @@ data = {
         "name": "Settings",
         "fields": [
             {
-                "user_id": "id",
+                "name": "user_id",
                 "type": "str",
                 "optional": False,
-                "editable": False,
+                "editable": True,
                 "searchable": False,
             },
             {
                 "name": "max_campaign_amount_sats",
                 "type": "int",
                 "optional": False,
-                "editable": False,
+                "editable": True,
                 "searchable": True,
             },
             {
                 "name": "description",
                 "type": "str",
                 "optional": True,
-                "editable": False,
+                "editable": True,
                 "searchable": False,
             },
         ],
