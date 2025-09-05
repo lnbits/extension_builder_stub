@@ -8,22 +8,17 @@
 {% endblock %} {% block page %}
 <div class="row q-col-gutter-md">
   <div class="col-12 col-md-8 col-lg-7 q-gutter-y-md">
-     <!-- << cancel_comment >>
-    <% if has_settings %>
+    <!-- << cancel_comment >>
+    <% if settings.has_settings %>
     << cancel_comment >> -->
     <q-card>
       <q-card-section class="q-pa-sm">
         <div class="row">
           <div class="col-md-6 col-sm-12"></div>
           <div class="col-md-6 col-sm-12">
-
-            <!-- << cancel_comment >>
-            <% if is_admin_settings_only %>
-            v-if="g.user.admin"
-            <% endif %>
-            << cancel_comment >> -->
             <q-btn
               @click="settingsFormDialog.show=true"
+              v-if="<% if settings.is_admin_settings_only %>g.user.admin<% else %>true<% endif %>"
               unelevated
               split
               color="primary"
@@ -172,7 +167,7 @@
   <!--/////////////////////////////////////////////////-->
 
   <!-- << cancel_comment >>
-  <% if has_settings %>
+  <% if settings.has_settings %>
   << cancel_comment >> -->
   <q-dialog v-model="settingsFormDialog.show" position="top">
     <q-card
@@ -204,7 +199,7 @@
   <!-- << cancel_comment >>
   <% endif %>
   << cancel_comment >> -->
-  
+
   <q-dialog v-model="ownerDataFormDialog.show" position="top">
     <q-card
       v-if="ownerDataFormDialog.show"

@@ -319,6 +319,7 @@ def test():
         {
             "extension_builder_stub_owner_inputs": owner_inputs,
             "cancel_comment": remove_line_marker,
+            **parsed_data,
         },
     )
     with open(template_path, "w", encoding="utf-8") as f:
