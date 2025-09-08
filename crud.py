@@ -93,7 +93,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
 async def create_extension_settings(
     user_id: str, data: ExtensionSettings
 ) -> ExtensionSettings:
-    settings = UserExtensionSettings(**data.dict(), user_id=user_id)
+    settings = UserExtensionSettings(**data.dict(), id=user_id)
     await db.insert("extension_builder_stub.extension_settings", settings)
     return settings
 
@@ -104,7 +104,7 @@ async def get_extension_settings(
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.extension_settings
-            WHERE user_id = :user_id
+            WHERE id = :user_id
         """,
         {"user_id": user_id},
         ExtensionSettings,

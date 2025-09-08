@@ -81,7 +81,7 @@ class ExtensionSettings(BaseModel):
 
 
 class UserExtensionSettings(ExtensionSettings):
-    user_id: str
+    id: str
 
 
 # <% endif %>
