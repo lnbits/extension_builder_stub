@@ -210,6 +210,8 @@ data = {
     },
     "client_table": {
         "name": "User Donations",
+        # todo: mnot public but submitted
+        "public_fields": ["amount_sats", "comment", "email"], 
         "fields": [
             {
                 "name": "id",
@@ -217,6 +219,7 @@ data = {
                 "optional": False,
                 "editable": False,
                 "searchable": False,
+                "sortable": False,
             },
             {
                 "name": "amount_sats",
@@ -226,6 +229,7 @@ data = {
                 "optional": False,
                 "editable": False,
                 "searchable": False,
+                "sortable": True,
             },
             {
                 "name": "comment",
@@ -235,6 +239,7 @@ data = {
                 "optional": True,
                 "editable": False,
                 "searchable": True,
+                "sortable": False,
             },
             {
                 "name": "email",
@@ -244,6 +249,7 @@ data = {
                 "optional": True,
                 "editable": False,
                 "searchable": True,
+                "sortable": False,
             },
         ],
     },
