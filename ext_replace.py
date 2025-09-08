@@ -299,30 +299,30 @@ parsed_data = {
         "all_fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
     },
     "client_table": {
-        "name": data["client_fields"]["name"],
+        "name": data["client_table"]["name"],
         "data_enditable": False,  # todo: user edits this data
         "editable_fields": [
             field_to_py(field)
-            for field in data["client_fields"]["fields"]
+            for field in data["client_table"]["fields"]
             if field["editable"]
         ],
         "search_fields": [
             camel_to_snake(field["name"])
-            for field in data["client_fields"]["fields"]
+            for field in data["client_table"]["fields"]
             if field["searchable"]
         ],
         "public_fields": [
             field_to_py(field)
-            for field in data["client_fields"]["fields"]
-            if field["name"] in data["client_fields"]["public_fields"]
+            for field in data["client_table"]["fields"]
+            if field["name"] in data["client_table"]["public_fields"]
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in (data["client_fields"]["fields"] + extra_ui_fields)
+            for field in (data["client_table"]["fields"] + extra_ui_fields)
             if field["sortable"]
         ],
-        "db_fields": [field_to_db(field) for field in data["client_fields"]["fields"]],
-        "all_fields": [field_to_py(field) for field in data["client_fields"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data["client_table"]["fields"]],
+        "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
     },
     "settings_table": {
         "has_settings": True,
