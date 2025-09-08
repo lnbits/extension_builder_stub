@@ -37,6 +37,7 @@
     <!-- << cancel_comment >>
     <% endif %>
     << cancel_comment >> -->
+    <!--//////////////Owner Data////////////////////////-->
     <q-card>
       <q-card-section>
         <div class="row items-center no-wrap q-mb-md">
@@ -126,6 +127,116 @@
                   dense
                   size="xs"
                   @click="deleteOwnerData(props.row.id)"
+                  icon="cancel"
+                  color="pink"
+                  class="q-mr-sm"
+                >
+                  <q-tooltip> Delete </q-tooltip>
+                </q-btn>
+              </q-td>
+
+              <q-td v-for="col in props.cols" :key="col.name" :props="props">
+                <div v-if="col.field == 'updated_at'">
+                  <span v-text="dateFromNow(col.value)"> </span>
+                </div>
+                <div v-else>${ col.value }</div>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </q-card-section>
+    </q-card>
+
+    <!--//////////////Client Data////////////////////////-->
+    <q-card>
+      <q-card-section>
+        <div class="row items-center no-wrap q-mb-md">
+          <div class="col">
+            <q-input
+              :label="$t('search')"
+              dense
+              class="q-pr-xl"
+              v-model="clientDataTable.search"
+            >
+              <template v-slot:before>
+                <q-icon name="search"> </q-icon>
+              </template>
+              <template v-slot:append>
+                <q-icon
+                  v-if="clientDataTable.search !== ''"
+                  name="close"
+                  @click="clientDataTable.search = ''"
+                  class="cursor-pointer"
+                >
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+          <div class="col-auto">
+            <q-btn
+              @click="showNewClientDataForm()"
+              unelevated
+              split
+              color="primary"
+            >
+              New Client Data
+            </q-btn>
+            <q-btn flat color="grey" icon="file_download" @click="exportCSV"
+              >CSV</q-btn
+            >
+          </div>
+        </div>
+        <q-table
+          dense
+          flat
+          :rows="clientDataList"
+          row-key="id"
+          :columns="clientDataTable.columns"
+          v-model:pagination="clientDataTable.pagination"
+          :loading="clientDataTable.loading"
+          @request="getClientData"
+        >
+          <template v-slot:header="props">
+            <q-tr :props="props">
+              <q-th auto-width></q-th>
+              <q-th v-for="col in props.cols" :key="col.name" :props="props">
+                ${ col.label }
+              </q-th>
+            </q-tr>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td auto-width>
+                <q-btn
+                  flat
+                  dense
+                  size="xs"
+                  icon="launch"
+                  color="primary"
+                  type="a"
+                  :href="props.row.id"
+                  target="_blank"
+                  class="q-mr-sm"
+                  ><q-tooltip>Open public page</q-tooltip></q-btn
+                >
+                <q-btn
+                  flat
+                  dense
+                  size="xs"
+                  @click="showEditClientDataForm(props.row)"
+                  icon="edit"
+                  color="light-blue"
+                  class="q-mr-sm"
+                >
+                  <q-tooltip> Edit </q-tooltip>
+                </q-btn>
+
+                <q-btn
+                  flat
+                  dense
+                  size="xs"
+                  @click="deleteClientData(props.row.id)"
                   icon="cancel"
                   color="pink"
                   class="q-mr-sm"
