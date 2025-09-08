@@ -35,6 +35,7 @@ window.app = Vue.createApp({
 
       clientDataFormDialog: {
         show: false,
+        ownerDataId: null,
         data: {},
       },
       clientDataList: [],

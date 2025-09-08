@@ -182,7 +182,16 @@
             </q-input>
           </div>
           <div class="col-auto">
-            <q-select></q-select>
+            <!-- todo: name something from public fields -->
+            <q-select
+              filled
+              dense
+              emit-value
+              v-model="clientDataFormDialog.ownerDataId"
+              :options="ownerDataList.map(x => ({label: x.name || x.id, value: x.id}))"
+              label="Owner Data"
+              class="q-mb-md"
+            ></q-select>
             <q-btn
               flat
               color="grey"
