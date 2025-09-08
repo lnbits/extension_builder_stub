@@ -45,6 +45,20 @@ async def get_owner_data(
     )
 
 
+async def get_owner_data_ids_by_user(
+    user_id: str,
+) -> list[str]:
+    rows: list[dict] = await db.fetchall(
+        """
+            SELECT DISTINCT id FROM extension_builder_stub.owner_data
+            WHERE user_id = :user_id
+        """,
+        {"user_id": user_id},
+    )
+
+    return [row["id"] for row in rows]
+
+
 async def get_public_owner_data(
     owner_data_id: str,
 ) -> Optional[PublicOwnerData]:
@@ -77,8 +91,9 @@ async def get_owner_data_paginated(
     )
 
 
-async def update_owner_data(data: OwnerData):
+async def update_owner_data(data: OwnerData) -> OwnerData:
     await db.update("extension_builder_stub.owner_data", data)
+    return data
 
 
 async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
@@ -116,6 +131,19 @@ async def get_client_data(
     )
 
 
+async def get_client_data_by_id(
+    client_data_id: str,
+) -> Optional[ClientData]:
+    return await db.fetchone(
+        """
+            SELECT * FROM extension_builder_stub.client_data
+            WHERE id = :id
+        """,
+        {"id": client_data_id},
+        ClientData,
+    )
+
+
 # async def get_public_client_data(
 #     client_data_id: str,
 # ) -> Optional[PublicClientData]:
@@ -130,14 +158,20 @@ async def get_client_data(
 
 
 async def get_client_data_paginated(
-    owner_data_id: Optional[str] = None,
+    owner_data_ids: Optional[list[str]] = None,
     filters: Optional[Filters[ClientDataFilters]] = None,
 ) -> Page[ClientData]:
     where = []
     values = {}
-    if owner_data_id:
-        where.append("owner_data_id = :owner_data_id")
-        values["owner_data_id"] = owner_data_id
+
+    if owner_data_ids:
+        id_clause = []
+        for i, item_id in enumerate(owner_data_ids):
+            # owner_data_ids are not user input, but DB entries, so this is safe
+            owner_data_id = f"owner_data_id__{i}"
+            id_clause.append(f"owner_data_id = :{owner_data_id}")
+            values[owner_data_id] = item_id
+        where.append(" OR ".join(id_clause))
 
     return await db.fetch_page(
         "SELECT * FROM extension_builder_stub.client_data",
@@ -148,8 +182,9 @@ async def get_client_data_paginated(
     )
 
 
-async def update_client_data(data: ClientData):
+async def update_client_data(data: ClientData) -> ClientData:
     await db.update("extension_builder_stub.client_data", data)
+    return data
 
 
 async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
