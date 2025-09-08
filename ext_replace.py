@@ -300,6 +300,7 @@ parsed_data = {
     },
     "client_table": {
         "name": data["client_fields"]["name"],
+        "data_enditable": False,  # todo: user edits this data
         "editable_fields": [
             field_to_py(field)
             for field in data["client_fields"]["fields"]
@@ -381,6 +382,7 @@ def test():
         {
             "extension_builder_stub_owner_inputs": owner_inputs,
             "extension_builder_stub_settings_inputs": settings_inputs,
+            # "extension_builder_stub_client_inputs": client_inputs, # todo: user edits this data
             "cancel_comment": remove_line_marker,
             **parsed_data,
         },

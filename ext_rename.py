@@ -139,18 +139,6 @@ def test2():
         new_text="Donations Campaign",
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
-    replace_text_in_files(
-        directory=".",
-        old_text="ClientData",
-        new_text="UserDonation",
-        file_extensions=[".py", ".js", ".html", ".md", ".json"],
-    )
-    replace_text_in_files(
-        directory=".",
-        old_text="Client Data",
-        new_text="User Donation",
-        file_extensions=[".py", ".js", ".html", ".md", ".json"],
-    )
 
     replace_text_in_files(
         directory=".",
@@ -162,6 +150,38 @@ def test2():
         directory=".",
         old_text="owner data",
         new_text="donations campaign",
+        file_extensions=[".py"],
+    )
+
+    replace_text_in_files(
+        directory=".",
+        old_text="ClientData",
+        new_text="UserDonation",
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="clentData",
+        new_text="userDonation",
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="Client Data",
+        new_text="User Donation",
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
+    )
+
+    replace_text_in_files(
+        directory=".",
+        old_text="client_data",
+        new_text="user_donation",
+        file_extensions=[".py", ".js", ".html", ".md", ".json"],
+    )
+    replace_text_in_files(
+        directory=".",
+        old_text="client data",
+        new_text="user donation",
         file_extensions=[".py"],
     )
 
