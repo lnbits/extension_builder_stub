@@ -6,6 +6,9 @@ from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
 
 from .models import (
+    ClientData,
+    ClientDataFilters,
+    CreateClientData,
     CreateOwnerData,
     OwnerData,
     OwnerDataFilters,
@@ -21,6 +24,7 @@ from .models import UserExtensionSettings as UserExtensionSettings
 db = Database("ext_extension_builder_stub")
 
 
+################################## Owner Data ##########################################
 async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
     owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash(), user_id=user_id)
     await db.insert("extension_builder_stub.owner_data", owner_data)
@@ -78,13 +82,83 @@ async def update_owner_data(data: OwnerData):
 
 
 async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
-    # todo: user_id
     await db.execute(
         """
             DELETE FROM extension_builder_stub.owner_data
             WHERE id = :id AND user_id = :user_id
         """,
         {"id": owner_data_id, "user_id": user_id},
+    )
+
+
+################################# Client Data #########################################
+
+
+async def create_client_data(owner_data_id: str, data: CreateClientData) -> ClientData:
+    client_data = ClientData(
+        **data.dict(), id=urlsafe_short_hash(), owner_data_id=owner_data_id
+    )
+    await db.insert("extension_builder_stub.client_data", client_data)
+    return client_data
+
+
+async def get_client_data(
+    owner_data_id: str,
+    client_data_id: str,
+) -> Optional[ClientData]:
+    return await db.fetchone(
+        """
+            SELECT * FROM extension_builder_stub.client_data
+            WHERE id = :id AND owner_data_id = :owner_data_id
+        """,
+        {"id": client_data_id, "owner_data_id": owner_data_id},
+        ClientData,
+    )
+
+
+# async def get_public_client_data(
+#     client_data_id: str,
+# ) -> Optional[PublicClientData]:
+#     return await db.fetchone(
+#         """
+#             SELECT * FROM extension_builder_stub.client_data
+#             WHERE id = :id
+#         """,
+#         {"id": client_data_id},
+#         PublicClientData,
+#     )
+
+
+async def get_client_data_paginated(
+    owner_data_id: Optional[str] = None,
+    filters: Optional[Filters[ClientDataFilters]] = None,
+) -> Page[ClientData]:
+    where = []
+    values = {}
+    if owner_data_id:
+        where.append("owner_data_id = :owner_data_id")
+        values["owner_data_id"] = owner_data_id
+
+    return await db.fetch_page(
+        "SELECT * FROM extension_builder_stub.client_data",
+        where=where,
+        values=values,
+        filters=filters,
+        model=ClientData,
+    )
+
+
+async def update_client_data(data: ClientData):
+    await db.update("extension_builder_stub.client_data", data)
+
+
+async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
+    await db.execute(
+        """
+            DELETE FROM extension_builder_stub.client_data
+            WHERE id = :id AND owner_data_id = :owner_data_id
+        """,
+        {"id": client_data_id, "owner_data_id": owner_data_id},
     )
 
 
