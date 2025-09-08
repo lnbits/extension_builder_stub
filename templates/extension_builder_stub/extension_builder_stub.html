@@ -53,14 +53,10 @@
     el: "#vue",
     mixins: [windowMixin],
     data: function () {
-      return {
-        qrValue: "{{lnurlpay}}",
-        myExtensionID: "{{extension_builder_stub_id}}",
-      };
+      return {};
     },
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py
-      eventReactionWebocket(this.myExtensionID);
     },
     methods: {},
   });

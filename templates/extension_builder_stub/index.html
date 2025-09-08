@@ -72,7 +72,11 @@
             >
               New Owner Data
             </q-btn>
-            <q-btn flat color="grey" icon="file_download" @click="exportCSV"
+            <q-btn
+              flat
+              color="grey"
+              icon="file_download"
+              @click="exportOwnerDataCSV"
               >CSV</q-btn
             >
           </div>
@@ -174,15 +178,12 @@
             </q-input>
           </div>
           <div class="col-auto">
+            <q-select></q-select>
             <q-btn
-              @click="showNewClientDataForm()"
-              unelevated
-              split
-              color="primary"
-            >
-              New Client Data
-            </q-btn>
-            <q-btn flat color="grey" icon="file_download" @click="exportCSV"
+              flat
+              color="grey"
+              icon="file_download"
+              @click="exportClientDataCSV"
               >CSV</q-btn
             >
           </div>
@@ -213,36 +214,12 @@
                   flat
                   dense
                   size="xs"
-                  icon="launch"
-                  color="primary"
-                  type="a"
-                  :href="props.row.id"
-                  target="_blank"
-                  class="q-mr-sm"
-                  ><q-tooltip>Open public page</q-tooltip></q-btn
-                >
-                <q-btn
-                  flat
-                  dense
-                  size="xs"
                   @click="showEditClientDataForm(props.row)"
                   icon="edit"
                   color="light-blue"
                   class="q-mr-sm"
                 >
                   <q-tooltip> Edit </q-tooltip>
-                </q-btn>
-
-                <q-btn
-                  flat
-                  dense
-                  size="xs"
-                  @click="deleteClientData(props.row.id)"
-                  icon="cancel"
-                  color="pink"
-                  class="q-mr-sm"
-                >
-                  <q-tooltip> Delete </q-tooltip>
                 </q-btn>
               </q-td>
 

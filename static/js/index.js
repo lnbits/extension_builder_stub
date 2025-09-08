@@ -9,12 +9,12 @@ window.app = Vue.createApp({
         show: false,
         data: {},
       },
+
       ownerDataFormDialog: {
         show: false,
         data: {},
       },
       ownerDataList: [],
-      myex: [],
       ownerDataTable: {
         search: "",
         loading: false,
@@ -179,10 +179,64 @@ window.app = Vue.createApp({
           }
         });
     },
-    async exportCSV() {
-      await LNbits.utils.exportCSV(this.ownerDataTable.columns, this.myex);
+    async exportOwnerDataCSV() {
+      await LNbits.utils.exportCSV(
+        this.ownerDataTable.columns,
+        this.ownerDataList,
+      );
     },
     //////////////// Client Data ////////////////////////
+
+    async showEditClientDataForm(data) {
+      this.clientDataFormDialog.data = { ...data };
+      this.clientDataFormDialog.show = true;
+    },
+    async saveClientData() {
+      console.log("Saving client data...");
+      try {
+        const data = { extra: {}, ...this.clientDataFormDialog.data };
+        console.log("### data", data);
+        const method = data.id ? "PUT" : "POST";
+        await LNbits.api.request(
+          method,
+          "/extension_builder_stub/api/v1/client_data",
+          null,
+          data,
+        );
+        this.getClientData();
+        this.clientDataFormDialog.show = false;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      }
+    },
+    async getClientData(props) {
+      try {
+        this.clientDataTable.loading = true;
+        const params = LNbits.utils.prepareFilterQuery(
+          this.clientDataTable,
+          props,
+        );
+        const { data } = await LNbits.api.request(
+          "GET",
+          `/extension_builder_stub/api/v1/client_data/paginated?${params}`,
+          null,
+        );
+        console.log("### data", data);
+        this.clientDataList = data.data;
+        this.clientDataTable.pagination.rowsNumber = data.total;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      } finally {
+        this.clientDataTable.loading = false;
+      }
+    },
+
+    async exportClientDataCSV() {
+      await LNbits.utils.exportCSV(
+        this.clientDataTable.columns,
+        this.clientDataList,
+      );
+    },
 
     connectWebocket(extension_builder_stub_id) {
       //////////////////////////////////////////////////
