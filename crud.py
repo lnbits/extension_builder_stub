@@ -111,8 +111,9 @@ async def get_extension_settings(
     )
 
 
-async def update_extension_settings(data: ExtensionSettings):
-    await db.update("extension_builder_stub.extension_settings", data)
+async def update_extension_settings(user_id: str, data: ExtensionSettings):
+    settings = UserExtensionSettings(**data.dict(), id=user_id)
+    await db.update("extension_builder_stub.extension_settings", settings)
 
 
 # <% endif %>
