@@ -73,7 +73,6 @@ class ExtensionSettings(BaseModel):
     <% endfor%>
     << cancel_comment >>"""
 
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     @classmethod
