@@ -18,7 +18,9 @@ async def update_settings(user_id: str, data: ExtensionSettings) -> ExtensionSet
     settings = await get_extension_settings(user_id)
     if not settings:
         settings = await create_extension_settings(user_id, ExtensionSettings())
-    return await update_extension_settings(user_id, data)
+    await update_extension_settings(user_id, data)
+
+    return settings
 
 
 # <% endif %>
