@@ -382,7 +382,8 @@ def test():
         {
             "extension_builder_stub_owner_inputs": owner_inputs,
             "extension_builder_stub_settings_inputs": settings_inputs,
-            # "extension_builder_stub_client_inputs": client_inputs, # todo: user edits this data
+            # todo: user edits this data
+            # "extension_builder_stub_client_inputs": client_inputs,
             "cancel_comment": remove_line_marker,
             **parsed_data,
         },
