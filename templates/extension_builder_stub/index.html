@@ -21,7 +21,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <q-btn
-              @click="settingsFormDialog.show=true"
+              @click="showSettingsDataForm()"
               v-if="<% if settings_table.is_admin_settings_only %>g.user.admin<% else %>true<% endif %>"
               unelevated
               split

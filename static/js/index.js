@@ -64,7 +64,37 @@ window.app = Vue.createApp({
   methods: {
     async updateSettings() {
       console.log("Updating settings...");
-      this.settingsFormDialog.show = false;
+      try {
+        const data = { ...this.settingsFormDialog.data };
+
+        await LNbits.api.request(
+          "PUT",
+          "/extension_builder_stub/api/v1/settings",
+          null,
+          data,
+        );
+        this.settingsFormDialog.show = false;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      }
+    },
+    async getSettings() {
+      console.log("Get settings...");
+      try {
+        const { data } = await LNbits.api.request(
+          "GET",
+          "/extension_builder_stub/api/v1/settings",
+          null,
+        );
+        console.log("### data", data);
+        this.settingsFormDialog.data = data;
+      } catch (error) {
+        LNbits.utils.notifyApiError(error);
+      }
+    },
+    async showSettingsDataForm() {
+      await this.getSettings();
+      this.settingsFormDialog.show = true;
     },
     async closeFormDialog() {
       this.formDialog.show = false;
