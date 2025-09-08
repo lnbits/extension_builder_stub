@@ -211,7 +211,7 @@ data = {
     "client_table": {
         "name": "User Donations",
         # todo: mnot public but submitted
-        "public_fields": ["amount_sats", "comment", "email"], 
+        "public_fields": ["amount_sats", "comment", "email"],
         "fields": [
             {
                 "name": "amount_sats",

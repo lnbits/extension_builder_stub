@@ -112,7 +112,7 @@ async def api_delete_owner_data(
     return SimpleStatus(success=True, message="Owner Data Deleted")
 
 
-#  <% if settings_table.has_settings %>
+#  <% if settings_table.has_settings %> << cancel_comment >>
 ################################### Settings ###########################################
 @extension_builder_stub_api_router.get(
     "/api/v1/settings",
@@ -148,4 +148,4 @@ async def api_update_extension_settings(
     return await update_settings(user_id, data)
 
 
-# <% endif %>
+# <% endif %> << cancel_comment >>

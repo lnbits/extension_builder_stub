@@ -88,7 +88,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
     )
 
 
-#  <% if settings_table.has_settings %>
+#  <% if settings_table.has_settings %> << cancel_comment >>
 ################################### Settings ###########################################
 async def create_extension_settings(
     user_id: str, data: ExtensionSettings
@@ -116,4 +116,4 @@ async def update_extension_settings(user_id: str, data: ExtensionSettings):
     await db.update("extension_builder_stub.extension_settings", settings)
 
 
-# <% endif %>
+# <% endif %> << cancel_comment >>

@@ -5,7 +5,7 @@
 empty_dict: dict[str, str] = {}
 
 
-#  <% if settings_table.has_settings %>
+#  <% if settings_table.has_settings %> << cancel_comment >>
 async def m001_extension_settings(db):
     """
     Initial owner data table.
@@ -22,7 +22,7 @@ async def m001_extension_settings(db):
     )
 
 
-# <% endif %>
+# <% endif %> << cancel_comment >>
 
 
 async def m002_owner_data(db):
@@ -36,6 +36,24 @@ async def m002_owner_data(db):
             id TEXT PRIMARY KEY,
             user_id TEXT NOT NULL,
             <% for field in owner_table.db_fields %><< field >>,
+            <% endfor%>created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
+            updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
+        );
+    """
+    )
+
+
+async def m003_client_data(db):
+    """
+    Initial client data table.
+    """
+
+    await db.execute(
+        f"""
+        CREATE TABLE extension_builder_stub.client_data (
+            id TEXT PRIMARY KEY,
+            owner_data_id TEXT NOT NULL,
+            <% for field in client_table.db_fields %><< field >>,
             <% endfor%>created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
             updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );
