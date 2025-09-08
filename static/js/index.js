@@ -58,13 +58,13 @@ window.app = Vue.createApp({
     };
   },
   watch: {
-    "donationsCampaignTable.search": {
+    "ownerDataTable.search": {
       handler() {
         const props = {};
-        if (this.donationsCampaignTable.search) {
-          props["search"] = this.donationsCampaignTable.search;
+        if (this.ownerDataTable.search) {
+          props["search"] = this.ownerDataTable.search;
         }
-        this.getDonationsCampaign();
+        this.getOwnerData();
       },
     },
   },
