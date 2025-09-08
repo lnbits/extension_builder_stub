@@ -209,7 +209,7 @@ data = {
         "public_fields": ["name", "description"],
     },
     "client_table": {
-        "name": "Donations",
+        "name": "User Donations",
         "fields": [
             {
                 "name": "id",
@@ -299,13 +299,29 @@ parsed_data = {
         "all_fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
     },
     "client_table": {
-        "name": data["client_table"]["name"],
+        "name": data["client_fields"]["name"],
         "editable_fields": [
             field_to_py(field)
-            for field in data["client_table"]["fields"]
+            for field in data["client_fields"]["fields"]
             if field["editable"]
         ],
-        "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
+        "search_fields": [
+            camel_to_snake(field["name"])
+            for field in data["client_fields"]["fields"]
+            if field["searchable"]
+        ],
+        "public_fields": [
+            field_to_py(field)
+            for field in data["client_fields"]["fields"]
+            if field["name"] in data["client_fields"]["public_fields"]
+        ],
+        "ui_table_columns": [
+            field_to_ui_table_column(field)
+            for field in (data["client_fields"]["fields"] + extra_ui_fields)
+            if field["sortable"]
+        ],
+        "db_fields": [field_to_db(field) for field in data["client_fields"]["fields"]],
+        "all_fields": [field_to_py(field) for field in data["client_fields"]["fields"]],
     },
     "settings_table": {
         "has_settings": True,
