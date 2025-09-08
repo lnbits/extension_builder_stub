@@ -67,13 +67,19 @@ window.app = Vue.createApp({
         this.getOwnerData();
       },
     },
+    "clientDataTable.search": {
+      handler() {
+        const props = {};
+        if (this.clientDataTable.search) {
+          props["search"] = this.clientDataTable.search;
+        }
+        this.getClientData();
+      },
+    },
   },
 
-  ///////////////////////////////////////////////////
-  ////////////////METHODS FUNCTIONS//////////////////
-  ///////////////////////////////////////////////////
-
   methods: {
+    //////////////// Settings ////////////////////////
     async updateSettings() {
       console.log("Updating settings...");
       try {
@@ -109,6 +115,7 @@ window.app = Vue.createApp({
       this.settingsFormDialog.show = true;
     },
 
+    //////////////// Owner Data ////////////////////////
     async showNewOwnerDataForm() {
       this.ownerDataFormDialog.data = {};
       this.ownerDataFormDialog.show = true;
@@ -135,7 +142,6 @@ window.app = Vue.createApp({
         LNbits.utils.notifyApiError(error);
       }
     },
-
     async getOwnerData(props) {
       try {
         this.ownerDataTable.loading = true;
@@ -157,7 +163,6 @@ window.app = Vue.createApp({
         this.ownerDataTable.loading = false;
       }
     },
-
     async deleteOwnerData(ownerDataId) {
       await LNbits.utils
         .confirmDialog("Are you sure you want to delete this Owner Data?")
@@ -177,9 +182,7 @@ window.app = Vue.createApp({
     async exportCSV() {
       await LNbits.utils.exportCSV(this.ownerDataTable.columns, this.myex);
     },
-    dateFromNow(date) {
-      return moment(date).fromNow();
-    },
+    //////////////// Client Data ////////////////////////
 
     connectWebocket(extension_builder_stub_id) {
       //////////////////////////////////////////////////
@@ -203,6 +206,11 @@ window.app = Vue.createApp({
           extension_builder_stub_id;
       }
       this.connection = new WebSocket(localUrl);
+    },
+
+    //////////////// Utils ////////////////////////
+    dateFromNow(date) {
+      return moment(date).fromNow();
     },
     async fetchCurrencies() {
       try {
