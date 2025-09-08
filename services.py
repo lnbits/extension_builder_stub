@@ -6,7 +6,7 @@ from .crud import (
 from .models import ExtensionSettings
 
 
-#  <% if settings_table.has_settings %>
+#  <% if settings_table.has_settings %> << cancel_comment >>
 async def get_settings(user_id: str) -> ExtensionSettings:
     settings = await get_extension_settings(user_id)
     if not settings:
@@ -23,4 +23,4 @@ async def update_settings(user_id: str, data: ExtensionSettings) -> ExtensionSet
     return settings
 
 
-# <% endif %>
+# <% endif %> << cancel_comment >>
