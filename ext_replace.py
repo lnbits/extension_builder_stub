@@ -242,7 +242,7 @@ data = {
                 "type": "int",
                 "label": "Max Campaign Amount (sats)",
                 "hint": "Maximum amount for a single campaign in satoshis",
-                "optional": False,
+                "optional": True, # all settings fields are optional
                 "editable": True,
                 "searchable": True,
             },
