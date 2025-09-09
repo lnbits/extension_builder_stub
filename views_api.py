@@ -248,7 +248,7 @@ async def api_delete_client_data(
 
 
 #  <% if settings_table.has_settings %> << cancel_comment >>
-################################### Settings ###########################################
+############################ Settings #############################
 @extension_builder_stub_api_router.get(
     "/api/v1/settings",
     name="Get Settings",

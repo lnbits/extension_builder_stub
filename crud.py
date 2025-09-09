@@ -24,7 +24,7 @@ from .models import UserExtensionSettings as UserExtensionSettings
 db = Database("ext_extension_builder_stub")
 
 
-################################## Owner Data ##########################################
+########################### Owner Data ############################
 async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
     owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash(), user_id=user_id)
     await db.insert("extension_builder_stub.owner_data", owner_data)
@@ -106,7 +106,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
     )
 
 
-################################# Client Data #########################################
+################################# Client Data ###########################
 
 
 async def create_client_data(owner_data_id: str, data: CreateClientData) -> ClientData:
@@ -198,7 +198,7 @@ async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
 
 
 #  <% if settings_table.has_settings %> << cancel_comment >>
-################################### Settings ###########################################
+############################ Settings #############################
 async def create_extension_settings(
     user_id: str, data: ExtensionSettings
 ) -> ExtensionSettings:

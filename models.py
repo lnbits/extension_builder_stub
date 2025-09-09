@@ -4,7 +4,7 @@ from lnbits.db import FilterModel
 from pydantic import BaseModel, Field
 
 
-################################## Owner Data ##########################################
+########################### Owner Data ############################
 class CreateOwnerData(BaseModel):
     """<< cancel_comment >>
     <% for field in owner_table.editable_fields %><< field >>
@@ -53,7 +53,7 @@ class OwnerDataFilters(FilterModel):
     updated_at: datetime | None
 
 
-################################# Client Data #########################################
+################################# Client Data ###########################
 
 
 class CreateClientData(BaseModel):
@@ -104,7 +104,7 @@ class ClientDataFilters(FilterModel):
 
 
 #  <% if settings_table.has_settings %> << cancel_comment >>
-################################### Settings ###########################################
+############################ Settings #############################
 class ExtensionSettings(BaseModel):
     """<< cancel_comment >>
     <% for field in settings_table.editable_fields %><< field >>
