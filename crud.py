@@ -45,6 +45,19 @@ async def get_owner_data(
     )
 
 
+async def get_owner_data_by_id(
+    owner_data_id: str,
+) -> Optional[OwnerData]:
+    return await db.fetchone(
+        """
+            SELECT * FROM extension_builder_stub.owner_data
+            WHERE id = :id
+        """,
+        {"id": owner_data_id},
+        OwnerData,
+    )
+
+
 async def get_owner_data_ids_by_user(
     user_id: str,
 ) -> list[str]:

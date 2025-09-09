@@ -47,6 +47,7 @@ async def owner_data_public_page(req: Request, owner_data_id):
         "extension_builder_stub/public_owner_data.html",
         {
             "request": req,
+            "owner_data_id": owner_data_id,
             "data": public_data,
         },
     )

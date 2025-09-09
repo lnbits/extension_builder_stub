@@ -20,6 +20,7 @@ from .crud import (
     get_client_data_by_id,
     get_client_data_paginated,
     get_owner_data,
+    get_owner_data_by_id,
     get_owner_data_ids_by_user,
     get_owner_data_paginated,
     update_client_data,
@@ -145,6 +146,26 @@ async def api_create_client_data(
     user: User = Depends(check_user_exists),
 ) -> ClientData:
     owner_data = await get_owner_data(user.id, owner_data_id)
+    if not owner_data:
+        raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
+
+    client_data = await create_client_data(owner_data_id, data)
+    return client_data
+
+
+@extension_builder_stub_api_router.put(
+    "/api/v1/client_data/public/{owner_data_id}",
+    name="Submit new Client Data",
+    summary="Submit new client data for the specified owner data."
+    "This is a public endpoint.",
+    response_description="The created client data.",
+    response_model=ClientData,
+)
+async def api_submit_public_client_data(
+    owner_data_id: str,
+    data: CreateClientData,
+) -> ClientData:
+    owner_data = await get_owner_data_by_id(owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
