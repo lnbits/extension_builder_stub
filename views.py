@@ -8,7 +8,7 @@ from lnbits.core.models import User
 from lnbits.decorators import check_user_exists
 from lnbits.helpers import template_renderer
 
-from .crud import get_public_owner_data
+from .crud import get_owner_data_by_id
 
 extension_builder_stub_generic_router = APIRouter()
 
@@ -37,17 +37,13 @@ async def index(req: Request, user: User = Depends(check_user_exists)):
 
 @extension_builder_stub_generic_router.get("/{owner_data_id}")
 async def owner_data_public_page(req: Request, owner_data_id: str):
-    public_data = await get_public_owner_data(owner_data_id)
-    if not public_data:
+    owner_data = await get_owner_data_by_id(owner_data_id)
+    if not owner_data:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND, detail="Owner Data does not exist."
         )
 
     return extension_builder_stub_renderer().TemplateResponse(
         "extension_builder_stub/public_owner_data.html",
-        {
-            "request": req,
-            "owner_data_id": owner_data_id,
-            "data": public_data,
-        },
+        {"request": req, "owner_data_id": owner_data_id},
     )

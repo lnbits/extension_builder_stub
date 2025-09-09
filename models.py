@@ -25,14 +25,6 @@ class OwnerData(BaseModel):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class PublicOwnerData(BaseModel):
-    id: str
-    """<< cancel_comment >>
-    <% for field in owner_table.public_fields %><< field >>
-    <% endfor%>
-    << cancel_comment >>"""
-
-
 class OwnerDataFilters(FilterModel):
     __search_fields__ = [
         """<< cancel_comment >>
@@ -72,14 +64,6 @@ class ClientData(BaseModel):
     << cancel_comment >>"""
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-
-class PublicClientData(BaseModel):
-    id: str
-    """<< cancel_comment >>
-    <% for field in client_table.public_fields %><< field >>
-    <% endfor%>
-    << cancel_comment >>"""
 
 
 class ClientDataPaymentRequest(BaseModel):

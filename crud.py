@@ -12,7 +12,6 @@ from .models import (
     CreateOwnerData,
     OwnerData,
     OwnerDataFilters,
-    PublicOwnerData,
 )
 
 #  <% if settings_table.has_settings %> << cancel_comment >>
@@ -70,19 +69,6 @@ async def get_owner_data_ids_by_user(
     )
 
     return [row["id"] for row in rows]
-
-
-async def get_public_owner_data(
-    owner_data_id: str,
-) -> Optional[PublicOwnerData]:
-    return await db.fetchone(
-        """
-            SELECT * FROM extension_builder_stub.owner_data
-            WHERE id = :id
-        """,
-        {"id": owner_data_id},
-        PublicOwnerData,
-    )
 
 
 async def get_owner_data_paginated(
@@ -155,19 +141,6 @@ async def get_client_data_by_id(
         {"id": client_data_id},
         ClientData,
     )
-
-
-# async def get_public_client_data(
-#     client_data_id: str,
-# ) -> Optional[PublicClientData]:
-#     return await db.fetchone(
-#         """
-#             SELECT * FROM extension_builder_stub.client_data
-#             WHERE id = :id
-#         """,
-#         {"id": client_data_id},
-#         PublicClientData,
-#     )
 
 
 async def get_client_data_paginated(
