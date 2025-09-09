@@ -161,7 +161,7 @@ def test2():
     )
     replace_text_in_files(
         directory=".",
-        old_text="clentData",
+        old_text="clientData",
         new_text="userDonation",
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
