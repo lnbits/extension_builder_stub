@@ -82,6 +82,12 @@ class PublicClientData(BaseModel):
     << cancel_comment >>"""
 
 
+class ClientDataPaymentRequest(BaseModel):
+    client_data_id: str
+    payment_hash: str
+    payment_request: str
+
+
 class ClientDataFilters(FilterModel):
     __search_fields__ = [
         """<< cancel_comment >>

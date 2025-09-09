@@ -20,7 +20,6 @@ from .crud import (
     get_client_data_by_id,
     get_client_data_paginated,
     get_owner_data,
-    get_owner_data_by_id,
     get_owner_data_ids_by_user,
     get_owner_data_paginated,
     update_client_data,
@@ -29,13 +28,14 @@ from .crud import (
 from .models import (
     ClientData,
     ClientDataFilters,
+    ClientDataPaymentRequest,
     CreateClientData,
     CreateOwnerData,
     ExtensionSettings,
     OwnerData,
     OwnerDataFilters,
 )
-from .services import get_settings, update_settings
+from .services import get_settings, payment_request_for_client_data, update_settings
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 client_data_filters = parse_filters(ClientDataFilters)
@@ -159,18 +159,14 @@ async def api_create_client_data(
     summary="Submit new client data for the specified owner data."
     "This is a public endpoint.",
     response_description="The created client data.",
-    response_model=ClientData,
+    response_model=ClientDataPaymentRequest,
 )
 async def api_submit_public_client_data(
     owner_data_id: str,
     data: CreateClientData,
-) -> ClientData:
-    owner_data = await get_owner_data_by_id(owner_data_id)
-    if not owner_data:
-        raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
+) -> ClientDataPaymentRequest:
 
-    client_data = await create_client_data(owner_data_id, data)
-    return client_data
+    return await payment_request_for_client_data(owner_data_id, data)
 
 
 @extension_builder_stub_api_router.put(
