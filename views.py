@@ -44,7 +44,7 @@ async def owner_data_public_page(req: Request, owner_data_id):
         )
 
     return extension_builder_stub_renderer().TemplateResponse(
-        "extension_builder_stub/owner_data.html",
+        "extension_builder_stub/public_owner_data.html",
         {
             "request": req,
             "data": public_data,
