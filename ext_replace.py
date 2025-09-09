@@ -211,7 +211,7 @@ data = {
     "client_table": {
         "name": "User Donations",
         # todo: mnot public but submitted
-        "public_fields": ["amount_sats", "comment", "email"],
+        "public_fields": ["email"],
         "fields": [
             {
                 "name": "amount_sats",
@@ -384,6 +384,23 @@ def test():
             # "extension_builder_stub_client_inputs": client_inputs,
             "cancel_comment": remove_line_marker,
             **parsed_data,
+        },
+    )
+    with open(template_path, "w", encoding="utf-8") as f:
+        f.write(rederer)
+
+    remove_lines_with_string(template_path, remove_line_marker)
+
+    public_client_data_inputs = html_input_fields(
+        [f for f in data["client_data_table"]["fields"] if not f["optional"]],
+        "publicClientData",
+    )
+    template_path = "./templates/extension_builder_stub/public_owner_data.html"
+    rederer = render_file(
+        template_path,
+        {
+            "extension_builder_stub_public_client_inputs": public_client_data_inputs,
+            "cancel_comment": remove_line_marker,
         },
     )
     with open(template_path, "w", encoding="utf-8") as f:

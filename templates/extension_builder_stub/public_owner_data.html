@@ -6,7 +6,11 @@
 <div class="row q-col-gutter-md justify-center">
   <div class="col-12 col-sm-6 col-md-5 col-lg-4">
     <q-card class="q-pa-lg">
-      <q-card-section class="q-pa-none"> </q-card-section>
+      <q-card-section class="q-pa-none">
+        <!-- << cancel_comment >>
+        << extension_builder_stub_public_client_inputs >>
+        < cancel_comment >> -->
+      </q-card-section>
     </q-card>
   </div>
   <div class="col-12 col-sm-6 col-md-5 col-lg-4 q-gutter-y-md">
@@ -28,7 +32,9 @@
     el: "#vue",
     mixins: [windowMixin],
     data: function () {
-      return {};
+      return {
+        publicClientData: {},
+      };
     },
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py
