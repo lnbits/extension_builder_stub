@@ -45,7 +45,7 @@ async def payment_request_for_client_data(
 
     payment: Payment = await create_invoice(
         wallet_id=owner_data.wallet_id,  # todo
-        amount=client_data.amount,  # todo
+        amount=client_data.amount_sats,  # todo
         extra={"tag": "extension_builder_stub"},
         memo=f"Payment for {owner_data.name}.",  # todo
     )
