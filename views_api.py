@@ -132,7 +132,12 @@ async def api_delete_owner_data(
 
 ############################# Client Data #############################
 @extension_builder_stub_api_router.post(
-    "/api/v1/client_data/{owner_data_id}", status_code=HTTPStatus.CREATED
+    "/api/v1/client_data/{owner_data_id}",
+    name="Create Client Data",
+    summary="Create new client data for the specified owner data.",
+    response_description="The created client data.",
+    response_model=ClientData,
+    status_code=HTTPStatus.CREATED,
 )
 async def api_create_client_data(
     owner_data_id: str,
@@ -142,14 +147,17 @@ async def api_create_client_data(
     owner_data = await get_owner_data(user.id, owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
-    if owner_data.user_id != user.id:
-        raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
+
     client_data = await create_client_data(owner_data_id, data)
     return client_data
 
 
 @extension_builder_stub_api_router.put(
-    "/api/v1/client_data/{client_data_id}", status_code=HTTPStatus.CREATED
+    "/api/v1/client_data/{client_data_id}",
+    name="Update Client Data",
+    summary="Update the client_data with this id.",
+    response_description="The updated client data.",
+    response_model=ClientData,
 )
 async def api_update_client_data(
     client_data_id: str,
@@ -160,16 +168,9 @@ async def api_update_client_data(
     if not client_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Client Data not found.")
 
-    if client_data.id != client_data_id:
-        raise HTTPException(
-            HTTPStatus.BAD_REQUEST, "You cannot change the Client Data ID."
-        )
-
     owner_data = await get_owner_data(user.id, client_data.owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
-    if owner_data.user_id != user.id:
-        raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
 
     client_data = await update_client_data(
         ClientData(**client_data.dict(), **data.dict())
@@ -217,8 +218,6 @@ async def api_get_client_data(
         raise HTTPException(
             HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data."
         )
-    if owner_data.user_id != user.id:
-        raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
 
     return client_data
 
@@ -243,8 +242,6 @@ async def api_delete_client_data(
         raise HTTPException(
             HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data."
         )
-    if owner_data.user_id != user.id:
-        raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
 
     await delete_client_data(owner_data.id, client_data_id)
     return SimpleStatus(success=True, message="Client Data Deleted")
