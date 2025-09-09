@@ -392,7 +392,7 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
     public_client_data_inputs = html_input_fields(
-        [f for f in data["client_data_table"]["fields"] if not f["optional"]],
+        [f for f in data["client_table"]["fields"] if not f["optional"]],
         "publicClientData",
     )
     template_path = "./templates/extension_builder_stub/public_owner_data.html"
