@@ -47,7 +47,7 @@ async def payment_request_for_client_data(
         wallet_id=owner_data.wallet_id,  # todo
         amount=client_data.amount_sats,  # todo
         extra={"tag": "extension_builder_stub"},
-        memo=f"Payment for {owner_data.name}.",  # todo
+        memo=f"Payment for {owner_data.name}. " f"Client Data ID: {client_data.id}",
     )
     return ClientDataPaymentRequest(
         client_data_id=client_data.id,

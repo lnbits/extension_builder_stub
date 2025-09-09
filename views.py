@@ -36,7 +36,7 @@ async def index(req: Request, user: User = Depends(check_user_exists)):
 
 
 @extension_builder_stub_generic_router.get("/{owner_data_id}")
-async def owner_data_public_page(req: Request, owner_data_id):
+async def owner_data_public_page(req: Request, owner_data_id: str):
     public_data = await get_public_owner_data(owner_data_id)
     if not public_data:
         raise HTTPException(

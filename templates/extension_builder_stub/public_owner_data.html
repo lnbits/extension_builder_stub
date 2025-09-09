@@ -5,6 +5,17 @@
 {% extends "public.html" %} {% block page %}
 <div class="row q-col-gutter-md justify-center">
   <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+    <q-card v-if="paymentRequest" class="q-pa-lg">
+      <q-card-section class="q-pa-none q-mb-md">
+        <span class="text-h5">Client Data</span>
+      </q-card-section>
+       <q-card-section class="q-pa-none q-mb-md">
+          <lnbits-qrcode
+            :href="'lightning:' + paymentRequest"
+            :value="'lightning:' + paymentRequest"
+          >
+       </q-card-section>
+    </q-card>
     <q-card class="q-pa-lg">
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data</span>
@@ -52,6 +63,8 @@
     mixins: [windowMixin],
     data: function () {
       return {
+        paymentRequest: "",
+        paymentHash: "",
         ownerDataId: "{{ owner_data_id }}",
         publicClientData: {},
       };
@@ -65,6 +78,9 @@
             null,
             this.publicClientData,
           );
+          this.paymentHash = data.payment_hash;
+          this.paymentRequest = data.payment_request;
+          LNbits.utils.notifySuccess("Client Data submitted!");
           console.log("### Data submitted:", data);
         } catch (error) {
           LNbits.utils.notifyApiError(error);
