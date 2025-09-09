@@ -241,7 +241,7 @@ data = {
                 "optional": True,
                 "editable": True,
                 "searchable": True,
-                "sortable": False,
+                "sortable": True,
             },
         ],
     },
