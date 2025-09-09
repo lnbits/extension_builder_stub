@@ -1,6 +1,5 @@
 <% for field in fields %> <% if field["type"] in ["int", "float"] %>
-<!-- todo -->
-<!-- :rules="[<% if field['optional'] %> val => val && val.length > 0 || '<< field[\'name\'] >> is required.' <% endif %>"]" -->
+<!-- todo :rules=[] -->
 <q-input
   filled
   dense
