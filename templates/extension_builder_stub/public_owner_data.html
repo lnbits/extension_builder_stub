@@ -80,12 +80,38 @@
           );
           this.paymentHash = data.payment_hash;
           this.paymentRequest = data.payment_request;
+
+          this.waitForPayment(this.paymentHash);
           Quasar.Notify.create({
             type: "positive",
             message: this.$t("Client Data submitted"),
           });
         } catch (error) {
           LNbits.utils.notifyApiError(error);
+        }
+      },
+      async waitForPayment(paymentHash) {
+        try {
+          const url = new URL(window.location);
+          url.protocol = url.protocol === "https:" ? "wss" : "ws";
+          url.pathname = `/api/v1/ws/${paymentHash}`;
+          const ws = new WebSocket(url);
+          ws.addEventListener("message", async ({ data }) => {
+            const payment = JSON.parse(data);
+            if (payment.pending === false) {
+              Quasar.Notify.create({
+                type: "positive",
+                message: "Invoice Paid!",
+              });
+              ws.close();
+            }
+          });
+        } catch (err) {
+          console.warn(err);
+          Quasar.Notify.create({
+            type: "negative",
+            message: "Error waiting for payment.",
+          });
         }
       },
     },
