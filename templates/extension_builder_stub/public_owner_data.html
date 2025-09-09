@@ -16,14 +16,18 @@
       </q-card-section>
 
       <q-card-section class="q-pa-none q-mt-md">
-        <q-btn
-          @click="submitClientData"
-          unelevated
-          color="primary"
-          class="float-right"
-        >
-          <span>Submit</span>
-        </q-btn>
+        <div class="row">
+          <div class="col">
+            <q-btn
+              @click="submitClientData"
+              unelevated
+              color="primary"
+              class="float-right"
+            >
+              <span>Submit</span>
+            </q-btn>
+          </div>
+        </div>
       </q-card-section>
       <q-card-section></q-card-section>
     </q-card>
@@ -56,7 +60,7 @@
       async submitClientData() {
         try {
           const { data } = await LNbits.api.request(
-            method,
+            "PUT",
             `/extension_builder_stub/api/v1/client_data/public/${this.ownerDataId}`,
             null,
             this.publicClientData,
@@ -70,7 +74,6 @@
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py
     },
-    methods: {},
   });
 </script>
 {% endblock %}

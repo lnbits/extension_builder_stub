@@ -57,7 +57,6 @@ class OwnerDataFilters(FilterModel):
 
 
 class CreateClientData(BaseModel):
-    owner_data_id: str
     """<< cancel_comment >>
     <% for field in client_table.editable_fields %><< field >>
     <% endfor%>
