@@ -9,14 +9,14 @@
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data</span>
       </q-card-section>
-       <q-card-section class="q-pa-none q-mb-md">
-          <lnbits-qrcode
-            :href="'lightning:' + paymentRequest"
-            :value="'lightning:' + paymentRequest"
-          >
-       </q-card-section>
+      <q-card-section class="q-pa-none q-mb-md">
+        <lnbits-qrcode
+          :href="'lightning:' + paymentRequest"
+          :value="'lightning:' + paymentRequest"
+        ></lnbits-qrcode>
+      </q-card-section>
     </q-card>
-    <q-card class="q-pa-lg">
+    <q-card v-else class="q-pa-lg">
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data</span>
       </q-card-section>
@@ -80,7 +80,11 @@
           );
           this.paymentHash = data.payment_hash;
           this.paymentRequest = data.payment_request;
-          LNbits.utils.notifySuccess("Client Data submitted!");
+          Quasar.Notify.create({
+            type: "positive",
+            message: this.$t("Client Data submitted"),
+          });
+
           console.log("### Data submitted:", data);
         } catch (error) {
           LNbits.utils.notifyApiError(error);
