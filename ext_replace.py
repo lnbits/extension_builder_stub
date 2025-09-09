@@ -211,7 +211,7 @@ data = {
     "client_table": {
         "name": "User Donations",
         # todo: mnot public but submitted
-        "public_fields": ["email"],
+        "public_fields": ["amount_sats", "comment", "email"],
         "fields": [
             {
                 "name": "amount_sats",
@@ -392,7 +392,11 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
     public_client_data_inputs = html_input_fields(
-        [f for f in data["client_table"]["fields"] if not f["optional"]],
+        [
+            f
+            for f in data["client_table"]["fields"]
+            if f["name"] in data["client_table"]["public_fields"]
+        ],
         "publicClientData",
     )
     template_path = "./templates/extension_builder_stub/public_owner_data.html"
