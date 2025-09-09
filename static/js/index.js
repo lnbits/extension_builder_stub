@@ -282,5 +282,6 @@ window.app = Vue.createApp({
   async created() {
     this.fetchCurrencies();
     this.getOwnerData();
+    this.getClientData();
   },
 });
