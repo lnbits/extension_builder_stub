@@ -188,6 +188,11 @@ def test2():
     rename_files_and_dirs_in_directory(
         directory=".", old_text="extension_builder_stub", new_text="donations"
     )
+    rename_files_and_dirs_in_directory(
+        directory=".",
+        old_text="owner_data",
+        new_text="donations_campaign",
+    )
 
     zip_directory(".", "donations.zip")
 
