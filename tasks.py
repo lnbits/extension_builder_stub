@@ -25,7 +25,7 @@ async def wait_for_paid_invoices():
 
 
 async def on_invoice_paid(payment: Payment) -> None:
-    if payment.extra.get("tag") != "ext_extension_builder_stub":
+    if payment.extra.get("tag") != "extension_builder_stub":
         return
 
     logger.info(f"Invoice paid for extension_builder_stub: {payment.payment_hash}")
