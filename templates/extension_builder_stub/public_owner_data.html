@@ -116,6 +116,7 @@
           ws.addEventListener("message", async ({ data }) => {
             const payment = JSON.parse(data);
             if (payment.pending === false) {
+              this.invoicePaid = true;
               Quasar.Notify.create({
                 type: "positive",
                 message: "Invoice Paid!",
