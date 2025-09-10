@@ -184,7 +184,7 @@
               filled
               dense
               emit-value
-              v-model="clientDataFormDialog.ownerDataId"
+              v-model="clientDataFormDialog.ownerData"
               :options="[{label: 'All Owner Data', value: ''}, ...ownerDataList.map(x => ({label: x.name || x.id, value: x.id}))]"
               label="Owner Data"
               class="q-mb-md"

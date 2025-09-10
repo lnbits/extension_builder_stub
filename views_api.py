@@ -206,10 +206,15 @@ async def api_update_client_data(
 )
 async def api_get_client_data_paginated(
     user: User = Depends(check_user_exists),
+    owner_data_id: Optional[str] = None,
     filters: Filters = Depends(client_data_filters),
 ) -> Page[ClientData]:
 
-    owner_data_ids = await get_owner_data_ids_by_user(user.id)
+    if owner_data_id:
+        owner_data_ids = [owner_data_id]
+    else:
+        owner_data_ids = await get_owner_data_ids_by_user(user.id)
+
     return await get_client_data_paginated(
         owner_data_ids=owner_data_ids,
         filters=filters,

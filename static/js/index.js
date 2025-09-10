@@ -35,7 +35,7 @@ window.app = Vue.createApp({
 
       clientDataFormDialog: {
         show: false,
-        ownerDataId: null,
+        ownerDataId: { label: "All Owner Data", value: "" },
         data: {},
       },
       clientDataList: [],
@@ -215,10 +215,13 @@ window.app = Vue.createApp({
     async getClientData(props) {
       try {
         this.clientDataTable.loading = true;
-        const params = LNbits.utils.prepareFilterQuery(
+        let params = LNbits.utils.prepareFilterQuery(
           this.clientDataTable,
           props,
         );
+        if (this.clientDataFormDialog.ownerDataId.value) {
+          params += `&owner_data_id=${this.clientDataFormDialog.ownerDataId.value}`;
+        }
         const { data } = await LNbits.api.request(
           "GET",
           `/extension_builder_stub/api/v1/client_data/paginated?${params}`,
