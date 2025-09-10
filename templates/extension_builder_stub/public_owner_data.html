@@ -5,19 +5,7 @@
 {% extends "public.html" %} {% block page %}
 <div class="row q-col-gutter-md justify-center">
   <div class="col-12 col-sm-6 col-md-5 col-lg-4">
-    <q-card v-if="paymentRequest" class="q-pa-lg">
-      <q-card-section class="q-pa-none q-mb-md">
-        <span class="text-h5">Client Data:</span>
-        <span v-text="clientDataId" class="text-h5"></span>
-      </q-card-section>
-      <q-card-section class="q-pa-none q-mb-md">
-        <lnbits-qrcode
-          :href="'lightning:' + paymentRequest"
-          :value="'lightning:' + paymentRequest"
-        ></lnbits-qrcode>
-      </q-card-section>
-    </q-card>
-    <q-card v-else-if="invoicePaid" class="q-pa-lg">
+    <q-card v-if="invoicePaid" class="q-pa-lg">
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data:</span>
         <span v-text="clientDataId" class="text-h5"></span>
@@ -29,6 +17,19 @@
         ></q-icon>
       </q-card-section>
     </q-card>
+    <q-card v-else-if="paymentRequest" class="q-pa-lg">
+      <q-card-section class="q-pa-none q-mb-md">
+        <span class="text-h5">Client Data:</span>
+        <span v-text="clientDataId" class="text-h5"></span>
+      </q-card-section>
+      <q-card-section class="q-pa-none q-mb-md">
+        <lnbits-qrcode
+          :href="'lightning:' + paymentRequest"
+          :value="'lightning:' + paymentRequest"
+        ></lnbits-qrcode>
+      </q-card-section>
+    </q-card>
+
     <q-card v-else class="q-pa-lg">
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data</span>
