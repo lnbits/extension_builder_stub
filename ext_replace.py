@@ -342,6 +342,15 @@ parsed_data = {
         ],
         "db_fields": [field_to_db(field) for field in data["settings_table"]["fields"]],
     },
+    "public_page": {
+        "owner_data_name_field:": "xxx",
+        "owner_data_description_field:": "xxx",
+        "action": {
+            "wallet_id_field": "xxx",
+            "currency_field": "xxx",
+            "amount_field": "xxx",
+        }
+    },
     "cancel_comment": remove_line_marker,
 }
 
