@@ -199,9 +199,10 @@ window.app = Vue.createApp({
         const data = { extra: {}, ...this.clientDataFormDialog.data };
         console.log("### data", data);
         const method = data.id ? "PUT" : "POST";
+        const entry = data.id ? `/${data.id}` : "";
         await LNbits.api.request(
           method,
-          "/extension_builder_stub/api/v1/client_data",
+          "/extension_builder_stub/api/v1/client_data" + entry,
           null,
           data,
         );
