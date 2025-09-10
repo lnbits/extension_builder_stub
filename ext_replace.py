@@ -380,6 +380,10 @@ def test():
         [f for f in data["owner_table"]["fields"] if f["editable"]],
         "ownerDataFormDialog.data",
     )
+    client_inputs = html_input_fields(
+        [f for f in data["client_table"]["fields"] if f["editable"]],
+        "clientDataFormDialog.data",
+    )
     settings_inputs = html_input_fields(
         [f for f in data["settings_table"]["fields"] if f["editable"]],
         "settingsFormDialog.data",
@@ -390,8 +394,7 @@ def test():
         {
             "extension_builder_stub_owner_inputs": owner_inputs,
             "extension_builder_stub_settings_inputs": settings_inputs,
-            # todo: user edits this data
-            # "extension_builder_stub_client_inputs": client_inputs,
+            "extension_builder_stub_client_inputs": client_inputs,
             "cancel_comment": remove_line_marker,
             **parsed_data,
         },
