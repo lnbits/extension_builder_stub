@@ -77,6 +77,15 @@ window.app = Vue.createApp({
         this.getClientData();
       },
     },
+    "clientDataFormDialog.ownerData.value": {
+      handler() {
+        const props = {};
+        if (this.clientDataTable.search) {
+          props["search"] = this.clientDataTable.search;
+        }
+        this.getClientData();
+      },
+    },
   },
 
   methods: {
@@ -219,8 +228,9 @@ window.app = Vue.createApp({
           this.clientDataTable,
           props,
         );
-        if (this.clientDataFormDialog.ownerDataId.value) {
-          params += `&owner_data_id=${this.clientDataFormDialog.ownerDataId.value}`;
+        const ownerDataId = this.clientDataFormDialog.ownerData.value;
+        if (ownerDataId) {
+          params += `&owner_data_id=${ownerDataId}`;
         }
         const { data } = await LNbits.api.request(
           "GET",

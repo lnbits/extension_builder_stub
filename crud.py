@@ -157,7 +157,8 @@ async def get_client_data_paginated(
             owner_data_id = f"owner_data_id__{i}"
             id_clause.append(f"owner_data_id = :{owner_data_id}")
             values[owner_data_id] = item_id
-        where.append(" OR ".join(id_clause))
+        or_clause = " OR ".join(id_clause)
+        where.append(f"({or_clause})")
 
     return await db.fetch_page(
         "SELECT * FROM extension_builder_stub.client_data",
