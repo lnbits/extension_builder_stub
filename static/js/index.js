@@ -232,6 +232,22 @@ window.app = Vue.createApp({
         this.clientDataTable.loading = false;
       }
     },
+    async deleteClientData(clientDataId) {
+      await LNbits.utils
+        .confirmDialog("Are you sure you want to delete this Client Data?")
+        .onOk(async () => {
+          try {
+            await LNbits.api.request(
+              "DELETE",
+              "/extension_builder_stub/api/v1/client_data/" + clientDataId,
+              null,
+            );
+            await this.getClientData();
+          } catch (error) {
+            LNbits.utils.notifyApiError(error);
+          }
+        });
+    },
 
     async exportClientDataCSV() {
       await LNbits.utils.exportCSV(

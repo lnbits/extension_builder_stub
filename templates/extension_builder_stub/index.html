@@ -233,6 +233,17 @@
                 >
                   <q-tooltip> Edit </q-tooltip>
                 </q-btn>
+                <q-btn
+                  flat
+                  dense
+                  size="xs"
+                  @click="deleteClientData(props.row.id)"
+                  icon="cancel"
+                  color="pink"
+                  class="q-mr-sm"
+                >
+                  <q-tooltip> Delete </q-tooltip>
+                </q-btn>
               </q-td>
 
               <q-td v-for="col in props.cols" :key="col.name" :props="props">
