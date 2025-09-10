@@ -243,6 +243,16 @@ data = {
                 "searchable": True,
                 "sortable": True,
             },
+            {
+                "name": "paid",
+                "label": "Paid",
+                "hint": "Indicates if the donation has been paid",
+                "type": "bool",
+                "optional": True,
+                "editable": False,
+                "searchable": False,
+                "sortable": True,
+            },
         ],
     },
     "settings_table": {

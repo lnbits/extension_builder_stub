@@ -4,6 +4,8 @@ from lnbits.core.models import Payment
 from lnbits.tasks import register_invoice_listener
 from loguru import logger
 
+from .services import payment_received_for_client_data
+
 #######################################
 ########## RUN YOUR TASKS HERE ########
 #######################################
@@ -26,4 +28,9 @@ async def on_invoice_paid(payment: Payment) -> None:
     if payment.extra.get("tag") != "ext_extension_builder_stub":
         return
 
-    logger.info(f"Invoice paid for extension_builder_stub: {payment.bolt11}")
+    logger.info(f"Invoice paid for extension_builder_stub: {payment.payment_hash}")
+
+    try:
+        await payment_received_for_client_data(payment)
+    except Exception as e:
+        logger.error(f"Error processing payment for extension_builder_stub: {e}")
