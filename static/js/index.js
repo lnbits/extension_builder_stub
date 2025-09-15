@@ -91,7 +91,6 @@ window.app = Vue.createApp({
   methods: {
     //////////////// Settings ////////////////////////
     async updateSettings() {
-      console.log("Updating settings...");
       try {
         const data = { ...this.settingsFormDialog.data };
 
@@ -107,14 +106,12 @@ window.app = Vue.createApp({
       }
     },
     async getSettings() {
-      console.log("Get settings...");
       try {
         const { data } = await LNbits.api.request(
           "GET",
           "/extension_builder_stub/api/v1/settings",
           null,
         );
-        console.log("### data", data);
         this.settingsFormDialog.data = data;
       } catch (error) {
         LNbits.utils.notifyApiError(error);
@@ -137,7 +134,6 @@ window.app = Vue.createApp({
     async saveOwnerData() {
       try {
         const data = { extra: {}, ...this.ownerDataFormDialog.data };
-        console.log("### data", data);
         const method = data.id ? "PUT" : "POST";
         const entry = data.id ? `/${data.id}` : "";
         await LNbits.api.request(
@@ -164,7 +160,6 @@ window.app = Vue.createApp({
           `/extension_builder_stub/api/v1/owner_data/paginated?${params}`,
           null,
         );
-        console.log("### data", data);
         this.ownerDataList = data.data;
         this.ownerDataTable.pagination.rowsNumber = data.total;
       } catch (error) {
@@ -205,7 +200,6 @@ window.app = Vue.createApp({
     async saveClientData() {
       try {
         const data = { extra: {}, ...this.clientDataFormDialog.data };
-        console.log("### data", data);
         const method = data.id ? "PUT" : "POST";
         const entry = data.id ? `/${data.id}` : "";
         await LNbits.api.request(
@@ -236,7 +230,6 @@ window.app = Vue.createApp({
           `/extension_builder_stub/api/v1/client_data/paginated?${params}`,
           null,
         );
-        console.log("### data", data);
         this.clientDataList = data.data;
         this.clientDataTable.pagination.rowsNumber = data.total;
       } catch (error) {
