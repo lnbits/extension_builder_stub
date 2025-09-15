@@ -276,6 +276,7 @@ data = {
         ],
     },
     "public_page": {
+        "has_public_page": True,
         "owner_data_fields": {
             "name": "name",
             "description": "description",
