@@ -61,7 +61,7 @@ async def payment_received_for_client_data(payment: Payment) -> bool:
 
     client_data.paid = True  # type: ignore
     await update_client_data(client_data)
-    logger.info(f"Client data {client_data_id} marked as paid.")
+    logger.info(f"Client Data {client_data_id} paid.")
     return True
 
 
