@@ -206,12 +206,9 @@ data = {
                 "sortable": False,
             },
         ],
-        "public_fields": ["name", "description"],
     },
     "client_table": {
         "name": "User Donations",
-        # todo: mnot public but submitted
-        "public_fields": ["amount_sats", "comment", "email"],
         "fields": [
             {
                 "name": "amount_sats",
@@ -278,6 +275,20 @@ data = {
             },
         ],
     },
+    "public_page": {
+        "owner_data_fields": {
+            "name": "name",
+            "description": "description",
+        },
+        "client_data_fields": {
+            "public_inputs": ["amount_sats", "comment", "email"],
+        },
+        "action_fields": {
+            "wallet_id": "wallet_id",
+            "currency": "currency",
+            "amount": "amount_sats",
+        },
+    },
 }
 
 parsed_data = {
@@ -292,11 +303,6 @@ parsed_data = {
             camel_to_snake(field["name"])
             for field in data["owner_table"]["fields"]
             if field["searchable"]
-        ],
-        "public_fields": [
-            field_to_py(field)
-            for field in data["owner_table"]["fields"]
-            if field["name"] in data["owner_table"]["public_fields"]
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
@@ -319,11 +325,6 @@ parsed_data = {
             for field in data["client_table"]["fields"]
             if field["searchable"]
         ],
-        "public_fields": [
-            field_to_py(field)
-            for field in data["client_table"]["fields"]
-            if field["name"] in data["client_table"]["public_fields"]
-        ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
             for field in (data["client_table"]["fields"] + extra_ui_fields)
@@ -341,15 +342,6 @@ parsed_data = {
             if field["editable"]
         ],
         "db_fields": [field_to_db(field) for field in data["settings_table"]["fields"]],
-    },
-    "public_page": {
-        "owner_data_name_field:": "xxx",
-        "owner_data_description_field:": "xxx",
-        "action": {
-            "wallet_id_field": "xxx",
-            "currency_field": "xxx",
-            "amount_field": "xxx",
-        }
     },
     "cancel_comment": remove_line_marker,
 }
@@ -417,7 +409,7 @@ def test():
         [
             f
             for f in data["client_table"]["fields"]
-            if f["name"] in data["client_table"]["public_fields"]
+            if f["name"] in data["public_page"]["client_data_fields"]["public_inputs"]
         ],
         "publicClientData",
     )

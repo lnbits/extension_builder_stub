@@ -194,7 +194,7 @@ window.app = Vue.createApp({
       await LNbits.utils.exportCSV(
         this.ownerDataTable.columns,
         this.ownerDataList,
-        'owner_data_' + new Date().toISOString().slice(0, 10) + '.csv'
+        "owner_data_" + new Date().toISOString().slice(0, 10) + ".csv",
       );
     },
     //////////////// Client Data ////////////////////////
@@ -268,7 +268,7 @@ window.app = Vue.createApp({
       await LNbits.utils.exportCSV(
         this.clientDataTable.columns,
         this.clientDataList,
-        'client_data_' + new Date().toISOString().slice(0, 10) + '.csv'
+        "client_data_" + new Date().toISOString().slice(0, 10) + ".csv",
       );
     },
 
