@@ -17,14 +17,13 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
             root.startswith("./.")
             or root.startswith("./__pycache__")
             or root.startswith("./node_modules")
+            or root.startswith("./transform")
         ):
             continue
         for filename in files:
             if file_extensions:
                 if not any(filename.endswith(ext) for ext in file_extensions):
                     continue
-            if filename in ["ext_rename.py", "ext_replace.py"]:
-                continue
 
             file_path = os.path.join(root, filename)
             try:
