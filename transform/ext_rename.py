@@ -1,6 +1,8 @@
 import os
 import zipfile
 
+from .models import data
+
 
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     """
@@ -105,19 +107,19 @@ def test2():
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub_name",
-        new_text="Raise Campaign",
+        new_text=data["name"],
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
-        old_text="extension_builder_stub_description",
-        new_text="An extension to manage fundraising campaigns.",
+        old_text="extension_builder_stub_short_description",
+        new_text=data["short_description"],
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub",
-        new_text="donations",
+        new_text=data["id"],
         file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
     )
     replace_text_in_files(
@@ -185,7 +187,7 @@ def test2():
     )
 
     rename_files_and_dirs_in_directory(
-        directory=".", old_text="extension_builder_stub", new_text="donations"
+        directory=".", old_text="extension_builder_stub", new_text=data["id"]
     )
     rename_files_and_dirs_in_directory(
         directory=".",
@@ -193,7 +195,7 @@ def test2():
         new_text="donations_campaign",
     )
 
-    zip_directory(".", "donations.zip")
+    zip_directory(".", f"data[{data['id']}].zip")
 
 
 test2()

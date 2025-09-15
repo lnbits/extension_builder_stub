@@ -1,6 +1,6 @@
 {
   "name": "extension_builder_stub_name",
-  "short_description": "extension_builder_stub_description",
+  "short_description": "extension_builder_stub_short_description",
   "tile": "/extension_builder_stub/static/image/extension_builder_stub.png",
   "min_lnbits_version": "1.0.0",
   "contributors": [
