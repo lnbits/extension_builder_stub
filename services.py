@@ -29,11 +29,17 @@ async def payment_request_for_client_data(
 
     client_data = await create_client_data(owner_data_id, data)
 
+    owner_data_name = getattr(
+        owner_data, "<<public_page.owner_data_fields.name>>", "Unknown"
+    )
     payment: Payment = await create_invoice(
-        wallet_id=owner_data.wallet_id,  # todo
-        amount=client_data.amount_sats,  # todo
+        wallet_id=getattr(
+            owner_data, "<<public_page.action_fields.wallet_id>>", "wallet_id"
+        ),
+        amount=getattr(client_data, "<<public_page.action_fields.amount_sats>>", 0),
+        currency=getattr(owner_data, "<<public_page.action_fields.currency>>", "sats"),
         extra={"tag": "extension_builder_stub", "client_data_id": client_data.id},
-        memo=f"Payment for {owner_data.name}. " f"Client Data ID: {client_data.id}",
+        memo=f"Payment for {owner_data_name}. " f"Client Data ID: {client_data.id}",
     )
     return ClientDataPaymentRequest(
         client_data_id=client_data.id,

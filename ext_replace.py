@@ -314,7 +314,6 @@ parsed_data = {
     },
     "client_table": {
         "name": data["client_table"]["name"],
-        "data_enditable": False,  # todo: user edits this data
         "editable_fields": [
             field_to_py(field)
             for field in data["client_table"]["fields"]
@@ -343,6 +342,7 @@ parsed_data = {
         ],
         "db_fields": [field_to_db(field) for field in data["settings_table"]["fields"]],
     },
+    "public_page": data["public_page"],
     "cancel_comment": remove_line_marker,
 }
 
