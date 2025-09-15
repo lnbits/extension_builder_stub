@@ -23,6 +23,9 @@ extra_ui_fields = [
 
 data = {
     "id": "donations",
+    "name": "Donations",
+    "short_description": "A simple donations extension",
+    "description": "An extension to manage donations. xxxxx",
     "owner_table": {
         "name": "Campaign",
         "fields": [
