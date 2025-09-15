@@ -285,6 +285,7 @@ data = {
             "public_inputs": ["amount_sats", "comment", "email"],
         },
         "action_fields": {
+            "generate_action": True,
             "wallet_id": "wallet_id",
             "currency": "currency",
             "amount": "amount_sats",
