@@ -203,7 +203,6 @@ window.app = Vue.createApp({
       this.clientDataFormDialog.show = true;
     },
     async saveClientData() {
-      console.log("Saving client data...");
       try {
         const data = { extra: {}, ...this.clientDataFormDialog.data };
         console.log("### data", data);
