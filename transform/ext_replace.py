@@ -63,7 +63,7 @@ def field_to_py(field: dict) -> str:
     field_type = field["type"]
     if field_type == "json":
         field_type = "dict"
-    elif field_type in ["wallet", "currency"]:
+    elif field_type in ["wallet", "currency", "text"]:
         field_type = "str"
     if field["optional"]:
         field_type += " | None"
