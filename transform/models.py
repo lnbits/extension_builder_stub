@@ -376,12 +376,6 @@ data = {
 
 # print("### data:", json.dumps(data))
 extension_data: ExtensionData = dict_to_model(data, ExtensionData)
-extension_data.client_data.fields.extend(
-    dict_to_model(f, DataField) for f in extra_ui_fields
-)
-extension_data.owner_data.fields.extend(
-    dict_to_model(f, DataField) for f in extra_ui_fields
-)
-
+ui_table_columns = [dict_to_model(f, DataField) for f in extra_ui_fields]
 # print("### extension_data:", extension_data)
 # print("### extension_data.json():", extension_data.json())

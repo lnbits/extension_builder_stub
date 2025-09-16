@@ -6,7 +6,7 @@ import re
 
 from jinja2 import Environment, FileSystemLoader
 
-from .models import DataField
+from .models import DataField, ui_table_columns
 from .models import extension_data as data
 
 
@@ -139,7 +139,7 @@ parsed_data = {
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in data.owner_data.fields
+            for field in data.owner_data.fields + ui_table_columns
             if field.sortable
         ],
         "db_fields": [field_to_db(field) for field in data.owner_data.fields],
@@ -157,7 +157,7 @@ parsed_data = {
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in data.client_data.fields
+            for field in data.client_data.fields + ui_table_columns
             if field.sortable
         ],
         "db_fields": [field_to_db(field) for field in data.client_data.fields],
