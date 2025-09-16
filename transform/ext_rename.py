@@ -1,4 +1,5 @@
 import os
+import re
 import zipfile
 
 from .models import data
@@ -11,6 +12,22 @@ def is_excluded_dir(path):
         if path.startswith(excluded_dir):
             return True
     return False
+
+
+def camel_to_words(name: str) -> str:
+    # Add space before capital letters (but not at the start)
+    words = re.sub(r"(?<!^)(?=[A-Z])", " ", name)
+    return words.strip()
+
+
+def camel_to_snake(name: str) -> str:
+    name = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", name)
+    name = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", name)
+    return name.lower()
+
+
+def lowercase_first_letter(s: str) -> str:
+    return s[:1].lower() + s[1:] if s else s
 
 
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
@@ -127,64 +144,64 @@ def test2():
     replace_text_in_files(
         directory=".",
         old_text="OwnerData",
-        new_text="DonationsCampaign",
+        new_text=data["owner_data"]["name"],
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="ownerData",
-        new_text="donationsCampaign",
+        new_text=lowercase_first_letter(data["owner_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Owner Data",
-        new_text="Donations Campaign",
+        new_text=camel_to_words(data["owner_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="owner_data",
-        new_text="donations_campaign",
+        new_text=camel_to_snake(data["owner_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="owner data",
-        new_text="donations campaign",
+        new_text=camel_to_words(data["owner_data"]["name"]).lower(),
         file_extensions=[".py"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="ClientData",
-        new_text="UserDonation",
+        new_text=data["client_data"]["name"],
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="clientData",
-        new_text="userDonation",
+        new_text=lowercase_first_letter(data["client_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Client Data",
-        new_text="User Donation",
+        new_text=camel_to_words(data["client_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="client_data",
-        new_text="user_donation",
+        new_text=camel_to_snake(data["owner_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="client data",
-        new_text="user donation",
+        new_text=camel_to_words(data["client_data"]["name"]).lower(),
         file_extensions=[".py"],
     )
 
@@ -194,7 +211,7 @@ def test2():
     rename_files_and_dirs_in_directory(
         directory=".",
         old_text="owner_data",
-        new_text="donations_campaign",
+        new_text=camel_to_snake(data["owner_data"]["name"]),
     )
 
     zip_directory(".", data["id"] + ".zip")
