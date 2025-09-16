@@ -1,4 +1,4 @@
-# poetry run python -m transform.ext_replace 
+# poetry run python -m transform.ext_replace
 
 import json
 import os

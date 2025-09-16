@@ -5,6 +5,7 @@ from .models import data
 
 excluded_dirs = {"./.", "./__pycache__", "./node_modules", "./transform"}
 
+
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     """
     Recursively replaces text in all files under the given directory.
