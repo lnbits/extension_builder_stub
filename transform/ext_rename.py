@@ -195,7 +195,7 @@ def test2():
     replace_text_in_files(
         directory=".",
         old_text="client_data",
-        new_text=camel_to_snake(data["owner_data"]["name"]),
+        new_text=camel_to_snake(data["client_data"]["name"]),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
