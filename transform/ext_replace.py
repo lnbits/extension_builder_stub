@@ -6,7 +6,8 @@ import re
 
 from jinja2 import Environment, FileSystemLoader
 
-from .models import data, extra_ui_fields
+from .models import DataField
+from .models import extension_data as data
 
 
 def jinja_env(template_dir: str) -> Environment:
@@ -58,21 +59,21 @@ def camel_to_snake(name: str) -> str:
     return name.lower()
 
 
-def field_to_py(field: dict) -> str:
-    field_name = camel_to_snake(field["name"])
-    field_type = field["type"]
+def field_to_py(field: DataField) -> str:
+    field_name = camel_to_snake(field.name)
+    field_type = field.type
     if field_type == "json":
         field_type = "dict"
     elif field_type in ["wallet", "currency", "text"]:
         field_type = "str"
-    if field["optional"]:
+    if field.optional:
         field_type += " | None"
     return f"{field_name}: {field_type}"
 
 
-def field_to_db(field: dict) -> str:
-    field_name = camel_to_snake(field["name"])
-    field_type = field["type"]
+def field_to_db(field: DataField) -> str:
+    field_name = camel_to_snake(field.name)
+    field_type = field.type
     if field_type == "str":
         db_type = "TEXT"
     elif field_type == "int":
@@ -87,20 +88,20 @@ def field_to_db(field: dict) -> str:
         db_type = "TEXT"
 
     db_field = f"{field_name} {db_type}"
-    if not field["optional"]:
+    if not field.optional:
         db_field += " NOT NULL"
     if field_type == "json":
         db_field += " DEFAULT '{empty_dict}'"
     return db_field
 
 
-def field_to_ui_table_column(field: dict) -> str:
+def field_to_ui_table_column(field: DataField) -> str:
     column = {
-        "name": field["name"],
+        "name": field.name,
         "align": "left",
-        "label": field["label"] or field["name"],
-        "field": field["name"],
-        "sortable": field["sortable"],
+        "label": field.label or field.name,
+        "field": field.name,
+        "sortable": field.sortable,
     }
 
     return json.dumps(column)
@@ -127,56 +128,50 @@ py_template_path = "./models.py"
 
 parsed_data = {
     "owner_data": {
-        "name": data["owner_data"]["name"],
+        "name": data.owner_data.name,
         "editable_fields": [
-            field_to_py(field)
-            for field in data["owner_data"]["fields"]
-            if field["editable"]
+            field_to_py(field) for field in data.owner_data.fields if field.editable
         ],
         "search_fields": [
-            camel_to_snake(field["name"])
-            for field in data["owner_data"]["fields"]
-            if field["searchable"]
+            camel_to_snake(field.name)
+            for field in data.owner_data.fields
+            if field.searchable
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in (data["owner_data"]["fields"] + extra_ui_fields)
-            if field["sortable"]
+            for field in data.owner_data.fields
+            if field.sortable
         ],
-        "db_fields": [field_to_db(field) for field in data["owner_data"]["fields"]],
-        "all_fields": [field_to_py(field) for field in data["owner_data"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data.owner_data.fields],
+        "all_fields": [field_to_py(field) for field in data.owner_data.fields],
     },
     "client_data": {
-        "name": data["client_data"]["name"],
+        "name": data.client_data.name,
         "editable_fields": [
-            field_to_py(field)
-            for field in data["client_data"]["fields"]
-            if field["editable"]
+            field_to_py(field) for field in data.client_data.fields if field.editable
         ],
         "search_fields": [
-            camel_to_snake(field["name"])
-            for field in data["client_data"]["fields"]
-            if field["searchable"]
+            camel_to_snake(field.name)
+            for field in data.client_data.fields
+            if field.searchable
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in (data["client_data"]["fields"] + extra_ui_fields)
-            if field["sortable"]
+            for field in data.client_data.fields
+            if field.sortable
         ],
-        "db_fields": [field_to_db(field) for field in data["client_data"]["fields"]],
-        "all_fields": [field_to_py(field) for field in data["client_data"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data.client_data.fields],
+        "all_fields": [field_to_py(field) for field in data.client_data.fields],
     },
     "settings_data": {
-        "enabled": data["settings_data"]["enabled"],
-        "is_admin_settings_only": data["settings_data"]["type"] == "admin",
+        "enabled": data.settings_data.enabled,
+        "is_admin_settings_only": data.settings_data.type == "admin",
         "editable_fields": [
-            field_to_py(field)
-            for field in data["settings_data"]["fields"]
-            if field["editable"]
+            field_to_py(field) for field in data.settings_data.fields if field.editable
         ],
-        "db_fields": [field_to_db(field) for field in data["settings_data"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data.settings_data.fields],
     },
-    "public_page": data["public_page"],
+    "public_page": data.public_page,
     "cancel_comment": remove_line_marker,
 }
 
@@ -212,15 +207,15 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
     owner_inputs = html_input_fields(
-        [f for f in data["owner_data"]["fields"] if f["editable"]],
+        [f for f in data.owner_data.fields if f.editable],
         "ownerDataFormDialog.data",
     )
     client_inputs = html_input_fields(
-        [f for f in data["client_data"]["fields"] if f["editable"]],
+        [f for f in data.client_data.fields if f.editable],
         "clientDataFormDialog.data",
     )
     settings_inputs = html_input_fields(
-        [f for f in data["settings_data"]["fields"] if f["editable"]],
+        [f for f in data.settings_data.fields if f.editable],
         "settingsFormDialog.data",
     )
     template_path = "./templates/extension_builder_stub/index.html"
@@ -242,8 +237,8 @@ def test():
     public_client_data_inputs = html_input_fields(
         [
             f
-            for f in data["client_data"]["fields"]
-            if f["name"] in data["public_page"]["client_data_fields"]["public_inputs"]
+            for f in data.client_data.fields
+            if f.name in data.public_page.client_data_fields.public_inputs
         ],
         "publicClientData",
     )
