@@ -1,3 +1,5 @@
+# poetry run python -m transform.ext_replace 
+
 import json
 import os
 import re
