@@ -98,7 +98,7 @@ def field_to_ui_table_column(field: dict) -> str:
     column = {
         "name": field["name"],
         "align": "left",
-        "label": field["label"],
+        "label": field["label"] or field["name"],
         "field": field["name"],
         "sortable": field["sortable"],
     }

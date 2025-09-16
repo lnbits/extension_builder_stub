@@ -127,7 +127,7 @@ data2 = {
                 "label": "Paid",
                 "hint": "Indicates if the donation has been paid",
                 "type": "bool",
-                "optional": True,
+                "optional": False,
                 "editable": False,
                 "searchable": False,
                 "sortable": True,
@@ -184,23 +184,14 @@ data = {
     "description": "etc etc",
     "public_page": {
         "has_public_page": True,
-        "owner_data_fields": {
-            "name": "name",
-            "description": "description"
-        },
-        "client_data_fields": {
-            "public_inputs": [
-                "amount_sats",
-                "comment",
-                "email"
-            ]
-        },
+        "owner_data_fields": {"name": "name", "description": "description"},
+        "client_data_fields": {"public_inputs": ["amount_sats", "comment", "email"]},
         "action_fields": {
             "generate_action": True,
             "wallet_id": "wallet_id",
             "currency": "currency",
-            "amount": "amount_sats"
-        }
+            "amount": "amount_sats",
+        },
     },
     "settings_data": {
         "enabled": True,
@@ -215,9 +206,9 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             }
-        ]
+        ],
     },
     "owner_data": {
         "name": "Campaign",
@@ -231,7 +222,7 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "description",
@@ -242,7 +233,7 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "wallet_id",
@@ -253,7 +244,7 @@ data = {
                 "sortable": False,
                 "searchable": False,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "currency",
@@ -264,9 +255,9 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
-            }
-        ]
+                "fields": [],
+            },
+        ],
     },
     "client_data": {
         "enabled": True,
@@ -281,7 +272,7 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "comment",
@@ -292,7 +283,7 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "email",
@@ -303,7 +294,7 @@ data = {
                 "sortable": True,
                 "searchable": True,
                 "editable": True,
-                "fields": []
+                "fields": [],
             },
             {
                 "name": "paid",
@@ -314,9 +305,9 @@ data = {
                 "sortable": True,
                 "searchable": False,
                 "editable": True,
-                "fields": []
-            }
-        ]
+                "fields": [],
+            },
+        ],
     },
-    "settingsType": "user"
+    "settingsType": "user",
 }
