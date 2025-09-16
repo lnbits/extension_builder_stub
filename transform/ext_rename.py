@@ -3,6 +3,7 @@ import zipfile
 
 from .models import data
 
+excluded_dirs = {"./.", "./__pycache__", "./node_modules", "./transform"}
 
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     """
@@ -15,13 +16,10 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     - file_extensions (list[str], optional): Only process files with these extensions.
     """
     for root, _, files in os.walk(directory):
-        if (
-            root.startswith("./.")
-            or root.startswith("./__pycache__")
-            or root.startswith("./node_modules")
-            or root.startswith("./transform")
-        ):
-            continue
+        for excluded_dir in excluded_dirs:
+            if root.startswith(excluded_dir):
+                continue
+
         for filename in files:
             if file_extensions:
                 if not any(filename.endswith(ext) for ext in file_extensions):
@@ -86,13 +84,9 @@ def zip_directory(source_dir, zip_path):
     """
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
-            # print(f"Zipping files in 1: {root}")
-            if (
-                root.startswith("./.")
-                or root.startswith("./__pycache__")
-                or root.startswith("./node_modules")
-            ):
-                continue
+            for excluded_dir in excluded_dirs:
+                if root.startswith(excluded_dir):
+                    continue
             print(f"Zipping files in 2: {root}")  # Debug statement
             for file in files:
                 full_path = os.path.join(root, file)
