@@ -14,7 +14,7 @@ from .models import (
     OwnerDataFilters,
 )
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 from .models import ExtensionSettings as ExtensionSettings
 from .models import UserExtensionSettings as UserExtensionSettings
 
@@ -184,7 +184,7 @@ async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
     )
 
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 ############################ Settings #############################
 async def create_extension_settings(
     user_id: str, data: ExtensionSettings

@@ -9,7 +9,7 @@
 <div class="row q-col-gutter-md">
   <div class="col-12 col-md-8 col-lg-7 q-gutter-y-md">
     <!-- << cancel_comment >>
-    <% if settings_table.has_settings %>
+    <% if settings_data.enabled %>
     << cancel_comment >> -->
     <q-card>
       <q-card-section class="q-pa-sm">
@@ -20,7 +20,7 @@
           <div class="col-md-6 col-sm-12">
             <q-btn
               @click="showSettingsDataForm()"
-              v-if="<% if settings_table.is_admin_settings_only %>g.user.admin<% else %>true<% endif %>"
+              v-if="<% if settings_data.is_admin_settings_only %>g.user.admin<% else %>true<% endif %>"
               unelevated
               split
               color="primary"
@@ -282,7 +282,7 @@
   <!--/////////////////////////////////////////////////-->
 
   <!-- << cancel_comment >>
-  <% if settings_table.has_settings %>
+  <% if settings_data.enabled %>
   << cancel_comment >> -->
   <q-dialog v-model="settingsFormDialog.show" position="top">
     <q-card

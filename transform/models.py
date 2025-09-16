@@ -134,7 +134,8 @@ data = {
             },
         ],
     },
-    "settings_table": {
+    "settings_data": {
+        "enabled": True,
         "name": "Settings",
         "fields": [
             {

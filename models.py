@@ -92,11 +92,11 @@ class ClientDataFilters(FilterModel):
     updated_at: datetime | None
 
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 ############################ Settings #############################
 class ExtensionSettings(BaseModel):
     """<< cancel_comment >>
-    <% for field in settings_table.editable_fields %><< field >>
+    <% for field in settings_data.editable_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
@@ -104,7 +104,7 @@ class ExtensionSettings(BaseModel):
 
     @classmethod
     def is_admin_only(cls) -> bool:
-        return bool("<< settings_table.is_admin_settings_only >>" == "True")
+        return bool("<< settings_data.is_admin_settings_only >>" == "True")
 
 
 class UserExtensionSettings(ExtensionSettings):

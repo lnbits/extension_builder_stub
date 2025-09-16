@@ -270,7 +270,7 @@ async def api_delete_client_data(
     return SimpleStatus(success=True, message="Client Data Deleted")
 
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 ############################ Settings #############################
 @extension_builder_stub_api_router.get(
     "/api/v1/settings",

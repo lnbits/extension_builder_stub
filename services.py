@@ -65,7 +65,7 @@ async def payment_received_for_client_data(payment: Payment) -> bool:
     return True
 
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 async def get_settings(user_id: str) -> ExtensionSettings:
     settings = await get_extension_settings(user_id)
     if not settings:

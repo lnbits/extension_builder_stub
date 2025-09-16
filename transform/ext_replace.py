@@ -166,15 +166,15 @@ parsed_data = {
         "db_fields": [field_to_db(field) for field in data["client_data"]["fields"]],
         "all_fields": [field_to_py(field) for field in data["client_data"]["fields"]],
     },
-    "settings_table": {
-        "has_settings": True,
-        "is_admin_settings_only": False,
+    "settings_data": {
+        "enabled": data["settings_data"]["enabled"],
+        "is_admin_settings_only": data["settings_data"]["type"] == "admin",
         "editable_fields": [
             field_to_py(field)
-            for field in data["settings_table"]["fields"]
+            for field in data["settings_data"]["fields"]
             if field["editable"]
         ],
-        "db_fields": [field_to_db(field) for field in data["settings_table"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data["settings_data"]["fields"]],
     },
     "public_page": data["public_page"],
     "cancel_comment": remove_line_marker,
@@ -220,7 +220,7 @@ def test():
         "clientDataFormDialog.data",
     )
     settings_inputs = html_input_fields(
-        [f for f in data["settings_table"]["fields"] if f["editable"]],
+        [f for f in data["settings_data"]["fields"] if f["editable"]],
         "settingsFormDialog.data",
     )
     template_path = "./templates/extension_builder_stub/index.html"

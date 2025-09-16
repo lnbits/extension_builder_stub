@@ -5,7 +5,7 @@
 empty_dict: dict[str, str] = {}
 
 
-#  <% if settings_table.has_settings %> << cancel_comment >>
+#  <% if settings_data.enabled %> << cancel_comment >>
 async def m001_extension_settings(db):
     """
     Initial owner data table.
@@ -15,7 +15,7 @@ async def m001_extension_settings(db):
         f"""
         CREATE TABLE extension_builder_stub.extension_settings (
             id TEXT NOT NULL,
-            <% for field in settings_table.db_fields %><< field >>,
+            <% for field in settings_data.db_fields %><< field >>,
             <% endfor%>updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );
     """
