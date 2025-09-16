@@ -197,7 +197,7 @@ def test2():
         new_text="donations_campaign",
     )
 
-    zip_directory(".", f"data[{data['id']}].zip")
+    zip_directory(".", data["id"] + ".zip")
 
 
 test2()
