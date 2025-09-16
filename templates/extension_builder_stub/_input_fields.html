@@ -13,7 +13,7 @@
   v-model="<< model_name >>.<< field['name'] >>"
   label="<< field['label'] or field['name'] >>"
   hint="<< field['hint'] >>  <% if field['optional'] %> (optional)<% endif %>"
-/>
+></q-checkbox>
 <% elif field.type == "datetime" %>
 <q-input
   filled
