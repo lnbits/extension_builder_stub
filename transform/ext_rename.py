@@ -2,7 +2,8 @@ import os
 import re
 import zipfile
 
-from .models import data
+# from .models import data
+from .models import extension_data as data
 
 excluded_dirs = {"./.", "./__pycache__", "./node_modules", "./transform"}
 
@@ -126,95 +127,95 @@ def test2():
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub_name",
-        new_text=data["name"],
+        new_text=data.name,
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub_short_description",
-        new_text=data["short_description"],
+        new_text=data.short_description,
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="extension_builder_stub",
-        new_text=data["id"],
+        new_text=data.id,
         file_extensions=[".py", ".js", ".html", ".md", ".json", ".toml"],
     )
     replace_text_in_files(
         directory=".",
         old_text="OwnerData",
-        new_text=data["owner_data"]["name"],
+        new_text=data.owner_data.name,
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="ownerData",
-        new_text=lowercase_first_letter(data["owner_data"]["name"]),
+        new_text=lowercase_first_letter(data.owner_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Owner Data",
-        new_text=camel_to_words(data["owner_data"]["name"]),
+        new_text=camel_to_words(data.owner_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="owner_data",
-        new_text=camel_to_snake(data["owner_data"]["name"]),
+        new_text=camel_to_snake(data.owner_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="owner data",
-        new_text=camel_to_words(data["owner_data"]["name"]).lower(),
+        new_text=camel_to_words(data.owner_data.name).lower(),
         file_extensions=[".py"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="ClientData",
-        new_text=data["client_data"]["name"],
+        new_text=data.client_data.name,
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="clientData",
-        new_text=lowercase_first_letter(data["client_data"]["name"]),
+        new_text=lowercase_first_letter(data.client_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="Client Data",
-        new_text=camel_to_words(data["client_data"]["name"]),
+        new_text=camel_to_words(data.client_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
 
     replace_text_in_files(
         directory=".",
         old_text="client_data",
-        new_text=camel_to_snake(data["client_data"]["name"]),
+        new_text=camel_to_snake(data.client_data.name),
         file_extensions=[".py", ".js", ".html", ".md", ".json"],
     )
     replace_text_in_files(
         directory=".",
         old_text="client data",
-        new_text=camel_to_words(data["client_data"]["name"]).lower(),
+        new_text=camel_to_words(data.client_data.name).lower(),
         file_extensions=[".py"],
     )
 
     rename_files_and_dirs_in_directory(
-        directory=".", old_text="extension_builder_stub", new_text=data["id"]
+        directory=".", old_text="extension_builder_stub", new_text=data.id
     )
     rename_files_and_dirs_in_directory(
         directory=".",
         old_text="owner_data",
-        new_text=camel_to_snake(data["owner_data"]["name"]),
+        new_text=camel_to_snake(data.owner_data.name),
     )
 
-    zip_directory(".", data["id"] + ".zip")
+    zip_directory(".", data.id + ".zip")
 
 
 test2()
