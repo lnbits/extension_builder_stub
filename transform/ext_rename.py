@@ -6,6 +6,13 @@ from .models import data
 excluded_dirs = {"./.", "./__pycache__", "./node_modules", "./transform"}
 
 
+def is_excluded_dir(path):
+    for excluded_dir in excluded_dirs:
+        if path.startswith(excluded_dir):
+            return True
+    return False
+
+
 def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     """
     Recursively replaces text in all files under the given directory.
@@ -17,12 +24,7 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     - file_extensions (list[str], optional): Only process files with these extensions.
     """
     for root, _, files in os.walk(directory):
-        exclude_dir = False
-        for excluded_dir in excluded_dirs:
-            if root.startswith(excluded_dir):
-                exclude_dir = True
-                break
-        if exclude_dir:
+        if is_excluded_dir(root):
             continue
 
         for filename in files:
@@ -54,6 +56,8 @@ def rename_files_and_dirs_in_directory(directory, old_text, new_text):
     """
     # First rename directories (bottom-up) so we don't lose paths while renaming
     for root, dirs, files in os.walk(directory, topdown=False):
+        if is_excluded_dir(root):
+            continue
         # Rename files
         for filename in files:
             if old_text in filename:
@@ -89,15 +93,7 @@ def zip_directory(source_dir, zip_path):
     """
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
-            for excluded_dir in excluded_dirs:
-                if root.startswith(excluded_dir):
-                    continue
-            exclude_dir = False
-            for excluded_dir in excluded_dirs:
-                if root.startswith(excluded_dir):
-                    exclude_dir = True
-                    break
-            if exclude_dir:
+            if is_excluded_dir(root):
                 continue
             print(f"Zipping files in 2: {root}")  # Debug statement
             for file in files:
