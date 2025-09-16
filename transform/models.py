@@ -26,7 +26,7 @@ data = {
     "name": "Donations",
     "short_description": "A simple donations extension",
     "description": "An extension to manage donations. xxxxx",
-    "owner_table": {
+    "owner_data": {
         "name": "Campaign",
         "fields": [
             {
@@ -89,7 +89,7 @@ data = {
             },
         ],
     },
-    "client_table": {
+    "client_data": {
         "name": "User Donations",
         "fields": [
             {

@@ -35,7 +35,7 @@ async def m002_owner_data(db):
         CREATE TABLE extension_builder_stub.owner_data (
             id TEXT PRIMARY KEY,
             user_id TEXT NOT NULL,
-            <% for field in owner_table.db_fields %><< field >>,
+            <% for field in owner_data.db_fields %><< field >>,
             <% endfor%>created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
             updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );
@@ -53,7 +53,7 @@ async def m003_client_data(db):
         CREATE TABLE extension_builder_stub.client_data (
             id TEXT PRIMARY KEY,
             owner_data_id TEXT NOT NULL,
-            <% for field in client_table.db_fields %><< field >>,
+            <% for field in client_data.db_fields %><< field >>,
             <% endfor%>created_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now},
             updated_at TIMESTAMP NOT NULL DEFAULT {db.timestamp_now}
         );

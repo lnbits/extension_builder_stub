@@ -124,45 +124,45 @@ py_template_path = "./models.py"
 
 
 parsed_data = {
-    "owner_table": {
-        "name": data["owner_table"]["name"],
+    "owner_data": {
+        "name": data["owner_data"]["name"],
         "editable_fields": [
             field_to_py(field)
-            for field in data["owner_table"]["fields"]
+            for field in data["owner_data"]["fields"]
             if field["editable"]
         ],
         "search_fields": [
             camel_to_snake(field["name"])
-            for field in data["owner_table"]["fields"]
+            for field in data["owner_data"]["fields"]
             if field["searchable"]
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in (data["owner_table"]["fields"] + extra_ui_fields)
+            for field in (data["owner_data"]["fields"] + extra_ui_fields)
             if field["sortable"]
         ],
-        "db_fields": [field_to_db(field) for field in data["owner_table"]["fields"]],
-        "all_fields": [field_to_py(field) for field in data["owner_table"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data["owner_data"]["fields"]],
+        "all_fields": [field_to_py(field) for field in data["owner_data"]["fields"]],
     },
-    "client_table": {
-        "name": data["client_table"]["name"],
+    "client_data": {
+        "name": data["client_data"]["name"],
         "editable_fields": [
             field_to_py(field)
-            for field in data["client_table"]["fields"]
+            for field in data["client_data"]["fields"]
             if field["editable"]
         ],
         "search_fields": [
             camel_to_snake(field["name"])
-            for field in data["client_table"]["fields"]
+            for field in data["client_data"]["fields"]
             if field["searchable"]
         ],
         "ui_table_columns": [
             field_to_ui_table_column(field)
-            for field in (data["client_table"]["fields"] + extra_ui_fields)
+            for field in (data["client_data"]["fields"] + extra_ui_fields)
             if field["sortable"]
         ],
-        "db_fields": [field_to_db(field) for field in data["client_table"]["fields"]],
-        "all_fields": [field_to_py(field) for field in data["client_table"]["fields"]],
+        "db_fields": [field_to_db(field) for field in data["client_data"]["fields"]],
+        "all_fields": [field_to_py(field) for field in data["client_data"]["fields"]],
     },
     "settings_table": {
         "has_settings": True,
@@ -210,11 +210,11 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
     owner_inputs = html_input_fields(
-        [f for f in data["owner_table"]["fields"] if f["editable"]],
+        [f for f in data["owner_data"]["fields"] if f["editable"]],
         "ownerDataFormDialog.data",
     )
     client_inputs = html_input_fields(
-        [f for f in data["client_table"]["fields"] if f["editable"]],
+        [f for f in data["client_data"]["fields"] if f["editable"]],
         "clientDataFormDialog.data",
     )
     settings_inputs = html_input_fields(
@@ -240,7 +240,7 @@ def test():
     public_client_data_inputs = html_input_fields(
         [
             f
-            for f in data["client_table"]["fields"]
+            for f in data["client_data"]["fields"]
             if f["name"] in data["public_page"]["client_data_fields"]["public_inputs"]
         ],
         "publicClientData",

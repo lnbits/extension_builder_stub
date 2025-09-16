@@ -20,7 +20,7 @@ window.app = Vue.createApp({
         loading: false,
         columns: [
           /** << cancel_comment >>
-          <% for field in owner_table.ui_table_columns %><< field >>,
+          <% for field in owner_data.ui_table_columns %><< field >>,
           <% endfor%>
           << cancel_comment >> **/
         ],
@@ -44,7 +44,7 @@ window.app = Vue.createApp({
         loading: false,
         columns: [
           /** << cancel_comment >>
-          <% for field in client_table.ui_table_columns %><< field >>,
+          <% for field in client_data.ui_table_columns %><< field >>,
           <% endfor%>
           << cancel_comment >> **/
         ],
