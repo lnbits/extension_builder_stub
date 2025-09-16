@@ -8,7 +8,7 @@ empty_dict: dict[str, str] = {}
 #  <% if settings_data.enabled %> << cancel_comment >>
 async def m001_extension_settings(db):
     """
-    Initial owner data table.
+    Initial settings table.
     """
 
     await db.execute(
