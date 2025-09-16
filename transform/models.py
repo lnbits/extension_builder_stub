@@ -21,7 +21,7 @@ extra_ui_fields = [
     },
 ]
 
-data = {
+data2 = {
     "id": "donations",
     "name": "Donations",
     "short_description": "A simple donations extension",
@@ -136,6 +136,7 @@ data = {
     },
     "settings_data": {
         "enabled": True,
+        "type": "user",
         "name": "Settings",
         "fields": [
             {
@@ -174,4 +175,148 @@ data = {
             "amount": "amount_sats",
         },
     },
+}
+
+data = {
+    "id": "donations",
+    "name": "Donations Campaigns",
+    "short_description": "Donate for a good cause",
+    "description": "etc etc",
+    "public_page": {
+        "has_public_page": True,
+        "owner_data_fields": {
+            "name": "name",
+            "description": "description"
+        },
+        "client_data_fields": {
+            "public_inputs": [
+                "amount_sats",
+                "comment",
+                "email"
+            ]
+        },
+        "action_fields": {
+            "generate_action": True,
+            "wallet_id": "wallet_id",
+            "currency": "currency",
+            "amount": "amount_sats"
+        }
+    },
+    "settings_data": {
+        "enabled": True,
+        "type": "user",
+        "fields": [
+            {
+                "name": "max_campaign_amount",
+                "type": "int",
+                "label": "Maximum allowed to raise",
+                "hint": "",
+                "optional": False,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            }
+        ]
+    },
+    "owner_data": {
+        "name": "Campaign",
+        "fields": [
+            {
+                "name": "name",
+                "type": "text",
+                "label": "",
+                "hint": "",
+                "optional": False,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "description",
+                "type": "text",
+                "label": "",
+                "hint": "",
+                "optional": True,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "wallet_id",
+                "type": "wallet",
+                "label": "",
+                "hint": "",
+                "optional": False,
+                "sortable": False,
+                "searchable": False,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "currency",
+                "type": "currency",
+                "label": "",
+                "hint": "",
+                "optional": False,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            }
+        ]
+    },
+    "client_data": {
+        "enabled": True,
+        "name": "UserDonation",
+        "fields": [
+            {
+                "name": "amount_sats",
+                "type": "int",
+                "label": "",
+                "hint": "",
+                "optional": False,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "comment",
+                "type": "text",
+                "label": "",
+                "hint": "",
+                "optional": True,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "email",
+                "type": "text",
+                "label": "",
+                "hint": "",
+                "optional": True,
+                "sortable": True,
+                "searchable": True,
+                "editable": True,
+                "fields": []
+            },
+            {
+                "name": "paid",
+                "type": "bool",
+                "label": "",
+                "hint": "",
+                "optional": False,
+                "sortable": True,
+                "searchable": False,
+                "editable": True,
+                "fields": []
+            }
+        ]
+    },
+    "settingsType": "user"
 }
