@@ -66,7 +66,7 @@ class ClientDataFields(BaseModel):
 class PublicPageFields(BaseModel):
     has_public_page: bool = False
     owner_data_fields: OwnerDataFields
-    client_data_fields: ClientDataFields | None = None
+    client_data_fields: ClientDataFields
     action_fields: ActionFields
 
 

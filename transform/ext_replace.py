@@ -107,7 +107,7 @@ def field_to_ui_table_column(field: DataField) -> str:
     return json.dumps(column)
 
 
-def html_input_fields(fields: dict, model_name: str) -> str:
+def html_input_fields(fields: list[DataField], model_name: str) -> str:
     template_path = "./templates/extension_builder_stub/_input_fields.html"
 
     rederer = render_file(
