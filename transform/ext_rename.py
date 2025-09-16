@@ -16,9 +16,13 @@ def replace_text_in_files(directory, old_text, new_text, file_extensions=None):
     - file_extensions (list[str], optional): Only process files with these extensions.
     """
     for root, _, files in os.walk(directory):
+        exclude_dir = False
         for excluded_dir in excluded_dirs:
             if root.startswith(excluded_dir):
-                continue
+                exclude_dir = True
+                break
+        if exclude_dir:
+            continue
 
         for filename in files:
             if file_extensions:
@@ -87,6 +91,13 @@ def zip_directory(source_dir, zip_path):
             for excluded_dir in excluded_dirs:
                 if root.startswith(excluded_dir):
                     continue
+            exclude_dir = False
+            for excluded_dir in excluded_dirs:
+                if root.startswith(excluded_dir):
+                    exclude_dir = True
+                    break
+            if exclude_dir:
+                continue
             print(f"Zipping files in 2: {root}")  # Debug statement
             for file in files:
                 full_path = os.path.join(root, file)
