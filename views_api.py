@@ -1,6 +1,5 @@
 # Description: This file contains the extensions API endpoints.
 from http import HTTPStatus
-from typing import Optional
 
 from fastapi import APIRouter, Depends
 from fastapi.exceptions import HTTPException
@@ -121,7 +120,7 @@ async def api_get_owner_data(
 )
 async def api_delete_owner_data(
     owner_data_id: str,
-    clear_client_data: Optional[bool] = False,
+    clear_client_data: bool | None = False,
     user: User = Depends(check_user_exists),
 ) -> SimpleStatus:
 
@@ -206,7 +205,7 @@ async def api_update_client_data(
 )
 async def api_get_client_data_paginated(
     user: User = Depends(check_user_exists),
-    owner_data_id: Optional[str] = None,
+    owner_data_id: str | None = None,
     filters: Filters = Depends(client_data_filters),
 ) -> Page[ClientData]:
 

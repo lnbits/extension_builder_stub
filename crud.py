@@ -1,6 +1,5 @@
 # Description: This file contains the CRUD operations for talking to the database.
 
-from typing import Optional
 
 from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
@@ -33,7 +32,7 @@ async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
 async def get_owner_data(
     user_id: str,
     owner_data_id: str,
-) -> Optional[OwnerData]:
+) -> OwnerData | None:
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.owner_data
@@ -46,7 +45,7 @@ async def get_owner_data(
 
 async def get_owner_data_by_id(
     owner_data_id: str,
-) -> Optional[OwnerData]:
+) -> OwnerData | None:
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.owner_data
@@ -72,8 +71,8 @@ async def get_owner_data_ids_by_user(
 
 
 async def get_owner_data_paginated(
-    user_id: Optional[str] = None,
-    filters: Optional[Filters[OwnerDataFilters]] = None,
+    user_id: str | None = None,
+    filters: Filters[OwnerDataFilters] | None = None,
 ) -> Page[OwnerData]:
     where = []
     values = {}
@@ -119,7 +118,7 @@ async def create_client_data(owner_data_id: str, data: CreateClientData) -> Clie
 async def get_client_data(
     owner_data_id: str,
     client_data_id: str,
-) -> Optional[ClientData]:
+) -> ClientData | None:
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.client_data
@@ -132,7 +131,7 @@ async def get_client_data(
 
 async def get_client_data_by_id(
     client_data_id: str,
-) -> Optional[ClientData]:
+) -> ClientData | None:
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.client_data
@@ -144,8 +143,8 @@ async def get_client_data_by_id(
 
 
 async def get_client_data_paginated(
-    owner_data_ids: Optional[list[str]] = None,
-    filters: Optional[Filters[ClientDataFilters]] = None,
+    owner_data_ids: list[str] | None = None,
+    filters: Filters[ClientDataFilters] | None = None,
 ) -> Page[ClientData]:
     where = []
     values = {}
@@ -196,7 +195,7 @@ async def create_extension_settings(
 
 async def get_extension_settings(
     user_id: str,
-) -> Optional[ExtensionSettings]:
+) -> ExtensionSettings | None:
     return await db.fetchone(
         """
             SELECT * FROM extension_builder_stub.extension_settings

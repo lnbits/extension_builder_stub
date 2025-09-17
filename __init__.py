@@ -44,7 +44,7 @@ def extension_builder_stub_start():
 __all__ = [
     "db",
     "extension_builder_stub_ext",
-    "extension_builder_stub_static_files",
     "extension_builder_stub_start",
+    "extension_builder_stub_static_files",
     "extension_builder_stub_stop",
 ]
