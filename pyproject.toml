@@ -1,6 +1,6 @@
 [project]
 name = "extension_builder_stub"
-version = "0.0.2"
+version = "0.0.3"
 requires-python = ">=3.10,<3.13"
 description = "<<extension_builder_stub_short_description>>"
 authors = []
