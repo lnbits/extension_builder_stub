@@ -1,9 +1,11 @@
-[tool.poetry]
+[project]
 name = "extension_builder_stub"
-version = "0.0.1"
+version = "0.0.2"
+requires-python = ">=3.10,<3.13"
 description = "<<extension_builder_stub_short_description>>"
 authors = []
-package-mode = false
+urls = { Homepage = "https://lnbits.com", Repository = "https://github.com/lnbits/tpos" }
+dependencies = [ "lnbits>1" ]
 
 [tool.poetry.dependencies]
 python = "~3.12 | ~3.11 | ~3.10"
