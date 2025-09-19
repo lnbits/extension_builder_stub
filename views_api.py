@@ -28,7 +28,7 @@ from .crud import (
 from .models import (
     ClientData,
     ClientDataFilters,
-    ClientDataPaymentRequest,  # <% if not generate_action %> << cancel_comment >> <% endif %>
+    ClientDataPaymentRequest,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
     CreateOwnerData,
     ExtensionSettings,
@@ -37,7 +37,7 @@ from .models import (
 )
 from .services import (
     get_settings,
-    payment_request_for_client_data,  # <% if not generate_action %> << cancel_comment >> <% endif %>
+    payment_request_for_client_data,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     update_settings,
 )
 
@@ -152,7 +152,9 @@ async def api_create_client_data(
     return client_data
 
 
-# <% if generate_action %> << cancel_comment >>
+# public_page.action_fields.generate_action <<public_page.action_fields.generate_action>>
+# action_fields <<action_fields>>
+# <% if public_page.action_fields.generate_action %> << cancel_comment >>
 @extension_builder_stub_api_router.put(
     "/api/v1/client_data/public/{owner_data_id}",
     name="Submit new Client Data",
@@ -165,7 +167,7 @@ async def api_submit_public_client_data(
     data: CreateClientData,
 ) -> ClientDataPaymentRequest | None:
 
-    # <% if not generate_payment_logic %> << cancel_comment >>
+    # <% if not public_page.action_fields.generate_payment_logic %> << cancel_comment >>
     logger.info("Payment logic generation is disabled. Client data created without payment.")
     # <% else %> << cancel_comment >>
     return await payment_request_for_client_data(owner_data_id, data)

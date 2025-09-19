@@ -12,13 +12,13 @@ from .crud import (
     update_extension_settings,
 )
 from .models import (
-    ClientDataPaymentRequest,  # <% if not generate_action %> << cancel_comment >> <% endif %>
+    ClientDataPaymentRequest,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
     ExtensionSettings,
 )
 
 
-# <% if generate_action %> << cancel_comment >>
+# <% if public_page.action_fields.generate_action %> << cancel_comment >>
 async def payment_request_for_client_data(
     owner_data_id: str,
     data: CreateClientData,
@@ -49,7 +49,7 @@ async def payment_request_for_client_data(
 
 
 async def payment_received_for_client_data(payment: Payment) -> bool:
-    # <% if not generate_payment_logic %> << cancel_comment >>
+    # <% if not public_page.action_fields.generate_payment_logic %> << cancel_comment >>
     logger.info("Payment receive logic generation is disabled.")
     # <% else %> << cancel_comment >>
     client_data_id = payment.extra.get("client_data_id")
@@ -62,7 +62,7 @@ async def payment_received_for_client_data(payment: Payment) -> bool:
         logger.warning(f"No client data found for ID: {client_data_id}")
         return False
 
-    setattr(client_data, "<< paid_flag >>", True)
+    setattr(client_data, "<< public_page.action_fields.paid_flag >>", True)
     await update_client_data(client_data)
     logger.info(f"Client Data {client_data_id} paid.")
     # <% endif %> << cancel_comment >>

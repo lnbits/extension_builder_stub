@@ -66,7 +66,7 @@ class ClientData(BaseModel):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-# <% if generate_payment_logic %> << cancel_comment >>
+# <% if public_page.action_fields.generate_action %> << cancel_comment >>
 class ClientDataPaymentRequest(BaseModel):
     client_data_id: str
     payment_hash: str
