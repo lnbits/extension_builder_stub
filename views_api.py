@@ -1,4 +1,5 @@
 # Description: This file contains the extensions API endpoints.
+from asyncio.log import logger
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends
@@ -27,14 +28,18 @@ from .crud import (
 from .models import (
     ClientData,
     ClientDataFilters,
-    ClientDataPaymentRequest,
+    ClientDataPaymentRequest,  # <% if not generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
     CreateOwnerData,
     ExtensionSettings,
     OwnerData,
     OwnerDataFilters,
 )
-from .services import get_settings, payment_request_for_client_data, update_settings
+from .services import (
+    get_settings,
+    payment_request_for_client_data,  # <% if not generate_action %> << cancel_comment >> <% endif %>
+    update_settings,
+)
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 client_data_filters = parse_filters(ClientDataFilters)
@@ -43,9 +48,7 @@ extension_builder_stub_api_router = APIRouter()
 
 
 ############################# Owner Data #############################
-@extension_builder_stub_api_router.post(
-    "/api/v1/owner_data", status_code=HTTPStatus.CREATED
-)
+@extension_builder_stub_api_router.post("/api/v1/owner_data", status_code=HTTPStatus.CREATED)
 async def api_create_owner_data(
     data: CreateOwnerData,
     user: User = Depends(check_user_exists),
@@ -54,9 +57,7 @@ async def api_create_owner_data(
     return owner_data
 
 
-@extension_builder_stub_api_router.put(
-    "/api/v1/owner_data/{owner_data_id}", status_code=HTTPStatus.CREATED
-)
+@extension_builder_stub_api_router.put("/api/v1/owner_data/{owner_data_id}", status_code=HTTPStatus.CREATED)
 async def api_update_owner_data(
     owner_data_id: str,
     data: CreateOwnerData,
@@ -67,9 +68,7 @@ async def api_update_owner_data(
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
     if owner_data.user_id != user.id:
         raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
-    owner_data = await update_owner_data(
-        OwnerData(**{**owner_data.dict(), **data.dict()})
-    )
+    owner_data = await update_owner_data(OwnerData(**{**owner_data.dict(), **data.dict()}))
     return owner_data
 
 
@@ -153,20 +152,27 @@ async def api_create_client_data(
     return client_data
 
 
+# <% if generate_action %> << cancel_comment >>
 @extension_builder_stub_api_router.put(
     "/api/v1/client_data/public/{owner_data_id}",
     name="Submit new Client Data",
-    summary="Submit new client data for the specified owner data."
-    "This is a public endpoint.",
+    summary="Submit new client data for the specified owner data." "This is a public endpoint.",
     response_description="The created client data.",
     response_model=ClientDataPaymentRequest,
 )
 async def api_submit_public_client_data(
     owner_data_id: str,
     data: CreateClientData,
-) -> ClientDataPaymentRequest:
+) -> ClientDataPaymentRequest | None:
 
+    # <% if not generate_payment_logic %> << cancel_comment >>
+    logger.info("Payment logic generation is disabled. Client data created without payment.")
+    # <% else %> << cancel_comment >>
     return await payment_request_for_client_data(owner_data_id, data)
+    # <% endif %> << cancel_comment >>
+
+
+# <% endif %> << cancel_comment >>
 
 
 @extension_builder_stub_api_router.put(
@@ -189,9 +195,7 @@ async def api_update_client_data(
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
-    client_data = await update_client_data(
-        ClientData(**{**client_data.dict(), **data.dict()})
-    )
+    client_data = await update_client_data(ClientData(**{**client_data.dict(), **data.dict()}))
     return client_data
 
 
@@ -237,9 +241,7 @@ async def api_get_client_data(
         raise HTTPException(HTTPStatus.NOT_FOUND, "ClientData not found.")
     owner_data = await get_owner_data(user.id, client_data.owner_data_id)
     if not owner_data:
-        raise HTTPException(
-            HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data."
-        )
+        raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data.")
 
     return client_data
 
@@ -261,9 +263,7 @@ async def api_delete_client_data(
         raise HTTPException(HTTPStatus.NOT_FOUND, "ClientData not found.")
     owner_data = await get_owner_data(user.id, client_data.owner_data_id)
     if not owner_data:
-        raise HTTPException(
-            HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data."
-        )
+        raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data.")
 
     await delete_client_data(owner_data.id, client_data_id)
     return SimpleStatus(success=True, message="Client Data Deleted")

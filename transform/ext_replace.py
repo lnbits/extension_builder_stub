@@ -129,36 +129,20 @@ py_template_path = "./models.py"
 parsed_data = {
     "owner_data": {
         "name": data.owner_data.name,
-        "editable_fields": [
-            field_to_py(field) for field in data.owner_data.fields if field.editable
-        ],
-        "search_fields": [
-            camel_to_snake(field.name)
-            for field in data.owner_data.fields
-            if field.searchable
-        ],
+        "editable_fields": [field_to_py(field) for field in data.owner_data.fields if field.editable],
+        "search_fields": [camel_to_snake(field.name) for field in data.owner_data.fields if field.searchable],
         "ui_table_columns": [
-            field_to_ui_table_column(field)
-            for field in data.owner_data.fields + ui_table_columns
-            if field.sortable
+            field_to_ui_table_column(field) for field in data.owner_data.fields + ui_table_columns if field.sortable
         ],
         "db_fields": [field_to_db(field) for field in data.owner_data.fields],
         "all_fields": [field_to_py(field) for field in data.owner_data.fields],
     },
     "client_data": {
         "name": data.client_data.name,
-        "editable_fields": [
-            field_to_py(field) for field in data.client_data.fields if field.editable
-        ],
-        "search_fields": [
-            camel_to_snake(field.name)
-            for field in data.client_data.fields
-            if field.searchable
-        ],
+        "editable_fields": [field_to_py(field) for field in data.client_data.fields if field.editable],
+        "search_fields": [camel_to_snake(field.name) for field in data.client_data.fields if field.searchable],
         "ui_table_columns": [
-            field_to_ui_table_column(field)
-            for field in data.client_data.fields + ui_table_columns
-            if field.sortable
+            field_to_ui_table_column(field) for field in data.client_data.fields + ui_table_columns if field.sortable
         ],
         "db_fields": [field_to_db(field) for field in data.client_data.fields],
         "all_fields": [field_to_py(field) for field in data.client_data.fields],
@@ -166,9 +150,7 @@ parsed_data = {
     "settings_data": {
         "enabled": data.settings_data.enabled,
         "is_admin_settings_only": data.settings_data.type == "admin",
-        "editable_fields": [
-            field_to_py(field) for field in data.settings_data.fields if field.editable
-        ],
+        "editable_fields": [field_to_py(field) for field in data.settings_data.fields if field.editable],
         "db_fields": [field_to_db(field) for field in data.settings_data.fields],
     },
     "public_page": data.public_page,
@@ -235,11 +217,7 @@ def test():
     remove_lines_with_string(template_path, remove_line_marker)
 
     public_client_data_inputs = html_input_fields(
-        [
-            f
-            for f in data.client_data.fields
-            if f.name in data.public_page.client_data_fields.public_inputs
-        ],
+        [f for f in data.client_data.fields if f.name in data.public_page.client_data_fields.public_inputs],
         "publicClientData",
     )
     template_path = "./templates/extension_builder_stub/public_owner_data.html"

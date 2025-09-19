@@ -108,9 +108,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
 
 
 async def create_client_data(owner_data_id: str, data: CreateClientData) -> ClientData:
-    client_data = ClientData(
-        **data.dict(), id=urlsafe_short_hash(), owner_data_id=owner_data_id
-    )
+    client_data = ClientData(**data.dict(), id=urlsafe_short_hash(), owner_data_id=owner_data_id)
     await db.insert("extension_builder_stub.client_data", client_data)
     return client_data
 
@@ -185,9 +183,7 @@ async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
 
 #  <% if settings_data.enabled %> << cancel_comment >>
 ############################ Settings #############################
-async def create_extension_settings(
-    user_id: str, data: ExtensionSettings
-) -> ExtensionSettings:
+async def create_extension_settings(user_id: str, data: ExtensionSettings) -> ExtensionSettings:
     settings = UserExtensionSettings(**data.dict(), id=user_id)
     await db.insert("extension_builder_stub.extension_settings", settings)
     return settings
@@ -206,9 +202,7 @@ async def get_extension_settings(
     )
 
 
-async def update_extension_settings(
-    user_id: str, data: ExtensionSettings
-) -> ExtensionSettings:
+async def update_extension_settings(user_id: str, data: ExtensionSettings) -> ExtensionSettings:
     settings = UserExtensionSettings(**data.dict(), id=user_id)
     await db.update("extension_builder_stub.extension_settings", settings)
     return settings

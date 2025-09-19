@@ -206,9 +206,7 @@ def test2():
         file_extensions=[".py"],
     )
 
-    rename_files_and_dirs_in_directory(
-        directory=".", old_text="extension_builder_stub", new_text=data.id
-    )
+    rename_files_and_dirs_in_directory(directory=".", old_text="extension_builder_stub", new_text=data.id)
     rename_files_and_dirs_in_directory(
         directory=".",
         old_text="owner_data",

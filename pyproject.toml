@@ -1,6 +1,6 @@
 [project]
 name = "extension_builder_stub"
-version = "0.0.3"
+version = "0.0.4"
 requires-python = ">=3.10,<3.13"
 description = "<<extension_builder_stub_short_description>>"
 authors = []
@@ -38,11 +38,11 @@ testpaths = [
 ]
 
 [tool.black]
-line-length = 88
+line-length = 120
 
 [tool.ruff]
 # Same as Black. + 10% rule of black
-line-length = 88
+line-length = 132
 
 
 [tool.ruff.lint]

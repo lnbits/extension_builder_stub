@@ -667,7 +667,7 @@ wheels = [
 
 [[package]]
 name = "extension-builder-stub"
-version = "0.0.2"
+version = "0.0.4"
 source = { virtual = "." }
 dependencies = [
     { name = "lnbits" },

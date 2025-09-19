@@ -18,6 +18,7 @@ from .models import (
 )
 
 
+# <% if generate_action %> << cancel_comment >>
 async def payment_request_for_client_data(
     owner_data_id: str,
     data: CreateClientData,
@@ -29,13 +30,9 @@ async def payment_request_for_client_data(
 
     client_data = await create_client_data(owner_data_id, data)
 
-    owner_data_name = getattr(
-        owner_data, "<<public_page.owner_data_fields.name>>", "Unknown"
-    )
+    owner_data_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "Unknown")
     payment: Payment = await create_invoice(
-        wallet_id=getattr(
-            owner_data, "<<public_page.action_fields.wallet_id>>", "no_wallet_id"
-        ),
+        wallet_id=getattr(owner_data, "<<public_page.action_fields.wallet_id>>", "no_wallet_id"),
         amount=getattr(client_data, "<<public_page.action_fields.amount>>", 0),
         currency=getattr(owner_data, "<<public_page.action_fields.currency>>", "sats"),
         extra={"tag": "extension_builder_stub", "client_data_id": client_data.id},
@@ -48,7 +45,13 @@ async def payment_request_for_client_data(
     )
 
 
+# <% endif %> << cancel_comment >>
+
+
 async def payment_received_for_client_data(payment: Payment) -> bool:
+    # <% if not generate_payment_logic %> << cancel_comment >>
+    logger.info("Payment receive logic generation is disabled.")
+    # <% else %> << cancel_comment >>
     client_data_id = payment.extra.get("client_data_id")
     if not client_data_id:
         logger.warning("Payment does not have a client_data_id in extra.")
@@ -59,9 +62,10 @@ async def payment_received_for_client_data(payment: Payment) -> bool:
         logger.warning(f"No client data found for ID: {client_data_id}")
         return False
 
-    client_data.paid = True  # type: ignore
+    client_data.paid = True
     await update_client_data(client_data)
     logger.info(f"Client Data {client_data_id} paid.")
+    # <% endif %> << cancel_comment >>
     return True
 
 

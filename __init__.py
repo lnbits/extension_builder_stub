@@ -35,9 +35,7 @@ def extension_builder_stub_stop():
 
 
 def extension_builder_stub_start():
-    task = create_permanent_unique_task(
-        "ext_extension_builder_stub", wait_for_paid_invoices
-    )
+    task = create_permanent_unique_task("ext_extension_builder_stub", wait_for_paid_invoices)
     scheduled_tasks.append(task)
 
 
