@@ -12,7 +12,7 @@ from .crud import (
     update_extension_settings,
 )
 from .models import (
-    ClientDataPaymentRequest,
+    ClientDataPaymentRequest,  # <% if not generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
     ExtensionSettings,
 )
@@ -62,7 +62,7 @@ async def payment_received_for_client_data(payment: Payment) -> bool:
         logger.warning(f"No client data found for ID: {client_data_id}")
         return False
 
-    client_data.paid = True
+    setattr(client_data, "<< paid_flag >>", True)
     await update_client_data(client_data)
     logger.info(f"Client Data {client_data_id} paid.")
     # <% endif %> << cancel_comment >>
