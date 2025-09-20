@@ -152,8 +152,6 @@ async def api_create_client_data(
     return client_data
 
 
-# public_page.action_fields.generate_action <<public_page.action_fields.generate_action>>
-# action_fields <<action_fields>>
 # <% if public_page.action_fields.generate_action %> << cancel_comment >>
 @extension_builder_stub_api_router.put(
     "/api/v1/client_data/public/{owner_data_id}",
