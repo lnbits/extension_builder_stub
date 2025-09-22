@@ -91,6 +91,15 @@ window.app = Vue.createApp({
   methods: {
     //////////////// Settings ////////////////////////
     async updateSettings() {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      Quasar.Notify.create({
+          message: 'This is preview mode!',
+          color: 'positive'
+      })
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         const data = { ...this.settingsFormDialog.data };
 
@@ -106,6 +115,11 @@ window.app = Vue.createApp({
       }
     },
     async getSettings() {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         const { data } = await LNbits.api.request(
           "GET",
@@ -132,6 +146,15 @@ window.app = Vue.createApp({
       this.ownerDataFormDialog.show = true;
     },
     async saveOwnerData() {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      Quasar.Notify.create({
+          message: 'This is preview mode!',
+          color: 'positive'
+      })
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         const data = { extra: {}, ...this.ownerDataFormDialog.data };
         const method = data.id ? "PUT" : "POST";
@@ -148,7 +171,18 @@ window.app = Vue.createApp({
         LNbits.utils.notifyApiError(error);
       }
     },
+
     async getOwnerData(props) {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      this.ownerDataList = [
+          <% for field in owner_data.ui_mock_data %><< field >>,
+          <% endfor%>
+      ]
+      this.ownerDataTable.pagination.rowsNumber = this.ownerDataList.length;
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         this.ownerDataTable.loading = true;
         const params = LNbits.utils.prepareFilterQuery(
@@ -173,6 +207,15 @@ window.app = Vue.createApp({
         .confirmDialog("Are you sure you want to delete this Owner Data?")
         .onOk(async () => {
           try {
+            /** << cancel_comment >>
+            <% if preview.is_preview_mode %>
+            Quasar.Notify.create({
+                message: 'This is preview mode!',
+                color: 'positive'
+            })
+            return
+            <% endif%>
+            << cancel_comment >> **/
             await LNbits.api.request(
               "DELETE",
               "/extension_builder_stub/api/v1/owner_data/" + ownerDataId,
@@ -198,6 +241,15 @@ window.app = Vue.createApp({
       this.clientDataFormDialog.show = true;
     },
     async saveClientData() {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      Quasar.Notify.create({
+          message: 'This is preview mode!',
+          color: 'positive'
+      })
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         const data = { extra: {}, ...this.clientDataFormDialog.data };
         const method = data.id ? "PUT" : "POST";
@@ -215,6 +267,16 @@ window.app = Vue.createApp({
       }
     },
     async getClientData(props) {
+      /** << cancel_comment >>
+      <% if preview.is_preview_mode %>
+      this.clientDataList = [
+          <% for field in owner_data.ui_mock_data %><< field >>,
+          <% endfor%>
+      ]
+      this.clientDataTable.pagination.rowsNumber = this.clientDataList.length;
+      return
+      <% endif%>
+      << cancel_comment >> **/
       try {
         this.clientDataTable.loading = true;
         let params = LNbits.utils.prepareFilterQuery(
@@ -243,6 +305,15 @@ window.app = Vue.createApp({
         .confirmDialog("Are you sure you want to delete this Client Data?")
         .onOk(async () => {
           try {
+            /** << cancel_comment >>
+            <% if preview.is_preview_mode %>
+            Quasar.Notify.create({
+                message: 'This is preview mode!',
+                color: 'positive'
+            })
+            return
+            <% endif%>
+            << cancel_comment >> **/
             await LNbits.api.request(
               "DELETE",
               "/extension_builder_stub/api/v1/client_data/" + clientDataId,
@@ -307,5 +378,11 @@ window.app = Vue.createApp({
     this.fetchCurrencies();
     this.getOwnerData();
     this.getClientData();
+
+    /** << cancel_comment >>
+    <% if preview.is_settings_preview %>
+    this.showSettingsDataForm()
+    <% endif%>
+    << cancel_comment >> **/
   },
 });
