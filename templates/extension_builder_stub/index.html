@@ -4,7 +4,17 @@
 
 {% extends "base.html" %} {% from "macros.jinja" import window_vars with context
 %} {% block scripts %} {{ window_vars(user) }}
+
+<!-- << cancel_comment >>
+<% if preview.is_preview_mode %>
+<script>
+  << embeded_index_js >>
+</script>
+<% else %>
 <script src="{{ static_url_for('extension_builder_stub/static', path='js/index.js') }}"></script>
+<% endif %>
+ << cancel_comment >> -->
+
 {% endblock %} {% block page %}
 <div class="row q-col-gutter-md">
   <div class="col-12 col-md-8 col-lg-7 q-gutter-y-md">
@@ -12,12 +22,12 @@
     <% if settings_data.enabled %>
     << cancel_comment >> -->
     <q-card>
-      <q-card-section class="q-pa-sm">
+      <q-card-section
+        class="<%if not preview.is_settings_preview%>blur-and-disable<%endif%>"
+      >
         <div class="row">
-          <div class="col-md-6 col-sm-12">
+          <div class="col">
             <span class="text-h5">extension_builder_stub_name</span>
-          </div>
-          <div class="col-md-6 col-sm-12">
             <q-btn
               @click="showSettingsDataForm()"
               v-if="<% if settings_data.is_admin_settings_only %>g.user.admin<% else %>true<% endif %>"
@@ -40,7 +50,9 @@
       <span class="text-h5">Owner Data</span>
     </div>
     <q-card class="q-mt-xs">
-      <q-card-section>
+      <q-card-section
+        class="<%if not preview.is_owner_data_preview%>blur-and-disable<%endif%>"
+      >
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
             <q-input
@@ -156,7 +168,9 @@
       <span class="text-h5">Client Data</span>
     </div>
     <q-card class="q-mt-xs">
-      <q-card-section>
+      <q-card-section
+        class="<%if not preview.is_client_data_preview%>blur-and-disable<%endif%>"
+      >
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
             <q-input
@@ -257,7 +271,7 @@
       </q-card-section>
     </q-card>
   </div>
-
+  <% if not preview.is_preview_mode %>
   <div class="col-12 col-md-4 col-lg-5 q-gutter-y-md">
     <q-card>
       <q-card-section>
@@ -276,6 +290,7 @@
       </q-card-section>
     </q-card>
   </div>
+  <% endif %>
 
   <!--/////////////////////////////////////////////////-->
   <!--//////////////FORM DIALOG////////////////////////-->
