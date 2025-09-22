@@ -29,7 +29,9 @@ window_vars(user) }}
     <!-- << cancel_comment >>
     <% if settings_data.enabled %>
     << cancel_comment >> -->
-    <q-card>
+    <q-card
+      id="<%if preview.is_settings_preview%>previewFocus<%else%>settingsCard<%endif%>"
+    >
       <q-card-section
         class="<%if not preview.is_settings_preview%>blur-and-disable<%endif%>"
       >
@@ -57,7 +59,10 @@ window_vars(user) }}
     <div class="q-mt-lg">
       <span class="text-h5">Owner Data</span>
     </div>
-    <q-card class="q-mt-xs">
+    <q-card
+      id="<%if preview.is_owner_data_preview%>previewFocus<%else%>ownerDataCard<%endif%>"
+      class="q-mt-xs"
+    >
       <q-card-section
         class="<%if not preview.is_owner_data_preview%>blur-and-disable<%endif%>"
       >
@@ -175,7 +180,10 @@ window_vars(user) }}
     <div class="q-mt-lg">
       <span class="text-h5">Client Data</span>
     </div>
-    <q-card class="q-mt-xs">
+    <q-card
+      id="<%if preview.is_client_data_preview%>previewFocus<%else%>clientDataCard<%endif%>"
+      class="q-mt-xs"
+    >
       <q-card-section
         class="<%if not preview.is_client_data_preview%>blur-and-disable<%endif%>"
       >
