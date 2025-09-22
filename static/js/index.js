@@ -270,7 +270,7 @@ window.app = Vue.createApp({
       /** << cancel_comment >>
       <% if preview.is_preview_mode %>
       this.clientDataList = [
-          <% for field in owner_data.ui_mock_data %><< field >>,
+          <% for field in client_data.ui_mock_data %> JSON.parse('<< field >>'),
           <% endfor%>
       ]
       this.clientDataTable.pagination.rowsNumber = this.clientDataList.length;

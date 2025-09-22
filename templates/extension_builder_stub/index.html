@@ -2,8 +2,16 @@
 <!--//PAGE FOR THE EXTENSIONS BACKEND IN LNBITS//////-->
 <!--/////////////////////////////////////////////////-->
 
-{% extends "base.html" %} {% from "macros.jinja" import window_vars with context
-%} {% block scripts %} {{ window_vars(user) }}
+<!-- << cancel_comment >>
+<% if preview.is_preview_mode %>
+{% extends "public.html" %}
+<% else %>
+{% extends "base.html" %}
+<% endif %>
+<< cancel_comment >> -->
+
+{% from "macros.jinja" import window_vars with context %} {% block scripts %} {{
+window_vars(user) }}
 
 <!-- << cancel_comment >>
 <% if preview.is_preview_mode %>
