@@ -33,7 +33,7 @@ window_vars(user) }}
       id="<%if preview.is_settings_preview%>previewFocus<%else%>settingsCard<%endif%>"
     >
       <q-card-section
-        class="<%if not preview.is_settings_preview%>blur-and-disable<%endif%>"
+        class="<%if preview.is_preview_mode and not preview.is_settings_preview%>blur-and-disable<%endif%>"
       >
         <div class="row">
           <div class="col">
@@ -64,7 +64,7 @@ window_vars(user) }}
       class="q-mt-xs"
     >
       <q-card-section
-        class="<%if not preview.is_owner_data_preview%>blur-and-disable<%endif%>"
+        class="<%if preview.is_preview_mode and not preview.is_owner_data_preview%>blur-and-disable<%endif%>"
       >
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
@@ -185,7 +185,7 @@ window_vars(user) }}
       class="q-mt-xs"
     >
       <q-card-section
-        class="<%if not preview.is_client_data_preview%>blur-and-disable<%endif%>"
+        class="<%if preview.is_preview_mode and not preview.is_client_data_preview%>blur-and-disable<%endif%>"
       >
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
