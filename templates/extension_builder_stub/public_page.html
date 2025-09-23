@@ -93,6 +93,15 @@
     },
     methods: {
       async submitClientData() {
+        /** << cancel_comment >>
+        <% if preview.is_preview_mode %>
+        Quasar.Notify.create({
+            message: 'This is preview mode!',
+            color: 'positive'
+        })
+        return
+        <% endif%>
+        << cancel_comment >> **/
         try {
           const { data } = await LNbits.api.request(
             "PUT",
