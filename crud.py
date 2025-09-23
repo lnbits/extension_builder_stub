@@ -140,18 +140,20 @@ async def get_client_data_paginated(
     owner_data_ids: list[str] | None = None,
     filters: Filters[ClientDataFilters] | None = None,
 ) -> Page[ClientData]:
+
+    if not owner_data_ids:
+        return Page(data=[], total=0)
+
     where = []
     values = {}
-
-    if owner_data_ids:
-        id_clause = []
-        for i, item_id in enumerate(owner_data_ids):
-            # owner_data_ids are not user input, but DB entries, so this is safe
-            owner_data_id = f"owner_data_id__{i}"
-            id_clause.append(f"owner_data_id = :{owner_data_id}")
-            values[owner_data_id] = item_id
-        or_clause = " OR ".join(id_clause)
-        where.append(f"({or_clause})")
+    id_clause = []
+    for i, item_id in enumerate(owner_data_ids):
+        # owner_data_ids are not user input, but DB entries, so this is safe
+        owner_data_id = f"owner_data_id__{i}"
+        id_clause.append(f"owner_data_id = :{owner_data_id}")
+        values[owner_data_id] = item_id
+    or_clause = " OR ".join(id_clause)
+    where.append(f"({or_clause})")
 
     return await db.fetch_page(
         "SELECT * FROM extension_builder_stub.client_data",

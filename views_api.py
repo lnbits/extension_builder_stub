@@ -217,10 +217,12 @@ async def api_get_client_data_paginated(
     filters: Filters = Depends(client_data_filters),
 ) -> Page[ClientData]:
 
+    owner_data_ids = await get_owner_data_ids_by_user(user.id)
+
     if owner_data_id:
+        if owner_data_id not in owner_data_ids:
+            raise HTTPException(HTTPStatus.FORBIDDEN, "Not your owner data.")
         owner_data_ids = [owner_data_id]
-    else:
-        owner_data_ids = await get_owner_data_ids_by_user(user.id)
 
     return await get_client_data_paginated(
         owner_data_ids=owner_data_ids,
