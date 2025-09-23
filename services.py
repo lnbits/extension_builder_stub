@@ -4,17 +4,17 @@ from loguru import logger
 
 from .crud import (
     create_client_data,
-    create_extension_settings,
+    create_extension_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     get_client_data_by_id,
-    get_extension_settings,
+    get_extension_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     get_owner_data_by_id,
     update_client_data,
-    update_extension_settings,
+    update_extension_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
 )
 from .models import (
     ClientDataPaymentRequest,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
-    ExtensionSettings,
+    ExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
 )
 
 

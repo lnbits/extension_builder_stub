@@ -31,14 +31,14 @@ from .models import (
     ClientDataPaymentRequest,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     CreateClientData,
     CreateOwnerData,
-    ExtensionSettings,
+    ExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     OwnerData,
     OwnerDataFilters,
 )
 from .services import (
-    get_settings,
+    get_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     payment_request_for_client_data,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
-    update_settings,
+    update_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
 )
 
 owner_data_filters = parse_filters(OwnerDataFilters)
