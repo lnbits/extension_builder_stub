@@ -2,7 +2,7 @@
   "name": "extension_builder_stub_name",
   "short_description": "extension_builder_stub_short_description",
   "tile": "/extension_builder_stub/static/image/extension_builder_stub.png",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "min_lnbits_version": "1.1.0",
   "contributors": [
     {
