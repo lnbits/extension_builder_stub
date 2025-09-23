@@ -9,15 +9,11 @@ from .models import (
     ClientDataFilters,
     CreateClientData,
     CreateOwnerData,
+    ExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     OwnerData,
     OwnerDataFilters,
+    UserExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
 )
-
-#  <% if settings_data.enabled %> << cancel_comment >>
-from .models import ExtensionSettings as ExtensionSettings
-from .models import UserExtensionSettings as UserExtensionSettings
-
-# <% endif %> << cancel_comment >>
 
 db = Database("ext_extension_builder_stub")
 
