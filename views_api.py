@@ -35,11 +35,15 @@ from .models import (
     OwnerData,
     OwnerDataFilters,
 )
+
+#  <% if settings_data.enabled or public_page.action_fields.generate_action %> << cancel_comment >>
 from .services import (
     get_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     payment_request_for_client_data,  # <% if not public_page.action_fields.generate_action %> << cancel_comment >> <% endif %>
     update_settings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
 )
+
+# <% endif %> << cancel_comment >>
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 client_data_filters = parse_filters(ClientDataFilters)
