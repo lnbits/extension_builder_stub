@@ -1,5 +1,4 @@
 # Description: This file contains the extensions API endpoints.
-from asyncio.log import logger
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends
@@ -169,11 +168,7 @@ async def api_submit_public_client_data(
     data: CreateClientData,
 ) -> ClientDataPaymentRequest | None:
 
-    # <% if not public_page.action_fields.generate_payment_logic %> << cancel_comment >>
-    logger.info("Payment logic generation is disabled. Client data created without payment.")
-    # <% else %> << cancel_comment >>
     return await payment_request_for_client_data(owner_data_id, data)
-    # <% endif %> << cancel_comment >>
 
 
 # <% endif %> << cancel_comment >>
