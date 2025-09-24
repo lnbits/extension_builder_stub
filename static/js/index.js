@@ -4,7 +4,7 @@ window.app = Vue.createApp({
   delimiters: ["${", "}"],
   data: function () {
     return {
-      currencyOptions: ["sats"],
+      currencyOptions: ["sat"],
       settingsFormDialog: {
         show: false,
         data: {},
@@ -12,7 +12,12 @@ window.app = Vue.createApp({
 
       ownerDataFormDialog: {
         show: false,
-        data: {},
+        data: {
+          /** << cancel_comment >>
+          <% for field in owner_data.js_fields %><< field >>,
+          <% endfor%>
+          << cancel_comment >> **/
+        },
       },
       ownerDataList: [],
       ownerDataTable: {
@@ -141,7 +146,12 @@ window.app = Vue.createApp({
     // <% if owner_data.editable %> << cancel_comment >>
     //////////////// Owner Data ////////////////////////
     async showNewOwnerDataForm() {
-      this.ownerDataFormDialog.data = {};
+      this.ownerDataFormDialog.data = {
+        /** << cancel_comment >>
+          <% for field in owner_data.js_fields %><< field >>,
+          <% endfor%>
+          << cancel_comment >> **/
+      };
       this.ownerDataFormDialog.show = true;
     },
     async showEditOwnerDataForm(data) {
