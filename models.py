@@ -7,11 +7,9 @@ from pydantic import BaseModel, Field
 ########################### Owner Data ############################
 class CreateOwnerData(BaseModel):
     """<< cancel_comment >>
-    <% for field in owner_data.editable_fields %><< field >>
+    <% for field in owner_data.all_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
-
-    extra: dict = {}
 
 
 class OwnerData(BaseModel):
@@ -50,7 +48,7 @@ class OwnerDataFilters(FilterModel):
 
 class CreateClientData(BaseModel):
     """<< cancel_comment >>
-    <% for field in client_data.editable_fields %><< field >>
+    <% for field in client_data.all_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
@@ -100,7 +98,7 @@ class ClientDataFilters(FilterModel):
 ############################ Settings #############################
 class ExtensionSettings(BaseModel):
     """<< cancel_comment >>
-    <% for field in settings_data.editable_fields %><< field >>
+    <% for field in settings_data.all_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
 
