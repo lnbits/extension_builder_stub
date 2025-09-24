@@ -89,6 +89,7 @@ window.app = Vue.createApp({
   },
 
   methods: {
+    // <% if settings_data.enabled %> << cancel_comment >>
     //////////////// Settings ////////////////////////
     async updateSettings() {
       /** << cancel_comment >>
@@ -135,7 +136,9 @@ window.app = Vue.createApp({
       await this.getSettings();
       this.settingsFormDialog.show = true;
     },
+    // <% endif %> << cancel_comment >> **/
 
+    // <% if owner_data.editable %> << cancel_comment >>
     //////////////// Owner Data ////////////////////////
     async showNewOwnerDataForm() {
       this.ownerDataFormDialog.data = {};
@@ -171,6 +174,7 @@ window.app = Vue.createApp({
         LNbits.utils.notifyApiError(error);
       }
     },
+    // <% endif %> << cancel_comment >>
 
     async getOwnerData(props) {
       /** << cancel_comment >>
@@ -234,8 +238,9 @@ window.app = Vue.createApp({
         "owner_data_" + new Date().toISOString().slice(0, 10) + ".csv",
       );
     },
-    //////////////// Client Data ////////////////////////
 
+    // <% if client_data.editable %> << cancel_comment >>
+    //////////////// Client Data ////////////////////////
     async showEditClientDataForm(data) {
       this.clientDataFormDialog.data = { ...data };
       this.clientDataFormDialog.show = true;
@@ -266,6 +271,8 @@ window.app = Vue.createApp({
         LNbits.utils.notifyApiError(error);
       }
     },
+    // <% endif %> << cancel_comment >>
+
     async getClientData(props) {
       /** << cancel_comment >>
       <% if preview.is_preview_mode %>
@@ -332,30 +339,6 @@ window.app = Vue.createApp({
         this.clientDataList,
         "client_data_" + new Date().toISOString().slice(0, 10) + ".csv",
       );
-    },
-
-    connectWebocket(extension_builder_stub_id) {
-      //////////////////////////////////////////////////
-      ///wait for pay action to happen and do a thing////
-      ///////////////////////////////////////////////////
-      if (location.protocol !== "http:") {
-        localUrl =
-          "wss://" +
-          document.domain +
-          ":" +
-          location.port +
-          "/api/v1/ws/" +
-          extension_builder_stub_id;
-      } else {
-        localUrl =
-          "ws://" +
-          document.domain +
-          ":" +
-          location.port +
-          "/api/v1/ws/" +
-          extension_builder_stub_id;
-      }
-      this.connection = new WebSocket(localUrl);
     },
 
     //////////////// Utils ////////////////////////

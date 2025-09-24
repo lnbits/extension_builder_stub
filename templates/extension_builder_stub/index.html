@@ -89,6 +89,7 @@ window_vars(user) }}
             </q-input>
           </div>
           <div class="col-auto">
+            <% if owner_data.editable %>
             <q-btn
               @click="showNewOwnerDataForm()"
               unelevated
@@ -97,6 +98,7 @@ window_vars(user) }}
             >
               New Owner Data
             </q-btn>
+            <% endif %>
             <q-btn
               flat
               color="grey"
@@ -135,11 +137,12 @@ window_vars(user) }}
                   icon="launch"
                   color="primary"
                   type="a"
-                  :href="props.row.id"
+                  :href="'/extension_builder_stub/' + props.row.id"
                   target="_blank"
                   class="q-mr-sm"
                   ><q-tooltip>Open public page</q-tooltip></q-btn
                 >
+                <% if owner_data.editable %>
                 <q-btn
                   flat
                   dense
@@ -151,7 +154,7 @@ window_vars(user) }}
                 >
                   <q-tooltip> Edit </q-tooltip>
                 </q-btn>
-
+                <% endif %>
                 <q-btn
                   flat
                   dense
@@ -252,6 +255,7 @@ window_vars(user) }}
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td auto-width>
+                <% if client_data.editable %>
                 <q-btn
                   flat
                   dense
@@ -263,6 +267,7 @@ window_vars(user) }}
                 >
                   <q-tooltip> Edit </q-tooltip>
                 </q-btn>
+                <% endif %>
                 <q-btn
                   flat
                   dense
@@ -313,9 +318,7 @@ window_vars(user) }}
   <!--//////////////FORM DIALOG////////////////////////-->
   <!--/////////////////////////////////////////////////-->
 
-  <!-- << cancel_comment >>
-  <% if settings_data.enabled %>
-  << cancel_comment >> -->
+  <!--   <% if settings_data.enabled %> << cancel_comment >>  -->
   <q-dialog v-model="settingsFormDialog.show" position="top">
     <q-card
       v-if="settingsFormDialog.show"
@@ -333,10 +336,9 @@ window_vars(user) }}
       </div>
     </q-card>
   </q-dialog>
-  <!-- << cancel_comment >>
-  <% endif %>
-  << cancel_comment >> -->
+  <!-- <% endif %> << cancel_comment >>  -->
 
+  <!-- <% if owner_data.editable %> << cancel_comment >> -->
   <q-dialog v-model="ownerDataFormDialog.show" position="top">
     <q-card
       v-if="ownerDataFormDialog.show"
@@ -356,7 +358,9 @@ window_vars(user) }}
       </div>
     </q-card>
   </q-dialog>
+  <!-- <% endif %>  << cancel_comment >> -->
 
+  <!-- <% if client_data.editable %> << cancel_comment >> -->
   <q-dialog v-model="clientDataFormDialog.show" position="top">
     <q-card
       v-if="clientDataFormDialog.show"
@@ -376,5 +380,6 @@ window_vars(user) }}
       </div>
     </q-card>
   </q-dialog>
+  <!-- <% endif %>  << cancel_comment >> -->
 </div>
 {% endblock %}
