@@ -41,7 +41,15 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
     if not owner_data:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Owner Data does not exist.")
 
+    public_page_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "")
+    public_page_description = getattr(owner_data, "<<public_page.owner_data_fields.description>>", "")
+
     return extension_builder_stub_renderer().TemplateResponse(
         "extension_builder_stub/public_page.html",
-        {"request": req, "owner_data_id": owner_data_id},
+        {
+            "request": req,
+            "owner_data_id": owner_data_id,
+            "public_page_name": public_page_name,
+            "public_page_description": public_page_description,
+        },
     )
