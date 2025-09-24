@@ -35,6 +35,7 @@ async def index(req: Request, user: User = Depends(check_user_exists)):
 # Frontend shareable page
 
 
+# <% if public_page.has_public_page %> << cancel_comment >>
 @extension_builder_stub_generic_router.get("/{owner_data_id}")
 async def owner_data_public_page(req: Request, owner_data_id: str):
     owner_data = await get_owner_data_by_id(owner_data_id)
@@ -53,3 +54,6 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
             "public_page_description": public_page_description,
         },
     )
+
+
+# <% endif %> << cancel_comment >>

@@ -130,6 +130,7 @@ window_vars(user) }}
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td auto-width>
+                <% if public_page.has_public_page %>
                 <q-btn
                   flat
                   dense
@@ -142,7 +143,7 @@ window_vars(user) }}
                   class="q-mr-sm"
                   ><q-tooltip>Open public page</q-tooltip></q-btn
                 >
-                <% if owner_data.editable %>
+                <% endif %> <% if owner_data.editable %>
                 <q-btn
                   flat
                   dense
