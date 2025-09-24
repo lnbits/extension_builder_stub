@@ -162,7 +162,7 @@ async def api_create_client_data(
     name="Submit new Client Data",
     summary="Submit new client data for the specified owner data." "This is a public endpoint.",
     response_description="The created client data.",
-    response_model=ClientDataPaymentRequest,
+    response_model=ClientDataPaymentRequest | None,
 )
 async def api_submit_public_client_data(
     owner_data_id: str,

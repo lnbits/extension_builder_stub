@@ -40,9 +40,7 @@
         << cancel_comment >> -->
       </q-card-section>
 
-      <!-- << cancel_comment >>
-      <% if generate_action %>
-      << cancel_comment >> -->
+      <!-- <% if generate_action %> << cancel_comment >> -->
       <q-card-section class="q-pa-none q-mt-md">
         <div class="row">
           <div class="col">
@@ -72,8 +70,8 @@
           Most extensions have a public page that can be shared (this page will
           still be accessible even if you have restricted access to your LNbits
           install).
-        </p>
-      </q-card-section>
+        </p></q-card-section
+      >
       <!-- <% else %> << cancel_comment >> -->
       <q-card-section>
         <h6 class="q-mb-sm q-mt-none">{{ public_page_name }}</h6>
@@ -99,6 +97,7 @@
       };
     },
     methods: {
+      // <% if generate_action %> << cancel_comment >>
       async submitClientData() {
         /** << cancel_comment >>
         <% if preview.is_preview_mode %>
@@ -116,11 +115,13 @@
             null,
             this.publicClientData,
           );
+          // <% if generate_payment_logic %> << cancel_comment >>
           this.clientDataId = data.client_data_id;
           this.paymentHash = data.payment_hash;
           this.paymentRequest = data.payment_request;
 
           this.waitForPayment(this.paymentHash);
+          // <% endif %> << cancel_comment >>
           Quasar.Notify.create({
             type: "positive",
             message: this.$t("Client Data submitted"),
@@ -129,6 +130,8 @@
           LNbits.utils.notifyApiError(error);
         }
       },
+      // <% endif %> << cancel_comment >>
+      // <% if generate_payment_logic %> << cancel_comment >>
       async waitForPayment(paymentHash) {
         try {
           const url = new URL(window.location);
@@ -154,6 +157,7 @@
           });
         }
       },
+      // <% endif %> << cancel_comment >>
     },
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py

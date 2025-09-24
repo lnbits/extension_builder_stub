@@ -30,6 +30,10 @@ async def payment_request_for_client_data(
 
     client_data = await create_client_data(owner_data_id, data)
 
+    # <% if not public_page.action_fields.generate_payment_logic %> << cancel_comment >>
+    logger.info("Payment logic generation is disabled. Client data created without payment.")
+    client_data_resp = ClientDataPaymentRequest(client_data_id=client_data.id)
+    # <% else %> << cancel_comment >>
     owner_data_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "Unknown")
     payment: Payment = await create_invoice(
         wallet_id=getattr(owner_data, "<<public_page.action_fields.wallet_id>>", "no_wallet_id"),
@@ -38,11 +42,13 @@ async def payment_request_for_client_data(
         extra={"tag": "extension_builder_stub", "client_data_id": client_data.id},
         memo=f"Payment for {owner_data_name}. " f"Client Data ID: {client_data.id}",
     )
-    return ClientDataPaymentRequest(
+    client_data_resp = ClientDataPaymentRequest(
         client_data_id=client_data.id,
         payment_hash=payment.payment_hash,
         payment_request=payment.bolt11,
     )
+    # <% endif %> << cancel_comment >>
+    return client_data_resp
 
 
 # <% endif %> << cancel_comment >>

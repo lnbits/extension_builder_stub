@@ -67,8 +67,8 @@ class ClientData(BaseModel):
 # <% if public_page.action_fields.generate_action %> << cancel_comment >>
 class ClientDataPaymentRequest(BaseModel):
     client_data_id: str
-    payment_hash: str
-    payment_request: str
+    payment_hash: str | None = None
+    payment_request: str | None = None
 
 
 # <% endif %> << cancel_comment >>
