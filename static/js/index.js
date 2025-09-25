@@ -381,7 +381,7 @@ window.app = Vue.createApp({
       }
     }, 100);
     <% endif%>
-    <% if preview.is_settings_preview %>
+    <% if settings_data.enabled and preview.is_settings_preview %>
     setTimeout(() => {
       this.showSettingsDataForm()
     }, 200);
