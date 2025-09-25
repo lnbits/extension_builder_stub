@@ -1,13 +1,13 @@
 window.app = Vue.createApp({
-  el: "#vue",
+  el: '#vue',
   mixins: [windowMixin],
-  delimiters: ["${", "}"],
+  delimiters: ['${', '}'],
   data: function () {
     return {
-      currencyOptions: ["sat"],
+      currencyOptions: ['sat'],
       settingsFormDialog: {
         show: false,
-        data: {},
+        data: {}
       },
 
       ownerDataFormDialog: {
@@ -17,11 +17,11 @@ window.app = Vue.createApp({
           <% for field in owner_data.js_fields %><< field >>,
           <% endfor%>
           << cancel_comment >> **/
-        },
+        }
       },
       ownerDataList: [],
       ownerDataTable: {
-        search: "",
+        search: '',
         loading: false,
         columns: [
           /** << cancel_comment >>
@@ -30,22 +30,22 @@ window.app = Vue.createApp({
           << cancel_comment >> **/
         ],
         pagination: {
-          sortBy: "updated_at",
+          sortBy: 'updated_at',
           rowsPerPage: 10,
           page: 1,
           descending: true,
-          rowsNumber: 10,
-        },
+          rowsNumber: 10
+        }
       },
 
       clientDataFormDialog: {
         show: false,
-        ownerData: { label: "All Owner Data", value: "" },
-        data: {},
+        ownerData: {label: 'All Owner Data', value: ''},
+        data: {}
       },
       clientDataList: [],
       clientDataTable: {
-        search: "",
+        search: '',
         loading: false,
         columns: [
           /** << cancel_comment >>
@@ -54,43 +54,43 @@ window.app = Vue.createApp({
           << cancel_comment >> **/
         ],
         pagination: {
-          sortBy: "updated_at",
+          sortBy: 'updated_at',
           rowsPerPage: 10,
           page: 1,
           descending: true,
-          rowsNumber: 10,
-        },
-      },
-    };
+          rowsNumber: 10
+        }
+      }
+    }
   },
   watch: {
-    "ownerDataTable.search": {
+    'ownerDataTable.search': {
       handler() {
-        const props = {};
+        const props = {}
         if (this.ownerDataTable.search) {
-          props["search"] = this.ownerDataTable.search;
+          props['search'] = this.ownerDataTable.search
         }
-        this.getOwnerData();
-      },
+        this.getOwnerData()
+      }
     },
-    "clientDataTable.search": {
+    'clientDataTable.search': {
       handler() {
-        const props = {};
+        const props = {}
         if (this.clientDataTable.search) {
-          props["search"] = this.clientDataTable.search;
+          props['search'] = this.clientDataTable.search
         }
-        this.getClientData();
-      },
+        this.getClientData()
+      }
     },
-    "clientDataFormDialog.ownerData.value": {
+    'clientDataFormDialog.ownerData.value': {
       handler() {
-        const props = {};
+        const props = {}
         if (this.clientDataTable.search) {
-          props["search"] = this.clientDataTable.search;
+          props['search'] = this.clientDataTable.search
         }
-        this.getClientData();
-      },
-    },
+        this.getClientData()
+      }
+    }
   },
 
   methods: {
@@ -107,17 +107,17 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        const data = { ...this.settingsFormDialog.data };
+        const data = {...this.settingsFormDialog.data}
 
         await LNbits.api.request(
-          "PUT",
-          "/extension_builder_stub/api/v1/settings",
+          'PUT',
+          '/extension_builder_stub/api/v1/settings',
           null,
-          data,
-        );
-        this.settingsFormDialog.show = false;
+          data
+        )
+        this.settingsFormDialog.show = false
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       }
     },
     async getSettings() {
@@ -127,19 +127,19 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        const { data } = await LNbits.api.request(
-          "GET",
-          "/extension_builder_stub/api/v1/settings",
-          null,
-        );
-        this.settingsFormDialog.data = data;
+        const {data} = await LNbits.api.request(
+          'GET',
+          '/extension_builder_stub/api/v1/settings',
+          null
+        )
+        this.settingsFormDialog.data = data
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       }
     },
     async showSettingsDataForm() {
-      await this.getSettings();
-      this.settingsFormDialog.show = true;
+      await this.getSettings()
+      this.settingsFormDialog.show = true
     },
     // <% endif %> << cancel_comment >> **/
 
@@ -151,12 +151,12 @@ window.app = Vue.createApp({
           <% for field in owner_data.js_fields %><< field >>,
           <% endfor%>
           << cancel_comment >> **/
-      };
-      this.ownerDataFormDialog.show = true;
+      }
+      this.ownerDataFormDialog.show = true
     },
     async showEditOwnerDataForm(data) {
-      this.ownerDataFormDialog.data = { ...data };
-      this.ownerDataFormDialog.show = true;
+      this.ownerDataFormDialog.data = {...data}
+      this.ownerDataFormDialog.show = true
     },
     async saveOwnerData() {
       /** << cancel_comment >>
@@ -169,19 +169,19 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        const data = { extra: {}, ...this.ownerDataFormDialog.data };
-        const method = data.id ? "PUT" : "POST";
-        const entry = data.id ? `/${data.id}` : "";
+        const data = {extra: {}, ...this.ownerDataFormDialog.data}
+        const method = data.id ? 'PUT' : 'POST'
+        const entry = data.id ? `/${data.id}` : ''
         await LNbits.api.request(
           method,
-          "/extension_builder_stub/api/v1/owner_data" + entry,
+          '/extension_builder_stub/api/v1/owner_data' + entry,
           null,
-          data,
-        );
-        this.getOwnerData();
-        this.ownerDataFormDialog.show = false;
+          data
+        )
+        this.getOwnerData()
+        this.ownerDataFormDialog.show = false
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       }
     },
     // <% endif %> << cancel_comment >>
@@ -198,27 +198,27 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        this.ownerDataTable.loading = true;
+        this.ownerDataTable.loading = true
         const params = LNbits.utils.prepareFilterQuery(
           this.ownerDataTable,
-          props,
-        );
-        const { data } = await LNbits.api.request(
-          "GET",
+          props
+        )
+        const {data} = await LNbits.api.request(
+          'GET',
           `/extension_builder_stub/api/v1/owner_data/paginated?${params}`,
-          null,
-        );
-        this.ownerDataList = data.data;
-        this.ownerDataTable.pagination.rowsNumber = data.total;
+          null
+        )
+        this.ownerDataList = data.data
+        this.ownerDataTable.pagination.rowsNumber = data.total
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       } finally {
-        this.ownerDataTable.loading = false;
+        this.ownerDataTable.loading = false
       }
     },
     async deleteOwnerData(ownerDataId) {
       await LNbits.utils
-        .confirmDialog("Are you sure you want to delete this Owner Data?")
+        .confirmDialog('Are you sure you want to delete this Owner Data?')
         .onOk(async () => {
           try {
             /** << cancel_comment >>
@@ -231,29 +231,29 @@ window.app = Vue.createApp({
             <% endif%>
             << cancel_comment >> **/
             await LNbits.api.request(
-              "DELETE",
-              "/extension_builder_stub/api/v1/owner_data/" + ownerDataId,
-              null,
-            );
-            await this.getOwnerData();
+              'DELETE',
+              '/extension_builder_stub/api/v1/owner_data/' + ownerDataId,
+              null
+            )
+            await this.getOwnerData()
           } catch (error) {
-            LNbits.utils.notifyApiError(error);
+            LNbits.utils.notifyApiError(error)
           }
-        });
+        })
     },
     async exportOwnerDataCSV() {
       await LNbits.utils.exportCSV(
         this.ownerDataTable.columns,
         this.ownerDataList,
-        "owner_data_" + new Date().toISOString().slice(0, 10) + ".csv",
-      );
+        'owner_data_' + new Date().toISOString().slice(0, 10) + '.csv'
+      )
     },
 
     // <% if client_data.editable %> << cancel_comment >>
     //////////////// Client Data ////////////////////////
     async showEditClientDataForm(data) {
-      this.clientDataFormDialog.data = { ...data };
-      this.clientDataFormDialog.show = true;
+      this.clientDataFormDialog.data = {...data}
+      this.clientDataFormDialog.show = true
     },
     async saveClientData() {
       /** << cancel_comment >>
@@ -266,19 +266,19 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        const data = { extra: {}, ...this.clientDataFormDialog.data };
-        const method = data.id ? "PUT" : "POST";
-        const entry = data.id ? `/${data.id}` : "";
+        const data = {extra: {}, ...this.clientDataFormDialog.data}
+        const method = data.id ? 'PUT' : 'POST'
+        const entry = data.id ? `/${data.id}` : ''
         await LNbits.api.request(
           method,
-          "/extension_builder_stub/api/v1/client_data" + entry,
+          '/extension_builder_stub/api/v1/client_data' + entry,
           null,
-          data,
-        );
-        this.getClientData();
-        this.clientDataFormDialog.show = false;
+          data
+        )
+        this.getClientData()
+        this.clientDataFormDialog.show = false
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       }
     },
     // <% endif %> << cancel_comment >>
@@ -295,31 +295,31 @@ window.app = Vue.createApp({
       <% endif%>
       << cancel_comment >> **/
       try {
-        this.clientDataTable.loading = true;
+        this.clientDataTable.loading = true
         let params = LNbits.utils.prepareFilterQuery(
           this.clientDataTable,
-          props,
-        );
-        const ownerDataId = this.clientDataFormDialog.ownerData.value;
+          props
+        )
+        const ownerDataId = this.clientDataFormDialog.ownerData.value
         if (ownerDataId) {
-          params += `&owner_data_id=${ownerDataId}`;
+          params += `&owner_data_id=${ownerDataId}`
         }
-        const { data } = await LNbits.api.request(
-          "GET",
+        const {data} = await LNbits.api.request(
+          'GET',
           `/extension_builder_stub/api/v1/client_data/paginated?${params}`,
-          null,
-        );
-        this.clientDataList = data.data;
-        this.clientDataTable.pagination.rowsNumber = data.total;
+          null
+        )
+        this.clientDataList = data.data
+        this.clientDataTable.pagination.rowsNumber = data.total
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       } finally {
-        this.clientDataTable.loading = false;
+        this.clientDataTable.loading = false
       }
     },
     async deleteClientData(clientDataId) {
       await LNbits.utils
-        .confirmDialog("Are you sure you want to delete this Client Data?")
+        .confirmDialog('Are you sure you want to delete this Client Data?')
         .onOk(async () => {
           try {
             /** << cancel_comment >>
@@ -332,45 +332,45 @@ window.app = Vue.createApp({
             <% endif%>
             << cancel_comment >> **/
             await LNbits.api.request(
-              "DELETE",
-              "/extension_builder_stub/api/v1/client_data/" + clientDataId,
-              null,
-            );
-            await this.getClientData();
+              'DELETE',
+              '/extension_builder_stub/api/v1/client_data/' + clientDataId,
+              null
+            )
+            await this.getClientData()
           } catch (error) {
-            LNbits.utils.notifyApiError(error);
+            LNbits.utils.notifyApiError(error)
           }
-        });
+        })
     },
 
     async exportClientDataCSV() {
       await LNbits.utils.exportCSV(
         this.clientDataTable.columns,
         this.clientDataList,
-        "client_data_" + new Date().toISOString().slice(0, 10) + ".csv",
-      );
+        'client_data_' + new Date().toISOString().slice(0, 10) + '.csv'
+      )
     },
 
     //////////////// Utils ////////////////////////
     dateFromNow(date) {
-      return moment(date).fromNow();
+      return moment(date).fromNow()
     },
     async fetchCurrencies() {
       try {
-        const response = await LNbits.api.request("GET", "/api/v1/currencies");
-        this.currencyOptions = ["sat", ...response.data];
+        const response = await LNbits.api.request('GET', '/api/v1/currencies')
+        this.currencyOptions = ['sat', ...response.data]
       } catch (error) {
-        LNbits.utils.notifyApiError(error);
+        LNbits.utils.notifyApiError(error)
       }
-    },
+    }
   },
   ///////////////////////////////////////////////////
   //////LIFECYCLE FUNCTIONS RUNNING ON PAGE LOAD/////
   ///////////////////////////////////////////////////
   async created() {
-    this.fetchCurrencies();
-    this.getOwnerData();
-    this.getClientData();
+    this.fetchCurrencies()
+    this.getOwnerData()
+    this.getClientData()
 
     /** << cancel_comment >>
     <% if preview.is_preview_mode %>
@@ -387,5 +387,5 @@ window.app = Vue.createApp({
     }, 200);
     <% endif%>
     << cancel_comment >> **/
-  },
-});
+  }
+})
