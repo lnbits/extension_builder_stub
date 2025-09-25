@@ -34,10 +34,18 @@ async def payment_request_for_client_data(
     logger.info("Payment logic generation is disabled. Client data created without payment.")
     client_data_resp = ClientDataPaymentRequest(client_data_id=client_data.id)
     # <% else %> << cancel_comment >>
+    amount = 0
+    # <% if public_page.action_fields.amount_source == "owner_data" %> << cancel_comment >>
+    amount = getattr(owner_data, "<<public_page.action_fields.amount>>", 0)
+    # <% elif public_page.action_fields.amount_source == "client_data" %> << cancel_comment >>
+    amount = getattr(client_data, "<<public_page.action_fields.amount>>", 0)
+    # <% endif %> << cancel_comment >>
+    if not amount or amount <= 0:
+        raise ValueError("The amount must be greater than zero to create a payment request.")
     owner_data_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "Unknown")
     payment: Payment = await create_invoice(
         wallet_id=getattr(owner_data, "<<public_page.action_fields.wallet_id>>", "no_wallet_id"),
-        amount=getattr(client_data, "<<public_page.action_fields.amount>>", 0),
+        amount=amount,
         currency=getattr(owner_data, "<<public_page.action_fields.currency>>", "sats"),
         extra={"tag": "extension_builder_stub", "client_data_id": client_data.id},
         memo=f"Payment for {owner_data_name}. " f"Client Data ID: {client_data.id}",
