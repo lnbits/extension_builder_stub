@@ -1,10 +1,10 @@
 [project]
 name = "extension_builder_stub"
-version = "0.0.4"
+version = "0.0.0"
 requires-python = ">=3.10,<3.13"
 description = "<<extension_builder_stub_short_description>>"
 authors = []
-urls = { Homepage = "https://lnbits.com", Repository = "https://github.com/lnbits/tpos" }
+urls = { Homepage = "https://lnbits.com", Repository = "https://github.com/lnbits/extension_builder_stub" }
 dependencies = [ "lnbits>1" ]
 
 [tool.poetry]
@@ -15,21 +15,20 @@ dev-dependencies = [
     "black>=24.3.0",
     "pytest-asyncio>=0.21.0",
     "pytest>=7.3.2",
-    "mypy>=1.5.1",
+    "mypy==1.17.1",
     "pre-commit>=3.2.2",
     "ruff>=0.3.2",
     "types-cffi>=1.16.0.20240331",
 ]
 
 [tool.mypy]
-[[tool.mypy.overrides]]
-module = [
-  "lnbits.*",
-  "loguru.*",
-  "fastapi.*",
-  "pydantic.*",
-]
-ignore_missing_imports = "True"
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
 
 [tool.pytest.ini_options]
 log_cli = false
