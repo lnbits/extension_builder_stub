@@ -3,8 +3,7 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import HTMLResponse
-from lnbits.core.models import User
+from lnbits.core.views.generic import index
 from lnbits.decorators import check_user_exists
 from lnbits.helpers import template_renderer
 
@@ -25,11 +24,15 @@ def extension_builder_stub_renderer():
 # Backend admin page
 
 
-@extension_builder_stub_generic_router.get("/", response_class=HTMLResponse)
-async def index(req: Request, user: User = Depends(check_user_exists)):
-    return extension_builder_stub_renderer().TemplateResponse(
-        "extension_builder_stub/index.html", {"request": req, "user": user.json()}
-    )
+# @extension_builder_stub_generic_router.get("/", response_class=HTMLResponse)
+# async def index(req: Request, user: User = Depends(check_user_exists)):
+#     return extension_builder_stub_renderer().TemplateResponse(
+#         "extension_builder_stub/index.html", {"request": req, "user": user.json()}
+#     )
+
+extension_builder_stub_generic_router.add_api_route(
+    "/", methods=["GET"], endpoint=index, dependencies=[Depends(check_user_exists)]
+)
 
 
 # Frontend shareable page

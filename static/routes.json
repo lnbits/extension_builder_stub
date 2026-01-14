@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/extension_builder_stub/",
+    "name": "Pageextension_builder_stub",
+    "template": "/extension_builder_stub/static/index.vue",
+    "component": "/extension_builder_stub/static/index.js"
+  },
+  {
+    "path": "/extension_builder_stub/client_data/:id",
+    "name": "Pageextension_builder_stubPublic",
+    "template": "/extension_builder_stub/static/display.vue",
+    "component": "/extension_builder_stub/static/display.js"
+  }
+]
