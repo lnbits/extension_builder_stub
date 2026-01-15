@@ -21,6 +21,7 @@ from .crud import (
     get_client_data_by_id,
     get_client_data_paginated,
     get_owner_data,
+    get_owner_data_by_id,
     get_owner_data_ids_by_user,
     get_owner_data_paginated,
     update_client_data,
@@ -113,6 +114,36 @@ async def api_get_owner_data(
         raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
 
     return owner_data
+
+
+# <% if public_page.has_public_page %> << cancel_comment >>
+@extension_builder_stub_api_router.get(
+    "/api/v1/owner_data/{owner_data_id}/public",
+    name="Get Public OwnerData",
+    summary="Get the public owner_data with this id.",
+    response_description="An owner_data or 404 if not found",
+    # response_model=OwnerData, PublicOwnerData,  --- IGNORE ---
+)
+async def api_get_public_owner_data(owner_data_id: str):
+    #  -> PublicOwnerData:
+
+    owner_data = await get_owner_data_by_id(owner_data_id)
+    if not owner_data:
+        raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
+
+    # do public class stuff here
+    public_page_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "")
+    public_page_description = getattr(owner_data, "<<public_page.owner_data_fields.description>>", "")
+
+    # return owner_data
+    return {
+        "owner_data_id": owner_data_id,
+        "public_page_name": public_page_name,
+        "public_page_description": public_page_description,
+    }
+
+
+# <% endif %> << cancel_comment >>
 
 
 @extension_builder_stub_api_router.delete(
