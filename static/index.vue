@@ -279,9 +279,7 @@
     <div class="col-12 col-md-4 col-lg-5 q-gutter-y-md">
       <q-card>
         <q-card-section>
-          <h6 class="text-subtitle1 q-my-none">
-            {{ SITE_TITLE }} extension_builder_stub_name
-          </h6>
+          <h6 class="text-subtitle1 q-my-none">extension_builder_stub_name</h6>
           <p>extension_builder_stub_short_description</p>
         </q-card-section>
         <q-card-section class="q-pa-none">

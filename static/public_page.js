@@ -6,11 +6,10 @@ window.Pageextension_builder_stubPublic = {
       paymentRequest: '',
       paymentHash: '',
       invoicePaid: false,
-      ownerDataId: '{{ owner_data_id }}',
+      ownerDataId: '',
       clientDataId: null,
       publicClientData: {},
-      publicPageName: '',
-      publicPageDescription: ''
+      publicPageData: {}
     }
   },
   methods: {
@@ -28,7 +27,7 @@ window.Pageextension_builder_stubPublic = {
       try {
         const {data} = await LNbits.api.request(
           'PUT',
-          `/extension_builder_stub/api/v1/client_data/public/${this.ownerDataId}`,
+          `/extension_builder_stub/api/v1/client_data/${this.ownerDataId}/public`,
           null,
           this.publicClientData
         )
@@ -79,12 +78,9 @@ window.Pageextension_builder_stubPublic = {
       try {
         const {data} = await LNbits.api.request(
           'GET',
-          `/extension_builder_stub/api/v1/owner_data/${this.$route.params.id}/public`
+          `/extension_builder_stub/api/v1/owner_data/${this.ownerDataId}/public`
         )
-        console.log('### data', data)
-        this.publicClientData = data || {}
-        this.publicPageName = data.public_page_name || ''
-        this.publicPageDescription = data.public_page_description || ''
+        this.publicPageData = data || {}
       } catch (error) {
         console.warn(error)
         LNbits.utils.notifyApiError(error)
@@ -93,10 +89,9 @@ window.Pageextension_builder_stubPublic = {
   },
   created: async function () {
     // Will trigger payment reaction when payment received, sent from tasks.py
+    this.ownerDataId = this.$route.params.id
     this.url =
-      window.location.origin +
-      '/extension_builder_stub/' +
-      this.$route.params.id
+      window.location.origin + '/extension_builder_stub/' + this.ownerDataId
     await this.fetchPublicData()
   }
 }

@@ -36,6 +36,7 @@ from .models import (
     ExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     OwnerData,
     OwnerDataFilters,
+    PublicOwnerData,  #  <% if not public_page.has_public_page %> << cancel_comment >> <% endif %>
 )
 
 #  <% if settings_data.enabled or public_page.action_fields.generate_action %> << cancel_comment >>
@@ -120,27 +121,17 @@ async def api_get_owner_data(
 @extension_builder_stub_api_router.get(
     "/api/v1/owner_data/{owner_data_id}/public",
     name="Get Public OwnerData",
-    summary="Get the public owner_data with this id.",
+    summary="Get the public owner_data with this id." "This is a public endpoint.",
     response_description="An owner_data or 404 if not found",
-    # response_model=OwnerData, PublicOwnerData,  --- IGNORE ---
+    response_model=PublicOwnerData,
 )
-async def api_get_public_owner_data(owner_data_id: str):
-    #  -> PublicOwnerData:
+async def api_get_public_owner_data(owner_data_id: str) -> PublicOwnerData:
 
     owner_data = await get_owner_data_by_id(owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
 
-    # do public class stuff here
-    public_page_name = getattr(owner_data, "<<public_page.owner_data_fields.name>>", "")
-    public_page_description = getattr(owner_data, "<<public_page.owner_data_fields.description>>", "")
-
-    # return owner_data
-    return {
-        "owner_data_id": owner_data_id,
-        "public_page_name": public_page_name,
-        "public_page_description": public_page_description,
-    }
+    return PublicOwnerData(**owner_data.dict())
 
 
 # <% endif %> << cancel_comment >>
@@ -190,7 +181,7 @@ async def api_create_client_data(
 
 # <% if public_page.action_fields.generate_action %> << cancel_comment >>
 @extension_builder_stub_api_router.put(
-    "/api/v1/client_data/public/{owner_data_id}",
+    "/api/v1/client_data/{owner_data_id}/public",
     name="Submit new Client Data",
     summary="Submit new client data for the specified owner data." "This is a public endpoint.",
     response_description="The created client data.",

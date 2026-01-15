@@ -23,6 +23,17 @@ class OwnerData(BaseModel):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+# <% if public_page.has_public_page %> << cancel_comment >>
+class PublicOwnerData(BaseModel):
+    """<< cancel_comment >>
+    <% for field in owner_data.public_fields %><< field >>
+    <% endfor%>
+    << cancel_comment >>"""
+
+
+# <% endif %> << cancel_comment >>
+
+
 class OwnerDataFilters(FilterModel):
     __search_fields__ = [
         """<< cancel_comment >>

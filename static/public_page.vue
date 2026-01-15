@@ -73,10 +73,10 @@
         <!-- <% else %> << cancel_comment >> -->
         <q-card-section>
           <h6 class="q-mb-sm q-mt-none">
-            <span v-text="publicPageName"></span>
+            <span v-text="publicPageData.name"></span>
           </h6>
           <p class="q-my-none">
-            <span v-text="publicPageDescription"></span>
+            <span v-text="publicPageData.description"></span>
           </p>
         </q-card-section>
         <!-- <% endif %> << cancel_comment >> -->
