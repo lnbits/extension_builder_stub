@@ -1,4 +1,4 @@
-window.Pageextension_builder_stub = {
+window.Pageextension_builder_stub_camel_name = {
   template: '#page-extension_builder_stub',
   delimiters: ['${', '}'],
   data: function () {

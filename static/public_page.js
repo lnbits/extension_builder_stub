@@ -1,4 +1,4 @@
-window.Pageextension_builder_stubPublic = {
+window.Pageextension_builder_stub_camel_namePublic = {
   template: '#page-extension_builder_stub-public',
   data: function () {
     return {

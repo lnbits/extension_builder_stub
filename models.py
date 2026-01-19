@@ -25,10 +25,14 @@ class OwnerData(BaseModel):
 
 # <% if public_page.has_public_page %> << cancel_comment >>
 class PublicOwnerData(BaseModel):
+    # <% if owner_data.public_fields %> << cancel_comment >>
     """<< cancel_comment >>
     <% for field in owner_data.public_fields %><< field >>
     <% endfor%>
     << cancel_comment >>"""
+    # <% else %> << cancel_comment >>
+    pass
+    # <% endif %> << cancel_comment >>
 
 
 # <% endif %> << cancel_comment >>
