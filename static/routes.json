@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/extension_builder_stub/",
+    "name": "Pageextension_builder_stub_camel_name",
+    "template": "/extension_builder_stub/static/index.vue",
+    "component": "/extension_builder_stub/static/index.js"
+  },
+  {
+    "path": "/extension_builder_stub/:id",
+    "name": "Pageextension_builder_stub_camel_namePublic",
+    "template": "/extension_builder_stub/static/public_page.vue",
+    "component": "/extension_builder_stub/static/public_page.js"
+  }
+]

@@ -34,6 +34,7 @@ test:
 	PYTHONUNBUFFERED=1 \
 	DEBUG=true \
 	uv run pytest
+
 install-pre-commit-hook:
 	@echo "Installing pre-commit hook to git"
 	@echo "Uninstall the hook with uv run pre-commit uninstall"

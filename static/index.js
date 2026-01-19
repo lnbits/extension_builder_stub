@@ -1,6 +1,5 @@
-window.app = Vue.createApp({
-  el: '#vue',
-  mixins: [windowMixin],
+window.Pageextension_builder_stub_camel_name = {
+  template: '#page-extension_builder_stub',
   delimiters: ['${', '}'],
   data: function () {
     return {
@@ -388,4 +387,4 @@ window.app = Vue.createApp({
     <% endif%>
     << cancel_comment >> **/
   }
-})
+}

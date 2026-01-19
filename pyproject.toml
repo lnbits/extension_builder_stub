@@ -1,11 +1,11 @@
 [project]
 name = "extension_builder_stub"
-version = "0.0.0"
+version = "0.1.0"
 requires-python = ">=3.10,<3.13"
 description = "<<extension_builder_stub_short_description>>"
 authors = []
 urls = { Homepage = "https://lnbits.com", Repository = "https://github.com/lnbits/extension_builder_stub" }
-dependencies = [ "lnbits>1" ]
+dependencies = [ "lnbits>=1.4.0" ]
 
 [tool.poetry]
 package-mode = false

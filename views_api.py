@@ -4,9 +4,11 @@ from http import HTTPStatus
 from fastapi import APIRouter, Depends
 from fastapi.exceptions import HTTPException
 from lnbits.core.models import SimpleStatus, User
+from lnbits.core.models.users import AccountId
 from lnbits.db import Filters, Page
 from lnbits.decorators import (
-    check_user_exists,
+    check_account_exists,
+    check_account_id_exists,
     parse_filters,
 )
 from lnbits.helpers import generate_filter_params_openapi
@@ -19,6 +21,7 @@ from .crud import (
     get_client_data_by_id,
     get_client_data_paginated,
     get_owner_data,
+    get_owner_data_by_id,
     get_owner_data_ids_by_user,
     get_owner_data_paginated,
     update_client_data,
@@ -33,6 +36,7 @@ from .models import (
     ExtensionSettings,  #  <% if not settings_data.enabled %> << cancel_comment >> <% endif %>
     OwnerData,
     OwnerDataFilters,
+    PublicOwnerData,  #  <% if not public_page.has_public_page %> << cancel_comment >> <% endif %>
 )
 
 #  <% if settings_data.enabled or public_page.action_fields.generate_action %> << cancel_comment >>
@@ -54,9 +58,9 @@ extension_builder_stub_api_router = APIRouter()
 @extension_builder_stub_api_router.post("/api/v1/owner_data", status_code=HTTPStatus.CREATED)
 async def api_create_owner_data(
     data: CreateOwnerData,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> OwnerData:
-    owner_data = await create_owner_data(user.id, data)
+    owner_data = await create_owner_data(account_id.id, data)
     return owner_data
 
 
@@ -64,12 +68,12 @@ async def api_create_owner_data(
 async def api_update_owner_data(
     owner_data_id: str,
     data: CreateOwnerData,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> OwnerData:
-    owner_data = await get_owner_data(user.id, owner_data_id)
+    owner_data = await get_owner_data(account_id.id, owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
-    if owner_data.user_id != user.id:
+    if owner_data.user_id != account_id.id:
         raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
     owner_data = await update_owner_data(OwnerData(**{**owner_data.dict(), **data.dict()}))
     return owner_data
@@ -84,12 +88,12 @@ async def api_update_owner_data(
     response_model=Page[OwnerData],
 )
 async def api_get_owner_data_paginated(
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
     filters: Filters = Depends(owner_data_filters),
 ) -> Page[OwnerData]:
 
     return await get_owner_data_paginated(
-        user_id=user.id,
+        user_id=account_id.id,
         filters=filters,
     )
 
@@ -103,14 +107,34 @@ async def api_get_owner_data_paginated(
 )
 async def api_get_owner_data(
     owner_data_id: str,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> OwnerData:
 
-    owner_data = await get_owner_data(user.id, owner_data_id)
+    owner_data = await get_owner_data(account_id.id, owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
 
     return owner_data
+
+
+# <% if public_page.has_public_page %> << cancel_comment >>
+@extension_builder_stub_api_router.get(
+    "/api/v1/owner_data/{owner_data_id}/public",
+    name="Get Public OwnerData",
+    summary="Get the public owner_data with this id." "This is a public endpoint.",
+    response_description="An owner_data or 404 if not found",
+    response_model=PublicOwnerData,
+)
+async def api_get_public_owner_data(owner_data_id: str) -> PublicOwnerData:
+
+    owner_data = await get_owner_data_by_id(owner_data_id)
+    if not owner_data:
+        raise HTTPException(HTTPStatus.NOT_FOUND, "OwnerData not found.")
+
+    return PublicOwnerData(**owner_data.dict())
+
+
+# <% endif %> << cancel_comment >>
 
 
 @extension_builder_stub_api_router.delete(
@@ -123,10 +147,10 @@ async def api_get_owner_data(
 async def api_delete_owner_data(
     owner_data_id: str,
     clear_client_data: bool | None = False,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> SimpleStatus:
 
-    await delete_owner_data(user.id, owner_data_id)
+    await delete_owner_data(account_id.id, owner_data_id)
     if clear_client_data is True:
         # await delete all client data associated with this owner data
         pass
@@ -145,9 +169,9 @@ async def api_delete_owner_data(
 async def api_create_client_data(
     owner_data_id: str,
     data: CreateClientData,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> ClientData:
-    owner_data = await get_owner_data(user.id, owner_data_id)
+    owner_data = await get_owner_data(account_id.id, owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
@@ -157,7 +181,7 @@ async def api_create_client_data(
 
 # <% if public_page.action_fields.generate_action %> << cancel_comment >>
 @extension_builder_stub_api_router.put(
-    "/api/v1/client_data/public/{owner_data_id}",
+    "/api/v1/client_data/{owner_data_id}/public",
     name="Submit new Client Data",
     summary="Submit new client data for the specified owner data." "This is a public endpoint.",
     response_description="The created client data.",
@@ -184,13 +208,13 @@ async def api_submit_public_client_data(
 async def api_update_client_data(
     client_data_id: str,
     data: CreateClientData,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> ClientData:
     client_data = await get_client_data_by_id(client_data_id)
     if not client_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Client Data not found.")
 
-    owner_data = await get_owner_data(user.id, client_data.owner_data_id)
+    owner_data = await get_owner_data(account_id.id, client_data.owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
@@ -207,12 +231,12 @@ async def api_update_client_data(
     response_model=Page[ClientData],
 )
 async def api_get_client_data_paginated(
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
     owner_data_id: str | None = None,
     filters: Filters = Depends(client_data_filters),
 ) -> Page[ClientData]:
 
-    owner_data_ids = await get_owner_data_ids_by_user(user.id)
+    owner_data_ids = await get_owner_data_ids_by_user(account_id.id)
 
     if owner_data_id:
         if owner_data_id not in owner_data_ids:
@@ -234,13 +258,13 @@ async def api_get_client_data_paginated(
 )
 async def api_get_client_data(
     client_data_id: str,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> ClientData:
 
     client_data = await get_client_data_by_id(client_data_id)
     if not client_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "ClientData not found.")
-    owner_data = await get_owner_data(user.id, client_data.owner_data_id)
+    owner_data = await get_owner_data(account_id.id, client_data.owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data.")
 
@@ -256,13 +280,13 @@ async def api_get_client_data(
 )
 async def api_delete_client_data(
     client_data_id: str,
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> SimpleStatus:
 
     client_data = await get_client_data_by_id(client_data_id)
     if not client_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "ClientData not found.")
-    owner_data = await get_owner_data(user.id, client_data.owner_data_id)
+    owner_data = await get_owner_data(account_id.id, client_data.owner_data_id)
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data deleted for this Client Data.")
 
@@ -280,9 +304,9 @@ async def api_delete_client_data(
     response_model=ExtensionSettings,
 )
 async def api_get_settings(
-    user: User = Depends(check_user_exists),
+    account_id: AccountId = Depends(check_account_id_exists),
 ) -> ExtensionSettings:
-    user_id = "admin" if ExtensionSettings.is_admin_only() else user.id
+    user_id = "admin" if ExtensionSettings.is_admin_only() else account_id.id
     return await get_settings(user_id)
 
 
@@ -295,14 +319,14 @@ async def api_get_settings(
 )
 async def api_update_extension_settings(
     data: ExtensionSettings,
-    user: User = Depends(check_user_exists),
+    account: User = Depends(check_account_exists),
 ) -> ExtensionSettings:
-    if ExtensionSettings.is_admin_only() and not user.admin:
+    if ExtensionSettings.is_admin_only() and not account.admin:
         raise HTTPException(
             HTTPStatus.FORBIDDEN,
             "Only admins can update settings.",
         )
-    user_id = "admin" if ExtensionSettings.is_admin_only() else user.id
+    user_id = "admin" if ExtensionSettings.is_admin_only() else account.id
     return await update_settings(user_id, data)
 
 
